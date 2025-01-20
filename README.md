@@ -16,10 +16,28 @@ SELECT CURRENT_TIME;
 SELECT CURRENT_TIMESTAMP AT TIME ZONE 'UTC';
 select EXTRACT(DOY FROM (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))
 delete from system_parameters.business_fields;
-delete from system_parameters.business_tables;    
+delete from system_parameters.business_tables;   
+
+DO $$
+BEGIN
+   EXECUTE (
+      SELECT string_agg('DROP TABLE IF EXISTS ' || quote_ident(schemaname) || '.' || quote_ident(tablename) || ' CASCADE;', ' ')
+      FROM pg_tables
+      WHERE schemaname = 'today'
+   );
+END $$;
+
 SHOW timezone;
 SELECT current_setting('timezone');
 select * from system_parameters.business_fields;
 select * from system_parameters.business_tables;    
 SELECT system_parameters.generate_table();
-SELECT * FROM system_parameters.temp_execution_log ORDER BY executed_at DESC;
+
+SELECT error_message FROM system_parameters.temp_execution_log 
+where not error_message is null
+ORDER BY executed_at DESC;
+
+26122024:
+- tao unique
+- sua lai sinh function unique, select, update, insert, delete
+- 
