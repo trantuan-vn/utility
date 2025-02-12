@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.*;
 
 public class PostgresToPulsar {
-    private static final String PULSAR_SERVICE_URL = "pulsar://pulsar-broker.pulsar.svc.cluster.local:6650";
+    //private static final String PULSAR_SERVICE_URL = "pulsar://pulsar-broker.pulsar.svc.cluster.local:6650";
     private static final String PULSAR_ADMIN_URL = "http://pulsar-broker.pulsar.svc.cluster.local:8080";
     private static final String POSTGRES_URL = "jdbc:postgresql://citus-master.citus.svc.cluster.local:5432/smartconsultor";
     private static final String POSTGRES_USER = "smartconsultor";
@@ -18,26 +18,29 @@ public class PostgresToPulsar {
         try {
             System.out.println("Starting PostgresToPulsar application...");
             SparkSession spark = SparkSession.builder().appName("Java Spark Hive").enableHiveSupport().getOrCreate();
-            PulsarClient pulsarClient = PulsarClient.builder().serviceUrl(PULSAR_SERVICE_URL).build();
+            //PulsarClient pulsarClient = PulsarClient.builder().serviceUrl(PULSAR_SERVICE_URL).build();
             PulsarAdmin pulsarAdmin = PulsarAdmin.builder().serviceHttpUrl(PULSAR_ADMIN_URL).build();
             Connection postgresConnection = DriverManager.getConnection(POSTGRES_URL, POSTGRES_USER, POSTGRES_PASSWORD);
 
             Statement postgresStatement = postgresConnection.createStatement();
-            ResultSet resultSet = postgresStatement.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'history'");
+            ResultSet resultSet = postgresStatement.executeQuery("SELECT table_name, numpartitions FROM system_parameters.business_tables WHERE is_archive = true");
 
             while (resultSet.next()) {
                 String tableName = resultSet.getString("table_name");
+                int numpartitions = resultSet.getInt("numpartitions");
                 String topicToday = "persistent://public/today/" + tableName;
                 String topicHistory = "persistent://public/history/" + tableName;
 
                 if (!pulsarAdmin.topics().getList("public/today").contains(topicToday)) {
                     System.out.println("Creating topic: " + topicToday);
-                    pulsarClient.newProducer().topic(topicToday).create().close();
+                    //pulsarClient.newProducer().topic(topicToday).create().close();
+                    pulsarAdmin.topics().createPartitionedTopic(topicToday, numpartitions);
                     System.out.println("Created topic: " + topicToday);
                 }
                 if (!pulsarAdmin.topics().getList("public/history").contains(topicHistory)) {
                     System.out.println("Creating topic: " + topicHistory);
-                    pulsarClient.newProducer().topic(topicHistory).create().close();
+                    //pulsarClient.newProducer().topic(topicHistory).create().close();
+                    pulsarAdmin.topics().createPartitionedTopic(topicHistory, numpartitions);
                     System.out.println("Created topic: " + topicHistory);
                 }
 
@@ -49,7 +52,7 @@ public class PostgresToPulsar {
             resultSet.close();
             postgresStatement.close();
             postgresConnection.close();
-            pulsarClient.close();
+            //pulsarClient.close();
             pulsarAdmin.close();
             spark.stop();
             System.out.println("Synchronization completed successfully!");
