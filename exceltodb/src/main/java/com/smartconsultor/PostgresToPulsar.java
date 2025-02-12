@@ -8,9 +8,9 @@ import java.sql.*;
 import java.util.*;
 
 public class PostgresToPulsar {
-    private static final String PULSAR_SERVICE_URL = "pulsar://pulsar-broker:6650";
-    private static final String PULSAR_ADMIN_URL = "http://pulsar-broker:8080";
-    private static final String POSTGRES_URL = "jdbc:postgresql://citus-master:5432/smartconsultor";
+    private static final String PULSAR_SERVICE_URL = "pulsar://pulsar-broker.pulsar.svc.cluster.local:6650";
+    private static final String PULSAR_ADMIN_URL = "http://pulsar-broker.pulsar.svc.cluster.local:8080";
+    private static final String POSTGRES_URL = "jdbc:postgresql://citus-master.citus.svc.cluster.local:5432/smartconsultor";
     private static final String POSTGRES_USER = "smartconsultor";
     private static final String POSTGRES_PASSWORD = "secret99";
 
@@ -31,10 +31,14 @@ public class PostgresToPulsar {
                 String topicHistory = "persistent://public/history/" + tableName;
 
                 if (!pulsarAdmin.topics().getList("public/today").contains(topicToday)) {
+                    System.out.println("Creating topic: " + topicToday);
                     pulsarClient.newProducer().topic(topicToday).create().close();
+                    System.out.println("Created topic: " + topicToday);
                 }
                 if (!pulsarAdmin.topics().getList("public/history").contains(topicHistory)) {
+                    System.out.println("Creating topic: " + topicHistory);
                     pulsarClient.newProducer().topic(topicHistory).create().close();
+                    System.out.println("Created topic: " + topicHistory);
                 }
 
                 Map<String, String> postgresSchema = getTableSchema(postgresConnection, tableName);
@@ -70,7 +74,12 @@ public class PostgresToPulsar {
 
     private static Map<String, String> getTableSchemaFromHive(SparkSession spark, String tableName) throws Exception {
         Map<String, String> schema = new LinkedHashMap<>();
-        spark.sql("DESCRIBE " + tableName).collectAsList().forEach(row -> schema.put(row.getString(0), row.getString(1)));
+        boolean tableExists = spark.sql("SHOW TABLES LIKE '" + tableName + "'")
+            .collectAsList()
+            .size() > 0;
+        if (tableExists) {
+            spark.sql("DESCRIBE " + tableName).collectAsList().forEach(row -> schema.put(row.getString(0), row.getString(1)));
+        }
         return schema;
     }
 
@@ -168,14 +177,17 @@ public class PostgresToPulsar {
             case "integer": case "int": case "int4": return "INT";
             case "bigint": case "int8": return "BIGINT";
             case "smallint": case "int2": return "SMALLINT";
-            case "text": case "varchar": case "char": case "string": return "STRING";
+            case "text": case "varchar": case "char": case "string": case "character varying": return "STRING";
             case "boolean": case "bool": return "BOOLEAN";
+            case "bytea": return "BINARY";
             case "float": case "float4": return "FLOAT";
             case "double precision": case "float8": return "DOUBLE";
             case "date": return "DATE";
-            case "timestamp": case "timestamptz": return "TIMESTAMP";
+            case "timestamp": case "timestamp without time zone": return "TIMESTAMP";
+            case "timestamptz": case "timestamp with time zone": return "TIMESTAMP";
             case "numeric": case "decimal": return "DECIMAL";
+            case "jsonb": return "STRING"; 
             default: throw new IllegalArgumentException("Unsupported PostgreSQL data type: " + postgresDataType);
         }
-    }
+    }        
 }
