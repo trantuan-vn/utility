@@ -21,7 +21,7 @@
               <createDependencyReducedPom>true</createDependencyReducedPom>
               <transformers>
                 <transformer>
-                  <mainClass>com.smartconsultor.PostgresToPulsar</mainClass>
+                  <mainClass>com.smartconsultor.PostgresToIgnite</mainClass>
                 </transformer>
               </transformers>
             </configuration>

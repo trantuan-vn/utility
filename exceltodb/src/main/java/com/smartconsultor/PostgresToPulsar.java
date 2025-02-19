@@ -1,7 +1,6 @@
 package com.smartconsultor;
 
 import org.apache.pulsar.client.admin.PulsarAdmin;
-import org.apache.pulsar.client.api.*;
 import org.apache.spark.sql.SparkSession;
 
 import java.sql.*;
