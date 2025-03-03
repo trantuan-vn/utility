@@ -1,0 +1,4 @@
+com/smartconsultor/keycloak/CustomDeviceAuthenticator.class
+com/smartconsultor/keycloak/DeviceEventListenerProvider.class
+com/smartconsultor/keycloak/CustomDeviceAuthenticatorFactory.class
+com/smartconsultor/keycloak/DeviceEventListenerProviderFactory.class
