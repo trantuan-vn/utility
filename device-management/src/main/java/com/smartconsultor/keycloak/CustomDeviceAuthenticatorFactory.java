@@ -52,7 +52,10 @@ public class CustomDeviceAuthenticatorFactory  implements AuthenticatorFactory {
     @Override
     public Requirement[] getRequirementChoices() {
         return new Requirement[]{ 
-            Requirement.REQUIRED 
+            Requirement.REQUIRED,
+            Requirement.ALTERNATIVE,
+            Requirement.DISABLED,
+            Requirement.CONDITIONAL
         };    
     }
 }

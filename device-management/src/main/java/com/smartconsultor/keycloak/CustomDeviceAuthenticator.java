@@ -33,7 +33,7 @@ public class CustomDeviceAuthenticator implements Authenticator {
     public void authenticate(AuthenticationFlowContext context) {
         UserModel user = context.getUser();
         Event event = context.getEvent().getEvent();
-        String deviceInfo = event.getDetails().get("user_agent") + " - " + event.getIpAddress();
+        String deviceInfo = event.getDetails().get("user_agent") + " - " + event.getIpAddress();  
 
         // Lấy danh sách thiết bị từ USER_ATTRIBUTE
         Map<String, Long> devices = getDevicesFromAttributes(user);
@@ -148,7 +148,6 @@ public class CustomDeviceAuthenticator implements Authenticator {
             .map(entry -> entry.getKey() + "::" + entry.getValue())
             .collect(Collectors.toList());
     }
-
     @Override
     public boolean requiresUser() { return true; }
     @Override
