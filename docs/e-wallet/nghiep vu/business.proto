@@ -1,0 +1,224 @@
+syntax = "proto3";
+
+package business;
+
+option java_multiple_files = true;
+option java_package = "com.smartconsultor.wallet";
+option java_outer_classname = "BusinessProto";
+
+// Root message được gửi đi qua hệ thống
+message BusinessMessage {
+  string topic = 1;
+  uint64 seqId = 2;
+  EventType eventType = 3;
+  oneof payload {
+    DepositRequested depositRequested = 10;
+    DepositConfirmed depositConfirmed = 11;
+
+    WithdrawalRequested withdrawalRequested = 12;
+    WithdrawalConfirmed withdrawalConfirmed = 13;
+    WithdrawalRejected withdrawalRejected = 14;
+
+    TransferInitiated transferInitiated = 15;
+    TransferReceived transferReceived = 16;
+    TransferFailed transferFailed = 17;
+
+    BalanceUpdated balanceUpdated = 18;
+    WalletLocked walletLocked = 19;
+    WalletUnlocked walletUnlocked = 20;
+
+    LoginSuccess loginSuccess = 21;
+    LoginFailed loginFailed = 22;
+    SessionExpired sessionExpired = 23;
+    DeviceLinked deviceLinked = 24;
+    DeviceRemoved deviceRemoved = 25;
+
+    KYCVerificationStarted kycStarted = 26;
+    KYCVerificationPassed kycPassed = 27;
+    KYCVerificationFailed kycFailed = 28;
+    KYCVerificationPending kycPending = 29;
+
+    NotificationPromo promoNotification = 30;
+    NotificationSystem systemNotification = 31;
+
+    MaintenanceScheduled maintenanceScheduled = 32;
+  }
+}
+
+// Enum phân loại loại sự kiện
+enum EventType {
+  UNKNOWN = 0;
+
+  // Deposit
+  DEPOSIT_REQUESTED = 1;
+  DEPOSIT_CONFIRMED = 2;
+
+  // Withdrawal
+  WITHDRAWAL_REQUESTED = 3;
+  WITHDRAWAL_CONFIRMED = 4;
+  WITHDRAWAL_REJECTED = 5;
+
+  // Transfer
+  TRANSFER_INITIATED = 6;
+  TRANSFER_RECEIVED = 7;
+  TRANSFER_FAILED = 8;
+
+  // Balance
+  BALANCE_UPDATED = 9;
+  WALLET_LOCKED = 10;
+  WALLET_UNLOCKED = 11;
+
+  // Auth
+  LOGIN_SUCCESS = 12;
+  LOGIN_FAILED = 13;
+  SESSION_EXPIRED = 14;
+  DEVICE_LINKED = 15;
+  DEVICE_REMOVED = 16;
+
+  // KYC
+  KYC_STARTED = 17;
+  KYC_PASSED = 18;
+  KYC_FAILED = 19;
+  KYC_PENDING = 20;
+
+  // Notification
+  NOTIFY_PROMO = 21;
+  NOTIFY_SYSTEM = 22;
+
+  // Maintenance
+  MAINTENANCE_SCHEDULED = 23;
+}
+
+// --- Deposit ---
+message DepositRequested {
+  string userId = 1;
+  string method = 2; // "bank", "credit_card", "momo", etc.
+  double amount = 3;
+}
+
+message DepositConfirmed {
+  string userId = 1;
+  string transactionId = 2;
+  double amount = 3;
+  string confirmedAt = 4;
+}
+
+// --- Withdrawal ---
+message WithdrawalRequested {
+  string userId = 1;
+  double amount = 2;
+  string destination = 3; // bank account, etc.
+}
+
+message WithdrawalConfirmed {
+  string userId = 1;
+  string transactionId = 2;
+  double amount = 3;
+  string confirmedAt = 4;
+}
+
+message WithdrawalRejected {
+  string userId = 1;
+  string reason = 2;
+}
+
+// --- Transfer ---
+message TransferInitiated {
+  string fromUserId = 1;
+  string toUserId = 2;
+  double amount = 3;
+}
+
+message TransferReceived {
+  string fromUserId = 1;
+  string toUserId = 2;
+  double amount = 3;
+}
+
+message TransferFailed {
+  string fromUserId = 1;
+  string toUserId = 2;
+  string reason = 3;
+}
+
+// --- Balance ---
+message BalanceUpdated {
+  string userId = 1;
+  double newBalance = 2;
+  string updatedAt = 3;
+}
+
+message WalletLocked {
+  string userId = 1;
+  string reason = 2;
+}
+
+message WalletUnlocked {
+  string userId = 1;
+}
+
+// --- Auth ---
+message LoginSuccess {
+  string userId = 1;
+  string deviceId = 2;
+  string timestamp = 3;
+}
+
+message LoginFailed {
+  string userId = 1;
+  string reason = 2;
+  string timestamp = 3;
+}
+
+message SessionExpired {
+  string userId = 1;
+  string sessionId = 2;
+}
+
+message DeviceLinked {
+  string userId = 1;
+  string deviceId = 2;
+}
+
+message DeviceRemoved {
+  string userId = 1;
+  string deviceId = 2;
+}
+
+// --- KYC ---
+message KYCVerificationStarted {
+  string userId = 1;
+}
+
+message KYCVerificationPassed {
+  string userId = 1;
+  string verifiedAt = 2;
+}
+
+message KYCVerificationFailed {
+  string userId = 1;
+  string reason = 2;
+}
+
+message KYCVerificationPending {
+  string userId = 1;
+  string submittedAt = 2;
+}
+
+// --- Notification ---
+message NotificationPromo {
+  string title = 1;
+  string body = 2;
+}
+
+message NotificationSystem {
+  string message = 1;
+  string level = 2; // "info", "warning", "critical"
+}
+
+// --- Maintenance ---
+message MaintenanceScheduled {
+  string startTime = 1;
+  string duration = 2; // e.g., "30m", "2h"
+  string message = 3;
+}

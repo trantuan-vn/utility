@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package smartconsultor.gateway;
+
+// Loại message chính
+enum MessageType {
+  UNKNOWN = 0;
+  HANDSHAKE = 1;
+  RESUME = 2;
+  BUSINESS = 3;
+  ERROR = 4;
+  MIGRATE = 5;
+  HEARTBEAT = 6;
+  STATE_UPDATE = 7;
+}
+
+// Message gói chung gửi/nhận qua WebSocket
+message GatewayMessage {
+  MessageType type = 1;
+  string userId = 2;
+  uint64 timestamp = 3;
+  oneof payload {
+    HandshakeMessage handshake = 4;
+    ResumeMessage resume = 5;
+    BusinessMessage business = 6;
+    ErrorMessage error = 7;
+    MigrateMessage migrate = 8;
+    HeartbeatMessage heartbeat = 9;
+    StateUpdateMessage stateUpdate = 10;
+  }
+}
+
+// --- HANDSHAKE ---
+message HandshakeMessage {
+  string authToken = 1; // Token JWT lấy từ Keycloak
+  string clientVersion = 2;
+  string deviceId = 3;
+}
+
+// --- RESUME ---
+message ResumeMessage {
+  string topic = 1;
+  string pod = 2;
+  uint64 lastReceivedSeq = 3;
+}
+
+// --- BUSINESS ---
+message BusinessMessage {
+  string topic = 1;
+  uint64 seqId = 2;
+  string eventType = 3;
+  bytes data = 4; // Payload tuỳ biến
+}
+
+// --- ERROR ---
+message ErrorMessage {
+  int32 code = 1;
+  string reason = 2;
+}
+
+// --- MIGRATE ---
+message MigrateMessage {
+  string newPod = 1;
+  string newTopic = 2;
+  uint64 resumeFromSeq = 3;
+  string reason = 4; // Optional: lý do migrate
+}
+
+// --- HEARTBEAT ---
+message HeartbeatMessage {
+  string status = 1;
+}
+
+// --- STATE UPDATE ---
+message StateUpdateMessage {
+  uint64 currentSeq = 1;
+  string status = 2;
+}
