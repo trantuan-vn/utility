@@ -1,0 +1,389 @@
+//frontend
+lib/
+├── app/
+│   ├── app.dart
+│   ├── main_binance.dart
+│   └── main_kraken.dart
+│
+├── brands/
+│   ├── binance/
+│   │   ├── brand_config.dart
+│   │   └── assets/
+│   ├── kraken/
+│   └── ...
+│
+├── config/
+│   ├── app_router.dart
+│   ├── app_theme.dart
+│   └── env.dart
+│
+├── core/
+│   ├── constants/
+│   │   ├── strings.dart
+│   │   ├── colors.dart
+│   │   └── assets.dart
+│   ├── error/
+│   │   ├── exceptions.dart
+│   │   └── failure.dart
+│   ├── network/
+│   │   ├── api_client.dart
+│   │   ├── dio_interceptors.dart
+│   │   └── websocket_manager.dart             # 🌐 WS Manager (quản lý kết nối, gửi/nhận, retry)
+│   ├── storage/
+│   │   ├── isar_service.dart                  # 📦 Local Isar DB
+│   │   ├── secure_storage_service.dart
+│   │   └── pending_queue_service.dart         # 📌 Local PendingQueue mutation
+│   ├── sync/
+│   │   ├── sync_service.dart                  # 🔄 SyncService - fallback REST
+│   │   └── retry_manager.dart                 # 🔁 Retry + Backoff
+│   ├── versioning/
+│   │   └── conflict_resolver.dart             # ⚖️ Conflict Resolver: version compare & overwrite
+│   ├── utils/
+│   │   ├── validators.dart
+│   │   ├── logger.dart
+│   │   └── extensions.dart
+│   └── heartbeat/
+│       └── heartbeat_manager.dart             # ❤️ Ping/Pong (heartbeat WS)
+│
+├── data/
+│   ├── datasources/
+│   │   ├── remote/
+│   │   │   ├── auth_remote.dart
+│   │   │   ├── feature_remote.dart
+│   │   │   ├── ekyc_remote.dart
+│   │   │   └── sync_remote.dart               # 🔧 Sync thông qua REST nếu fallback
+│   │   │   └── transaction_auth_remote.dart        # 🔐 NEW: API xác thực SMS/SmartOTP
+│   │   └── local/
+│   │       ├── isar_service.dart
+│   │       ├── kyc_local_store.dart
+│   │       ├── pending_queue_local_store.dart
+│   │       └── version_local_store.dart       # Lưu version để so sánh trong ConflictResolver
+│   │       └── smart_otp_local_store.dart          # 💾 NEW: Lưu secret key SmartOTP
+│   ├── models/
+│   │   ├── user_model.dart
+│   │   ├── feature_model.dart
+│   │   ├── ekyc_models.dart
+│   │   ├── user_action_model.dart
+│   │   └── sync_model.dart                    # Model cho mutation, versioning
+│   │   ├── transaction_auth_model.dart             # 🔐 NEW: Model cho OTP / SmartOTP
+│   └── repositories_impl/
+│       ├── auth_repository_impl.dart
+│       ├── feature_repository_impl.dart
+│       ├── ekyc_repository_impl.dart
+│       ├── pending_queue_repository_impl.dart
+│       └── sync_repository_impl.dart
+│       └── transaction_auth_repository_impl.dart   # 🔐 NEW: Triển khai xác thực OTP
+│
+├── domain/
+│   ├── entities/
+│   │   ├── user_entity.dart
+│   │   ├── feature_entity.dart
+│   │   ├── ekyc_entity.dart
+│   │   ├── pending_mutation_entity.dart
+│   │   └── sync_entity.dart                   # Entity cho sync + version tracking
+│   │   └── transaction_auth_entity.dart            # 🔐 NEW
+│   ├── repositories/
+│   │   ├── auth_repository.dart
+│   │   ├── feature_repository.dart
+│   │   ├── ekyc_repository.dart
+│   │   ├── pending_queue_repository.dart
+│   │   └── sync_repository.dart
+│   │   └── transaction_auth_repository.dart        # 🔐 NEW
+│   └── usecases/
+│       ├── login_usecase.dart
+│       ├── get_features_usecase.dart
+│       ├── submit_ekyc_usecase.dart
+│       ├── get_kyc_status_usecase.dart
+│       ├── upload_document_usecase.dart
+│       ├── sync_pending_mutations_usecase.dart
+│       ├── resolve_conflict_usecase.dart      # ⬅️ Ghi đè local hoặc gửi lại mutation
+│       └── retry_failed_mutations_usecase.dart# 🔁 Retry Mutation nếu network/server error
+│       ├── request_sms_otp_usecase.dart            # 🔐 NEW
+│       ├── verify_sms_otp_usecase.dart             # 🔐 NEW
+│       ├── generate_smart_otp_usecase.dart         # 🔐 NEW
+│       └── verify_smart_otp_usecase.dart           # 🔐 NEW
+│
+├── features/
+│   └── identity_providers/                   # ⬅️ MỚI: Nhóm tích hợp các định danh
+│       ├── vneid/                             # 🇻🇳 VNeID
+│       │   ├── data/
+│       │   │   ├── vneid_remote_service.dart
+│       │   │   ├── vneid_model.dart
+│       │   │   └── vneid_repository_impl.dart
+│       │   ├── domain/
+│       │   │   ├── entities/
+│       │   │   │   └── vneid_entity.dart
+│       │   │   ├── repositories/
+│       │   │   │   └── vneid_repository.dart
+│       │   │   └── usecases/
+│       │   │       ├── fetch_vneid_data_usecase.dart
+│       │   │       └── validate_vneid_usecase.dart
+│       │   ├── presentation/
+│       │   │   ├── pages/
+│       │   │   │   └── vneid_auth_page.dart
+│       │   │   └── state/
+│       │   │       ├── vneid_notifier.dart
+│       │   │       └── vneid_state.dart
+│       │   └── utils/
+│       │       └── vneid_parser.dart
+│       ├── thailand_eid/
+│       │   └── ...                            # 🇹🇭 Thai eID tích hợp tương tự VNeID
+│       ├── malaysia_myid/
+│       │   └── ...                            # 🇲🇾 Malaysia MyID (nếu cần)
+│       └── shared/
+│           └── identity_mapper.dart          # Chuyển đổi định dạng identity chung
+│
+├── injection/
+│   └── injection_container.dart            # Đăng ký VNeIDRepo, ThaiEIDRepo...
+│
+├── presentation/
+│   ├── pages/
+│   │   ├── splash/
+│   │   │   └── splash_page.dart
+│   │   ├── intro/
+│   │   │   └── intro_page.dart
+│   │   ├── dashboard/
+│   │   │   └── dashboard_page.dart
+│   │   ├── dynamic/
+│   │   │   ├── dynamic_page.dart
+│   │   │   ├── deposit_page.dart
+│   │   │   ├── withdrawal_page.dart
+│   │   │   ├── swap_page.dart
+│   │   │   ├── bridge_page.dart
+│   │   │   └── placeorder_page.dart
+│   │   ├── ekyc/
+│   │   │   ├── ekyc_page.dart
+│   │   │   ├── document_upload_page.dart
+│   │   │   ├── selfie_capture_page.dart
+│   │   │   └── ekyc_status_page.dart
+│   │   │   └── identity_provider_selector.dart  # ⬅️ Chọn giữa VNeID, ThaiEID...
+│   │   └── settings/
+│   │       └── settings_page.dart
+│   │   └── transaction_auth/                       # 🔐 NEW
+│   │       ├── sms_otp_page.dart
+│   │       ├── smart_otp_setup_page.dart
+│   │       ├── smart_otp_verify_page.dart
+│   │       └── transaction_auth_selector.dart      # Chọn phương thức xác thực
+│   ├── state/
+│   │   ├── auth/
+│   │   │   ├── auth_notifier.dart
+│   │   │   └── auth_state.dart
+│   │   ├── feature/
+│   │   │   ├── feature_notifier.dart
+│   │   │   └── feature_state.dart
+│   │   ├── ekyc/
+│   │   │   ├── ekyc_notifier.dart
+│   │   │   └── ekyc_state.dart
+│   │   ├── sync/
+│   │   │   ├── sync_notifier.dart
+│   │   │   └── sync_state.dart
+│   │   ├── pending_queue/
+│   │   │   ├── pending_queue_notifier.dart
+│   │   │   └── pending_queue_state.dart
+│   │   └── websocket/
+│   │       ├── websocket_notifier.dart        # Trạng thái WS (connected, failed, retry...)
+│   │       └── websocket_state.dart
+│   │   └── transaction_auth/                       # 🔐 NEW
+│   │       ├── transaction_auth_notifier.dart
+│   │       └── transaction_auth_state.dart
+│   └── widgets/
+│       ├── app_button.dart
+│       ├── input_field.dart
+│       ├── camera_preview_widget.dart
+│       ├── document_upload_widget.dart
+│       ├── pending_queue_widget.dart
+│       ├── connection_status_widget.dart      # Hiển thị trạng thái kết nối WS
+│       └── sync_status_widget.dart            # Hiển thị trạng thái đồng bộ / xung đột
+│       └── identity_preview_widget.dart      # Hiển thị thông tin từ định danh đã xác thực
+│       └── smart_otp_input_widget.dart            # 🔐 NEW: Giao diện nhập mã SmartOTP
+│
+├── l10n/                          # Localization
+|
+└── main.dart
+
+//backend
+vertx-gateway/
+├── app/                           # Entry point và config cho các brand
+│   ├── MainBinanceVerticle.java
+│   ├── MainKrakenVerticle.java
+│   └── MainVerticle.java          # Shared bootstrapping (routing, DI)
+│
+├── brands/                        # Cấu hình riêng cho từng thương hiệu (theme, routes)
+│   ├── binance/
+│   │   └── BrandConfig.java
+│   ├── kraken/
+│   │   └── BrandConfig.java
+│   └── ...
+│
+├── config/
+│   ├── RouterFactory.java         # Đăng ký các routes
+│   ├── VertxConfigLoader.java     # Load config từ env, file, etc.
+│   ├── WebSocketConfig.java       # Cấu hình cho WS
+│   └── SecureConfig.java          # Keycloak, API key, etc.
+│
+├── core/
+│   ├── constants/
+│   │   ├── ErrorCodes.java
+│   │   └── Topics.java            # Pulsar topic constants
+│   ├── error/
+│   │   ├── AppException.java
+│   │   └── GlobalErrorHandler.java
+│   ├── websocket/
+│   │   ├── WebSocketHandler.java
+│   │   ├── WebSocketSessionManager.java       # Quản lý phiên (userId/deviceId)
+│   │   └── HeartbeatManager.java              # Ping/pong
+│   ├── security/
+│   │   ├── JwtAuthProvider.java
+│   │   ├── KeycloakValidator.java
+│   │   └── RateLimiter.java
+│   ├── storage/
+│   │   ├── RedisSessionStore.java             # Lưu trạng thái kết nối
+│   │   └── RocksDBQueueStore.java             # Hàng đợi pending local
+│   ├── pulsar/
+│   │   ├── PulsarProducer.java
+│   │   ├── PulsarConsumerManager.java
+│   │   └── BackoffRetryManager.java
+│   ├── sync/
+│   │   ├── SyncService.java                   # Sync fallback
+│   │   └── ConflictResolver.java              # So sánh version ghi đè
+│   └── utils/
+│       ├── JsonUtil.java
+│       └── LoggerUtil.java
+│
+├── data/
+│   ├── models/
+│   │   ├── UserModel.java
+│   │   ├── EkycModel.java
+│   │   ├── SyncMutationModel.java
+│   │   ├── TransactionAuthModel.java
+│   │   └── IdentityProviderModel.java
+│   ├── repositories_impl/
+│   │   ├── AuthRepositoryImpl.java
+│   │   ├── EkycRepositoryImpl.java
+│   │   ├── SyncRepositoryImpl.java
+│   │   ├── TransactionAuthRepositoryImpl.java
+│   │   └── IdentityProviderRepositoryImpl.java
+│   └── datasources/
+│       ├── remote/
+│       │   ├── RestApiClient.java
+│       │   └── IdentityProviderService.java
+│       └── local/
+│           ├── RedisClient.java
+│           └── RocksDBService.java
+│
+├── domain/
+│   ├── entities/
+│   │   ├── UserEntity.java
+│   │   ├── EkycEntity.java
+│   │   ├── SyncEntity.java
+│   │   ├── TransactionAuthEntity.java
+│   │   └── IdentityProviderEntity.java
+│   ├── repositories/
+│   │   ├── AuthRepository.java
+│   │   ├── EkycRepository.java
+│   │   ├── SyncRepository.java
+│   │   ├── TransactionAuthRepository.java
+│   │   └── IdentityProviderRepository.java
+│   └── usecases/
+│       ├── LoginUseCase.java
+│       ├── SubmitEkycUseCase.java
+│       ├── ResolveConflictUseCase.java
+│       ├── RequestSmsOtpUseCase.java
+│       ├── VerifySmartOtpUseCase.java
+│       └── FetchIdentityDataUseCase.java
+│
+├── features/
+│   ├── transaction_auth/
+│   │   ├── SmsOtpHandler.java
+│   │   ├── SmartOtpHandler.java
+│   │   └── TransactionAuthSelector.java
+│   ├── ekyc/
+│   │   ├── EkycHandler.java
+│   │   └── DocumentUploadHandler.java
+│   ├── sync/
+│   │   ├── SyncMutationHandler.java
+│   │   └── VersioningHandler.java
+│   ├── websocket/
+│   │   ├── WebSocketMessageRouter.java
+│   │   └── WebSocketAckHandler.java
+│   └── identity_providers/
+│       ├── vneid/
+│       │   ├── VnEidValidator.java
+│       │   └── VnEidService.java
+│       ├── thailand_eid/
+│       └── malaysia_myid/
+│
+├── injection/
+│   └── DependencyInjection.java   # Wire DI cho usecases, repo
+│
+├── test/                          # Unit test cho usecase và handler
+└── README.md
+
+flink-job/
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/yourcompany/yourproject/
+│   │   │       ├── domain/
+│   │   │       │   ├── model/                  # Các Entity, Value Object, Enum
+│   │   │       │   │   ├── User.java
+│   │   │       │   │   ├── Wallet.java
+│   │   │       │   │   ├── Transaction.java
+│   │   │       │   │   ├── TransactionType.java (DEPOSIT, WITHDRAWAL, SWAP, BRIDGE, PLACE_ORDER,...)
+│   │   │       │   │   └── GatewayMessage.java  # Message input từ Pulsar, có thể protobuf
+│   │   │       │   ├── repository/             # Interface cho lưu trữ, truy vấn (PostgreSQL, Redis)
+│   │   │       │   │   ├── WalletRepository.java
+│   │   │       │   │   └── TransactionRepository.java
+│   │   │       │   └── service/                # Business rule thuần túy
+│   │   │       │       ├── WalletService.java  # Ví dụ xử lý logic nghiệp vụ ví
+│   │   │       │       ├── TransactionService.java
+│   │   │       │       └── DomainEvent.java
+│   │   │       ├── application/
+│   │   │       │   ├── usecase/                 # Các use case cụ thể
+│   │   │       │   │   ├── DepositUseCase.java
+│   │   │       │   │   ├── WithdrawalUseCase.java
+│   │   │       │   │   ├── SwapUseCase.java
+│   │   │       │   │   ├── BridgeUseCase.java
+│   │   │       │   │   └── PlaceOrderUseCase.java
+│   │   │       │   └── dto/                      # DTO truyền giữa các tầng (nếu cần)
+│   │   │       │       └── TransactionResultDto.java
+│   │   │       ├── infrastructure/
+│   │   │       │   ├── pulsar/
+│   │   │       │   │   ├── PulsarConsumer.java   # Đọc từ Pulsar input topics
+│   │   │       │   │   ├── PulsarProducer.java   # Gửi message ra output topics
+│   │   │       │   │   └── PulsarConfig.java     # Cấu hình Pulsar client
+│   │   │       │   ├── database/
+│   │   │       │   │   ├── PostgresWalletRepository.java
+│   │   │       │   │   └── PostgresTransactionRepository.java
+│   │   │       │   └── cache/
+│   │   │       │       └── RedisCacheService.java
+│   │   │       ├── adapter/
+│   │   │       │   ├── flink/
+│   │   │       │   │   ├── source/
+│   │   │       │   │   │   ├── PulsarFlinkSource.java   # Kết nối Flink source với Pulsar
+│   │   │       │   │   ├── sink/
+│   │   │       │   │   │   ├── PulsarFlinkSink.java     # Kết nối Flink sink với Pulsar
+│   │   │       │   │   └── process/
+│   │   │       │   │       ├── TransactionProcessFunction.java # Logic xử lý Flink ProcessFunction
+│   │   │       │   └── mapper/
+│   │   │       │       └── GatewayMessageMapper.java   # Mapper giữa protobuf message và domain model
+│   │   │       ├── di/                         # Thư mục chứa các module & component Dagger
+│   │   │       │   ├── component/
+│   │   │       │   │   └── FlinkJobComponent.java
+│   │   │       │   ├── module/
+│   │   │       │   │   ├── ApplicationModule.java
+│   │   │       │   │   ├── PulsarModule.java
+│   │   │       │   │   ├── RepositoryModule.java
+│   │   │       │   │   └── FlinkModule.java
+│   │   │       │   └── qualifier/
+│   │   │       │       └── CustomQualifiers.java
+│   │   │       └── FlinkJobRunner.java  # Entry-point job chạy Flink pipeline
+│   │   ├── proto/                       # Các file .proto định nghĩa GatewayMessage,...
+│   │   └── resources/
+│   │       └── application.conf         # Config Flink, Pulsar,...
+└── src/
+    └── test/
+        └── java/                        # Unit test
+
+chatgpt: bổ sung các lớp java vào thư mục theo kiến trúc clean với e-wallet như sau: đọc từ 10 input topic của pulsar, mỗi topic tương ứng 1K user (chứa các GatewayMessage của user), xử lý theo nghiệp vụ deposit, withdrawal, swap, bridge, placeorder, ..., sau đó gửi kết quả tới 10 output topic của pulsar, mỗi topic tưởng ứng 1K user tương ứng

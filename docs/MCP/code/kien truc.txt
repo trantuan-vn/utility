@@ -1,0 +1,90 @@
+ai_agent/
+├── domain/
+│   ├── models/
+│   │   ├── ProjectMeta.dart
+│   │   ├── Task.dart
+│   │   ├── AgentAction.dart
+│   │   ├── CodeKnowledgeGraph.dart
+│   │   └── PullRequestInfo.dart           # Cho ReviewAgent
+│   ├── repositories/
+│   │   ├── CodebaseRepository.dart
+│   │   ├── TaskRepository.dart
+│   │   ├── PromptStrategyRepository.dart
+│   │   └── DependencyRepository.dart
+│
+├── usecases/
+│   ├── GenerateFeatureUseCase.dart
+│   ├── RefactorCodeUseCase.dart
+│   ├── WriteTestUseCase.dart
+│   ├── SyncBackendModelsUseCase.dart
+│   ├── UpdateKnowledgeGraphUseCase.dart
+│   ├── ReviewPullRequestUseCase.dart
+│   ├── GenerateDocsUseCase.dart
+│   ├── PlanTasksFromIssueUseCase.dart
+│   ├── AnalyzeSecurityUseCase.dart
+│   ├── OptimizePerformanceUseCase.dart
+│   ├── UpdateDependenciesUseCase.dart
+│   ├── GenerateMonitoringHintsUseCase.dart
+│   └── SuggestUXImprovementsUseCase.dart
+│
+├── agents/
+│   ├── CodeAgent.dart
+│   ├── TestAgent.dart
+│   ├── RefactorAgent.dart
+│   ├── KnowledgeAgent.dart
+│   ├── GitAgent.dart
+│   ├── ReviewAgent.dart
+│   ├── DocAgent.dart
+│   ├── PlanningAgent.dart
+│   ├── SecurityAgent.dart
+│   ├── PerformanceAgent.dart
+│   ├── DependencyAgent.dart
+│   ├── MonitoringAgent.dart
+│   ├── SyncAgent.dart
+│   └── UXAgent.dart
+│
+├── orchestrator/       ◀ 🆕 Multi-agent orchestration
+│   ├── AgentOrchestrator.dart
+│   ├── TaskPlanner.dart
+│   ├── AgentRegistry.dart
+│   ├── WorkflowEngine.dart
+│   ├── MemoryStore.dart
+│   └── AgentContext.dart
+|
+├── infrastructure/
+│   ├── github/
+│   │   └── GitHubClient.dart
+│   ├── llm/
+│   │   ├── OpenAIClient.dart
+│   │   └── ClaudeClient.dart              # Nếu hỗ trợ multi-LLM
+│   ├── filesystem/
+│   │   └── FileEditor.dart
+│   └── observability/
+│       └── MonitoringClient.dart          # Đẩy logs, trace, metrics
+│
+├── prompts/
+│   ├── task_templates/
+│   │   └── generate_feature.prompt.md
+│   ├── refactor_templates/
+│   ├── test_templates/
+│   ├── review_templates/
+│   ├── doc_templates/
+│   ├── security_templates/
+│   ├── performance_templates/
+│   ├── ux_templates/
+│   ├── dependency_templates/
+│   ├── planning_templates/
+│   └── meta_guidelines.md
+│
+├── entrypoints/
+│   ├── cli/
+│   ├── github_action/
+│   └── vscode_extension/
+│
+├── config/
+│   └── agent_config.yaml
+│
+└── shared/
+    ├── logger.dart
+    ├── constants.dart
+    └── utils.dart

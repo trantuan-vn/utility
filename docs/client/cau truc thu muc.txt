@@ -1,0 +1,120 @@
+"" thêm các cấu phần theo logic trong "" view đầy đủ thư mục giúp tôi sau khi bổ sung 
+
+lib/
+├── app/
+│   ├── app.dart
+│   ├── main_binance.dart
+│   └── main_kraken.dart
+│
+├── brands/
+│   ├── binance/
+│   │   ├── brand_config.dart
+│   │   └── assets/
+│   ├── kraken/
+│   └── ...
+│
+├── config/
+│   ├── app_router.dart
+│   ├── app_theme.dart
+│   └── env.dart
+│
+├── core/
+│   ├── constants/
+│   │   ├── strings.dart
+│   │   ├── colors.dart
+│   │   └── assets.dart
+│   ├── error/
+│   │   ├── exceptions.dart
+│   │   └── failure.dart
+│   ├── network/
+│   │   ├── api_client.dart
+│   │   └── dio_interceptors.dart
+│   │   └── websocket_manager.dart
+│   ├── storage/
+│   │   ├── isar_service.dart
+│   │   └── secure_storage_service.dart
+│   ├── utils/
+│   │   ├── validators.dart
+│   │   ├── logger.dart
+│   │   └── extensions.dart
+│   └── camera/
+│       ├── camera_service.dart
+│       └── image_utils.dart
+│
+├── data/
+│   ├── datasources/
+│   │   ├── remote/
+│   │   │   ├── auth_remote.dart
+│   │   │   ├── feature_remote.dart
+│   │   │   └── ekyc_remote.dart
+│   │   └── local/
+│   │       ├── isar_service.dart
+│   │       └── kyc_local_store.dart
+│   ├── models/
+│   │   ├── user_model.dart
+│   │   ├── feature_model.dart
+│   │   └── ekyc_models.dart
+│   │   └── user_action_model.dart
+│   └── repositories_impl/
+│       ├── auth_repository_impl.dart
+│       ├── feature_repository_impl.dart
+│       └── ekyc_repository_impl.dart
+│
+├── domain/
+│   ├── entities/
+│   │   ├── user_entity.dart
+│   │   ├── feature_entity.dart
+│   │   └── ekyc_entity.dart
+│   ├── repositories/
+│   │   ├── auth_repository.dart
+│   │   ├── feature_repository.dart
+│   │   └── ekyc_repository.dart
+│   └── usecases/
+│       ├── login_usecase.dart
+│       ├── get_features_usecase.dart
+│       ├── submit_ekyc_usecase.dart
+│       ├── get_kyc_status_usecase.dart
+│       └── upload_document_usecase.dart
+│
+├── injection/
+│   └── injection_container.dart
+│
+├── presentation/
+│   ├── pages/
+│   │   ├── splash/
+│   │   │   └── splash_page.dart
+│   │   ├── intro/
+│   │   │   └── intro_page.dart
+│   │   ├── dashboard/
+│   │   │   └── dashboard_page.dart
+│   │   ├── dynamic/
+│   │   │   ├── dynamic_page.dart
+│   │   │   ├── deposit_page.dart
+│   │   │   ├── withdrawal_page.dart
+│   │   │   ├── swap_page.dart
+│   │   │   ├── bridge_page.dart
+│   │   │   └── placeorder_page.dart
+│   │   ├── ekyc/
+│   │   │   ├── ekyc_page.dart
+│   │   │   ├── document_upload_page.dart
+│   │   │   ├── selfie_capture_page.dart
+│   │   │   └── ekyc_status_page.dart
+│   │   └── settings/
+│   │       └── settings_page.dart
+│   ├── state/
+│   │   ├── auth/
+│   │   │   ├── auth_notifier.dart
+│   │   │   └── auth_state.dart
+│   │   ├── feature/
+│   │   │   ├── feature_notifier.dart
+│   │   │   └── feature_state.dart
+│   │   └── ekyc/
+│   │       ├── ekyc_notifier.dart
+│   │       └── ekyc_state.dart
+│   └── widgets/
+│       ├── app_button.dart
+│       ├── input_field.dart
+│       ├── camera_preview_widget.dart
+│       └── document_upload_widget.dart
+│
+└── main.dart
