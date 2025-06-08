@@ -1,0 +1,6 @@
+[submodule "keycloak-spi-trusted-device"]
+    path = keycloak-spi-trusted-device
+    url = https://github.com/trantuan-vn/keycloak-spi-trusted-device.git
+[submodule "keycloak-2fa-sms-authenticator"]
+    path = keycloak-2fa-sms-authenticator
+    url = https://github.com/trantuan-vn/keycloak-2fa-sms-authenticator.git
