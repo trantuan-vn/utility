@@ -1,0 +1,142 @@
+**Pitch Deck: Xây dựng zkRollup cho Đông Nam Á**
+
+---
+
+### 1. Tiêu đề: Từ TTCK Việt Nam đến hạ tầng Web3 SEA
+
+**Người trình bày:** TuấnTA (Founder)
+**Email:** [admin@zkvn.net](mailto:admin@zkvn.net)
+**Telegram:** @adminzkvn
+
+---
+
+### 2. Giới thiệu Founder
+
+* Tôi là Tuấn, kiến trúc sư hệ thống TTCK Việt Nam
+* Thiết kế core giao dịch và thanh quyết cho hàng triệu NĐT
+* Giờ chuyển hướng sang Web3 để xây dựng hạ tầng zk cho SEA
+
+---
+
+### 3. Tầm nhìn
+
+**Tạo Layer 2 zkRollup mã nguồn mở cho SEA**:
+
+* Hỗ trợ DApp fintech, trading, e-wallet
+* Compliance-friendly, scalable, UX thân thiện
+* Hỗ trợ fiat onboarding, paymaster
+
+---
+
+### 4. Cơ hội SEA
+
+* 700 triệu dân, dân số trẻ, phổ cập fintech
+* Vietnam, Philippines, Indo: top chấp nhận crypto
+* SEA cần blockchain rẻ, linh hoạt, compliance
+
+---
+
+### 5. Vấn đề hiện tại
+
+* Ethereum: đắt, chậm, khó scale
+* Solana: nhanh nhưng down time và không modular
+* zkSync/StarkNet: chưa tối ưu fiat onboarding và Web2 UX
+
+---
+
+### 6. Giải pháp: zkRollupVN
+
+* zkEVM hoặc R1CS prover
+* Sequencer mô- đun, staking DAO
+* DA layer: Celestia, EigenDA
+* API fiat onboarding, KYC module
+
+---
+
+### 7. Kiến trúc hệ thống
+
+**Client** → Sequencer → Prover → Submit Proof → Smart Contract (Verifier)
+
+**Bridge**: L2 ⇆ Ethereum
+
+**Storage**: SMT state db (offchain) + Merkle root onchain
+
+---
+
+### 8. Roadmap (2025-2026)
+
+* Q3/2025: MVP prover, sequencer
+* Q4/2025: DA + Rollup verifier
+* Q1/2026: SDK, wallet, bridge
+* Q2/2026: Mainnet + DAO + grant
+
+---
+
+### 9. Lợi thế Founder
+
+* Xây TTCK: hiểu rõ yêu cầu compliance & scale
+* Quen thuộc hệ sinh thái fintech
+* Kế hoạch build modular stack cho SEA
+
+---
+
+### 10. Gọi vốn & Use of Funds
+
+* Mục tiêu: $500K seed round
+* 40%: R&D prover + zk circuit
+* 30%: Infra + audit
+* 20%: Grants + Community
+* 10%: Vận hành + pháp lý
+
+---
+11. Tokenomics, TVL Mục tiêu & Revenue dự kiến 
+11.1 Tokenomics
+- Tên token: ZKVN
+- Tổng cung: 1 tỷ token
+- Phân bổ:
+    + 30%: Ecosystem & Grants (vesting 3 năm)
+    + 20%: Team & Advisors (vesting 4 năm)
+    + 20%: Staking & Sequencer Rewards (phát hành dần)
+    + 15%: Seed & Strategic Investors (vesting 2 năm)
+    + 10%: Community Treasury (DAO quản lý)
+    + 5%: Liquidity & Exchanges (khóa 1 năm)
+11.2 Biểu đồ Tokenomics:
+- Biểu đồ tròn (pie chart) với các màu sắc khác nhau cho từng hạng mục:
+- Ecosystem & Grants: Xanh lá (30%)
+- Team & Advisors: Xanh dương (20%)
+- Staking & Sequencer: Cam (20%)
+- Investors: Đỏ (15%)
+- Treasury: Tím (10%)
+- Liquidity: Vàng (5%)
+Ghi chú: Vesting schedule hiển thị dưới dạng timeline nhỏ bên dưới biểu đồ.
+11.3 TVL Mục tiêu
+- Q4/2025 (MVP): $10M TVL (từ DApp trading & e-wallet)
+- Q2/2026 (Mainnet): $50M TVL
+- Q4/2026: $200M TVL (mở rộng sang Indo, Philippines)
+11.4 Biểu đồ TVL (Mô tả):
+- Biểu đồ cột (bar chart) với 3 cột:
+    + Q4/2025: $10M (màu xanh lá)
+    + Q2/2026: $50M (màu xanh dương)
+    + Q4/2026: $200M (màu đỏ)
+- Trục Y: TVL (USD), Trục X: Thời gian.
+11.5 Revenue Dự kiến
+- Nguồn thu:
+    + Transaction fees (0.01-0.05% mỗi tx)
+    + Fiat onboarding API (2% phí giao dịch)
+    + Premium SDK cho DApp (subscription model)
+- Dự kiến:
+    + Q4/2025: $50K/tháng (từ tx fees)
+    + Q2/2026: $200K/tháng (tx fees + API)
+    + Q4/2026: $1M/tháng (tx fees + API + SDK)
+11.6 Biểu đồ Revenue (Mô tả):
+- Biểu đồ đường (line chart) với 3 mốc thời gian:
+    + Q4/2025: $50K (điểm khởi đầu)
+    + Q2/2026: $200K
+    + Q4/2026: $1M
+- Trục Y: Doanh thu (USD/tháng), Trục X: Thời gian.
+- Đường cong tăng trưởng màu xanh dương, với các điểm dữ liệu được đánh dấu.
+
+### 12. Call to Action
+**Hãy cùng xây dựng nền móng Web3 cho SEA**
+Liên hệ:
+[admin@zkvn.net](mailto:admin@zkvn.net) | Telegram: @adminzkvn

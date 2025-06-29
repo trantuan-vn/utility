@@ -1,0 +1,30 @@
+1. BẢNG THU PHÍ DỰ KIẾN CHO zkRollupVN
+| #  | Loại phí                               | Đối tượng                | Mức phí (dự kiến)                | Mục đích/Chi tiết                                     |
+| -- | -------------------------------------- | ------------------------ | -------------------------------- | ----------------------------------------------------- |
+| 1  | **Phí giao dịch thường (transfer)**    | Người dùng               | 0.02 – 0.10 USDC                 | Phí cơ bản cho mỗi L2 tx, tùy congestion              |
+| 2  | **Phí tương tác DApp (contract call)** | Người dùng               | 0.05 – 0.30 USDC                 | Tùy độ phức tạp của logic smart contract              |
+| 3  | **Phí nạp rút (bridge L1–L2)**         | Người dùng               | 0.2 – 1.0 USDC                   | Gồm phí L1 calldata + phí dịch vụ bridge              |
+| 4  | **Phí deploy smart contract**          | Dev/DApp                 | 5 – 50 USDC                      | Tùy dung lượng bytecode, trả theo gas                 |
+| 5  | **Phí đăng ký Account Abstraction**    | Người dùng / Wallet      | 0.1 – 0.3 USDC                   | Gồm đăng ký public key + circuit chứng minh           |
+| 6  | **Phí dùng SDK riêng / Infra**         | Doanh nghiệp / dự án lớn | Theo gói (100 – 5000 USDC/tháng) | Cung cấp circuit riêng, API tốc độ cao, DA riêng      |
+| 7  | **Phí lưu trữ dữ liệu (DA riêng)**     | Người dùng / DApp        | 0.001 – 0.005 USDC / tx          | Nếu dùng zkPorter / EigenDA thay vì Ethereum calldata |
+| 8  | **Phí xếp lệnh / khớp lệnh (zkDEX)**   | Người dùng DEX           | 0.05% – 0.2% mỗi lệnh            | Nếu tích hợp order book off-chain zkMatch engine      |
+| 9  | **MEV (nếu mở sequencer auction)**     | Builder / MEV bot        | Auction-based (tuỳ block)        | Cho phép đấu giá thứ tự tx trong block zkRollup       |
+| 10 | **Phí tham gia DAO / proposal**        | Token holder / voter     | 0.1 – 1 ZKVN (native token)      | Đảm bảo spam resistance, vote nghiêm túc              |
+
+2. Mô hình doanh thu ước tính sơ bộ
+| Tình huống                | Ước tính doanh thu hàng tháng |
+| ------------------------- | ----------------------------- |
+| 500K tx/ngày × 0.05 USDC  | $750K                         |
+| 1000 DApp trả phí deploy  | $50K                          |
+| 200 DApp dùng SDK premium | $200K                         |
+| Tổng cộng                 | ~$1M+ / tháng**               |
+
+3. Gợi ý gói phí (Productization)
+| Gói               | Đối tượng           | Giá                  | Gồm có                                    |
+| ----------------- | ------------------- | -------------------- | ----------------------------------------- |
+| **Basic L2**      | Người dùng          | Miễn phí tx đầu tiên | 10 tx miễn phí, AA auto-onboarding        |
+| **Builder SDK**   | DApp nhỏ            | $99/tháng           | SDK + faucet + circuit basic              |
+| **Pro DApp**      | DEX/Game/DeFi       | $499/tháng          | Custom circuit, faster DA, private prover |
+| **Enterprise L2** | Sàn lớn / Ngân hàng | $5000+/tháng        | zkRollup riêng, DA riêng, audit + support |
+

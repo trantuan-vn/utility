@@ -1,0 +1,54 @@
+1. Token tổng quan
+| Thuộc tính        | Thông tin                                                       |
+| ----------------- | --------------------------------------------------------------- |
+| **Token Name**    | `ZKVN` (zkRollup Việt Nam Token)                                |
+| **Total Supply**  | 1,000,000,000 ZKVN                                              |
+| **Decimals**      | 18                                                              |
+| **Blockchain**    | Ethereum (L1) & zkRollupVN (L2)                                 |
+| **Utility chính** | Gas fee, staking validator, DAO vote, reward, incentive builder |
+
+2. Phân bổ token
+| Nhóm                  | Tỷ lệ | Lượng (ZKVN) | Ghi chú                                        |
+| --------------------- | ----- | ------------ | ---------------------------------------------- |
+| **Core Team**         | 15%   | 150,000,000  | Vesting 4 năm (12m cliff + 36m linear)         |
+| **Investor**          | 12%   | 120,000,000  | Vesting 18m                                    |
+| **Public Sale / IDO** | 3%    | 30,000,000   | Community mở rộng                              |
+| **Grants + Builder**  | 20%   | 200,000,000  | Incentive deploy dApp, audit, bridge           |
+| **Staking Reward**    | 20%   | 200,000,000  | Cho sequencer, prover validator                |
+| **DAO Treasury**      | 20%   | 200,000,000  | Để voting, quyết định subsidy / reward         |
+| **Ecosystem Growth**  | 10%   | 100,000,000  | Liquidity mining, marketing, incentive program |
+
+3. Doanh thu và chia sẻ (Revenue Sharing DAO)
+3.1 Nguồn thu vào DAO Treasury:
+| Nguồn doanh thu            | Tỷ lệ trích về DAO Treasury |
+| -------------------------- | --------------------------- |
+| Phí giao dịch L2 (tx fees) | 30%                         |
+| Phí cầu nạp/rút bridge     | 20%                         |
+| Phí deploy smart contract  | 50%                         |
+| DA layer lưu trữ           | 10%                         |
+| SDK gói trả phí            | 10%                         |
+| MEV auction (nếu có)       | 50%                         |
+
+3.2 Chi tiêu DAO Treasury (do vote DAO quyết):
+| Danh mục chi tiêu      | Mục đích                                |
+| ---------------------- | --------------------------------------- |
+| Builder Subsidy        | Hỗ trợ gas phí, audit, testnet reward   |
+| Retroactive Grant      | Dự án có đóng góp lớn (voting-based)    |
+| Staking Reward bổ sung | Thưởng thêm cho người giữ token         |
+| Voter Incentive        | Vote DAO đúng lúc sẽ nhận fee/token     |
+| Token Buyback / Burn   | Duy trì giá trị ZKVN (DAO tự điều phối) |
+
+4. Token Utility & Fee Integration
+| Tính năng                       | Mô tả                                          |
+| ------------------------------- | ---------------------------------------------- |
+| **Gas Fee bằng ZKVN**           | Mạng hỗ trợ gas bằng ETH hoặc ZKVN             |
+| **Staking làm sequencer**       | Đặt cọc ZKVN để tham gia hệ thống Sequencer mở |
+| **Voting DAO**                  | Dùng ZKVN để tham gia đề xuất + biểu quyết     |
+| **Paymaster ZKVN**              | Smart Wallet có thể dùng ZKVN để chi phí tx    |
+| **Discount cho DApp dùng ZKVN** | Trả phí deploy bằng ZKVN được giảm 30%         |
+
+5. Dự báo lợi nhuận chia sẻ
+| Tình huống               | Lượng phí / tháng | Về DAO (30–50%) | DAO dùng (vote)           |
+| ------------------------ | ----------------- | --------------- | ------------------------- |
+| 1 triệu tx × 0.05 USDC   | $50,000           | $15,000         | Trợ giá DApp, retro grant |
+| 500 bridge tx × 0.5 USDC | $250              | $50             | Burn / vote incentive     |

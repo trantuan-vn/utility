@@ -1,0 +1,107 @@
+I. Cách zkSync Era kiếm tiền
+💸 1. Phí giao dịch L2 (Transaction Fees)
+- Người dùng khi gửi, swap, mint NFT, deploy smart contract… trên zkSync phải trả phí gas bằng ETH hoặc token khác.
+- zkSync thu phần chênh lệch giữa phí người dùng trả và chi phí thật sự khi submit lên Ethereum (L1).
+👉 Lợi nhuận = Phí người dùng trả trên L2 − Phí đăng dữ liệu trên Ethereum
+💼 2. Sequencer (Tập trung) = Toàn bộ phí → Matter Labs
+- Hiện tại sequencer của zkSync là permissioned (Matter Labs điều hành), tức:
+    + Toàn bộ phí người dùng trên L2 được kiểm soát bởi Matter Labs.
+    + Matter Labs có thể ưu tiên, điều chỉnh gas, thu phí MEV (nếu có).
+📌 Chưa mở decentralized sequencer, nên 100% phí thuộc Matter Labs.
+🏦 3. Data Availability Layer (DA)
+- zkSync Era hiện sử dụng Ethereum để lưu dữ liệu công khai (calldata).
+- Tuy nhiên trong tương lai, nếu dùng DA riêng (như zkPorter), họ có thể:
+    + Thu phí lưu trữ từ người dùng, với chi phí rẻ hơn Ethereum.
+    + Bán dịch vụ lưu trữ (off-chain DA) cho các dApp.
+🧱 4. Tính phí deploy smart contract
+- Khi deploy smart contract lên zkSync Era, dev phải trả phí cao hơn tx thường.
+- zkSync có thể thu phần chênh lệch / gas reserve từ các đợt deploy lớn (ví dụ DEX, GameFi, NFT drop).
+📊 5. Token zkSync (ZK) — Sẽ mở khóa giá trị trong tương lai
+- zkSync chưa ra token tính tới hiện tại (2025-06), nhưng sắp có.
+- Token có thể:
+    + Staking để trở thành sequencer
+    + Pay fee gas
+    + Governance DAO
+    + Share doanh thu cho holder
+→ Đây sẽ là một cách gián tiếp Matter Labs kiếm tiền từ hệ sinh thái thông qua tokenomics.
+💥 6. Grants + Partnership phí / whitelist listing
+- zkSync có thể yêu cầu:
+    + Dự án lớn muốn xuất hiện trong zkSync Portal hoặc Ecosystem phải trả phí hợp tác
+    + Dev muốn truy cập sớm circuit / SDK đặc biệt phải có license / deal riêng
+🛠️ 7. Cung cấp SDK, API nâng cao / infra riêng (Enterprise)
+- zkSync có thể cung cấp:
+    + Private Prover SDK
+    + Zero-knowledge VM sandbox
+    + Custom bootloader / gas paymaster cho các tổ chức
+→ Thu phí SaaS / infra service
+✳️ Tóm lại: zkSync kiếm tiền bằng 3 nhóm chính:
+| Nhóm                    | Chi tiết                                              |
+| ----------------------- | ----------------------------------------------------- |
+| **Phí hệ thống**        | Giao dịch, deploy, bridge, calldata → Matter Labs thu |
+| **Kiểm soát sequencer** | Chạy sequencer + kiểm soát fee + MEV                  |
+| **Token & Ecosystem**   | Token ZK, staking, governance, DA-as-a-service, SDK   |
+
+II. Điểm yếu của zkSync Era
+1. Hiểu rõ điểm mạnh và điểm yếu hiện tại của zkSync Era
+1.1 Điểm mạnh zkSync Era
+| Ưu điểm                   | Giải thích                            |
+| ------------------------- | ------------------------------------- |
+| 🔒 zkEVM Type 4           | Tương thích Solidity, dev dễ tiếp cận |
+| 🚀 Tốc độ cao             | Prover (Boojum) cực nhanh, GPU tối ưu |
+| 💡 AA tích hợp sẵn        | Không cần ERC-4337 ngoài              |
+| 💰 Pay gas bằng mọi token | Hỗ trợ stablecoin, tiện cho UX        |
+| 🧱 Native Layer 3         | Hỗ trợ build L3 trên zkSync Era       |
+1.2 Điểm yếu / cơ hội vượt mặt
+| Điểm yếu                                                     | Cơ hội cải tiến trong zkRollupVN                                           |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| ❗**Permissioned sequencer** (tập trung)                      | 👉 Xây sequencer **decentralized** / rotating (Celestia, EigenLayer, etc.) |
+| ❗Không open-source toàn bộ infra (bootloader, fee model)     | 👉 Open-source toàn stack → tạo niềm tin cộng đồng dev                     |
+| ❗Không hoàn toàn EVM-compatible (type 4)                     | 👉 Làm zkEVM Type 2 / Type 1 để devport bytecode chính xác                 |
+| ❗Hệ sinh thái chưa phi tập trung (central upgrade, operator) | 👉 Triển khai **DAO quản trị Rollup State Update**, L1 enshrined           |
+| ❗Dữ liệu trên-chain → phí cao nếu không có DA riêng          | 👉 Tích hợp **Data Availability Layer riêng (Celestia, Avail, EigenDA)**   |
+| ❗AA bootloader custom khó viết                               | 👉 Cung cấp AA SDK đơn giản hoặc plug-in wallet logic                      |
+
+2. Vậy muốn làm zkRollupVN cạnh tranh được, cần :
+2.1 Hạ tầng kỹ thuật
+| Thành phần  | Gợi ý lựa chọn                                            |
+| ----------- | --------------------------------------------------------- |
+| zkEVM       | CairoVM (StarkNet), RiscZero, SP1 (Succinct), hoặc zkWASM |
+| Prover      | GPU prover, WebGPU (client-side proving)                  |
+| DA layer    | Tích hợp modular DA: Celestia, EigenDA                    |
+| State model | Sparse Merkle Tree, Verkle Tree, hay Plonk-based          |
+| Bridge      | Custom L1/L2 messaging, hoặc native zkBridge              |
+| L3 support  | Cho phép người khác xây Layer3 Rollup trên nền TuấnChain  |
+2.2 Dev & community
+| Thành phần    | Ý tưởng cụ thể                                               |
+| ------------- | ------------------------------------------------------------ |
+| DevX          | CLI thân thiện (`vnchain-cli deploy ...`), SDK đa ngôn ngữ   |
+| Open tooling  | AA wallet SDK, faucet, testnet, block explorer riêng         |
+| Community DAO | Token governance, incentive sớm cho dev / builder            |
+| UX mạnh       | Ví dễ dùng, gas bằng USDC, giao dịch tốc độ cao (\~<1s)      |
+
+3. Chiến lược nổi bật vượt zkSync Era
+| Cách làm                                  | Giải thích                                              |
+| ----------------------------------------- | ------------------------------------------------------- |
+| **Decentralized Sequencer sớm**           | zkSync Era vẫn chưa có                                  |
+| **Fully open-source bootloader + AA SDK** | zkSync giữ private phần này                             |
+| **Tích hợp DA riêng + gas optimization**  | zkSync đang phụ thuộc Ethereum DA                       |
+| **Build ecosystem Việt mạnh**             | Chạy hackathon, incubator, grant dev Việt               |
+| **Tokenomics tốt + real yield**           | zkSync chưa ra token, cơ hội cạnh tranh rõ ràng         |
+| **L3 platform tốt**                       | Cho các team khác build zkRollup trên TuấnChain dễ dàng |
+
+Tóm lại: muốn vượt zkSync Era? Cần:
+- Kỹ thuật mạnh hơn: prover tốt hơn, DA rẻ hơn, infra mở hơn
+- Decentralization thật sự: sequencer, governance, bridge trustless
+- Dev thân thiện: SDK, toolchain dễ dùng
+- Cộng đồng Việt & global builder mạnh: giống Starknet hoặc Optimism đang làm
+- Tokenomics hấp dẫn: incentive tốt, không lock như zkSync
+
+4.  So với các DEX hiện tại:
+
+| DEX                   | Layer                | Cross-chain       | Rollup                | Smart Routing | Native BTC   |
+| --------------------- | -------------------- | ----------------- | -------------------   | ------------- | ------------ |
+| **Uniswap**           | Ethereum, L2         | ❌ (chưa native)   | ✅ Optimism/Arbitrum | ✅             | ❌            |
+| **PancakeSwap**       | BNB Chain            | ❌                 | ❌                   | ✅             | ❌            |
+| **Osmosis**           | Cosmos chain         | ✅ (IBC)           | ❌                   | ❌             | ❌            |
+| **Radiant / Tapioca** | Arbitrum / LayerZero | ✅                 | ❌                   | ✅             | ❌            |
+| **DEX của bạn**       | zkRollup             | ✅ **(LayerZero)** | ✅ **(zkRollup)**    | ✅             | ✅ **(WBTC)** |

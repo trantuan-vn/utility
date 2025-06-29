@@ -1,0 +1,44 @@
+1. Quỹ đầu tư / angel tại Việt Nam và khu vực
+| Tên tổ chức / cá nhân                        | Ghi chú                                                            |
+| -------------------------------------------- | ------------------------------------------------------------------ |
+| **Kyber Ventures**                           | Quỹ đầu tư từ Kyber Network (gốc Việt), đã rót vốn vào nhiều L2    |
+| **Coin98 Ventures**                          | Tập trung đầu tư L2, DeFi, GameFi, DEX... có mạng lưới mạnh        |
+| **Impossible Finance**                       | Có arm đầu tư + hỗ trợ gọi vốn, team có gốc Việt                   |
+| **Whampoa Digital (SG)**                     | Liên kết với chính phủ Singapore, đầu tư zk, modular rollup        |
+| **Kyros Ventures**                           | Vừa là quỹ đầu tư, vừa vận hành cộng đồng Web3 ở VN                |
+| **HC Ventures (Hust)**                       | Quỹ từ cựu sinh viên Bách Khoa, mạnh về deeptech, có đầu tư crypto |
+| **ICT Capital**                              | Gắn với FPT, đã từng đầu tư AI/blockchain                          |
+| **Cá nhân angel như Long Vuong (Tomochain)** | Founder blockchain VN đầu tiên, có thể support vision              |
+| **Alphabot Ventures**                        | Mới nổi, tập trung builder – có thể gọi nếu có MVP tốt             |
+
+2. Accelerator + Incubator ở Đông Nam Á
+| Tên                              | Ghi chú                                                     |
+| -------------------------------- | ----------------------------------------------------------- |
+| **Alliance DAO (US/SEA)**        | Hỗ trợ gọi vốn, cố vấn kỹ thuật, có batch cho Layer 2 riêng |
+| **AppWorks (Taiwan)**            | Hỗ trợ startup SEA, từng đầu tư sớm nhiều Web3 startup      |
+| **Antler (SG)**                  | Có chương trình builder crypto riêng, hợp tác rất nhiều VC  |
+| **ZK Incubator**                 | Tổ chức các chương trình huấn luyện founder zk              |
+| **Scroll Grants / zkSync Grant** | Gọi grant trực tiếp để có vốn khởi động circuit / prover    |
+| **A16z Crypto Startup School**   | Cực mạnh, nếu muốn global luôn                              |
+
+3. Cách tiếp cận để gọi từ Việt Nam
+| Hành động                                    | Diễn giải cụ thể                                                 |
+| -------------------------------------------- | ---------------------------------------------------------------- |
+| **Tạo một MVP chạy local**                   | VD: chứng minh cập nhật Merkle root zkTransfer → show họ luôn    |
+| **Soạn pitch deck riêng**                    | Bằng tiếng Anh, in đậm background founder + plan gọi \$500K–\$1M |
+| **Chạy “call warm” với người có kết nối VC** | Nhờ giới thiệu soft intro → tăng tỷ lệ phản hồi                  |
+| **Tham gia sự kiện Web3 VN/SEA**             | Hacker House, L2Day, Vietnam Blockchain Week, Celestia Meetup... |
+| **Liên hệ grant Scroll/Celestia/zkSync**     | Đa phần grant trị giá \$10K–\$50K, dùng để build MVP đầu tiên    |
+
+4. Kênh gửi lời mời đầu tư
+| Kênh                                 | Ưu điểm                                                 |
+| ------------------------------------ | ------------------------------------------------------- |
+| ✉️ Email cold (với deck PDF)         | Gửi cho Kyber, Coin98, C98 Capital...                   |
+| 🐦 Twitter DM / Discord builder      | Đội dev của VC rất hay hoạt động ở đây                  |
+| 🗣 Giới thiệu warm (quan hệ cá nhân) | Nếu biết 1 người trong VC → tỉ lệ gặp trực tiếp cao hơn |
+| 🧑‍💼 LinkedIn                          | Founder-level hay nhận cold message có đầu tư           |
+
+5. Mẹo nhỏ
+✅ Deck trình bày rõ “Tôi từng xây dựng TTCK Việt Nam → giờ tôi muốn xây hạ tầng zkRollup cho SEA”
+✅ Có domain .vn, GitHub public, sơ đồ kỹ thuật, roadmap Gantt
+✅ Tokenomics minh bạch + vesting nghiêm túc (điểm cộng cực lớn)

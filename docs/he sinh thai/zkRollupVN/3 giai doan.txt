@@ -1,0 +1,58 @@
+1. Giai đoạn 1: Kiếm tiền trước để nuôi mình & nuôi dự án
+🎯 Mục tiêu: Tự chủ tài chính trong 6–12 tháng, tích lũy kiến thức, tạo uy tín, tiếp xúc quỹ/VC.
+🔑 1.1. Làm dịch vụ Blockchain/Web3 (Freelance hoặc Studio nhỏ)
+- Smart contract dev (Solidity, Move)
+- Audit contract (học từ các tool như Slither, MythX, Move Prover)
+- Viết whitepaper/tokenomics cho dự án nước ngoài
+- Dựng frontend/backend dApp (React + Node.js + Web3)
+- Kiếm $1.5k–5k/tháng là khả thi.
+✅ Làm remote cho công ty Hàn, Singapore, Dubai, EU rất tiềm năng.
+🔑 1.2. Tham gia hackathon và bounty
+- Có thể kiếm $10k+ nếu lọt top dự án tốt.
+- Hackathon nổi bật: ETHGlobal, DoraHacks, Aptos/Sui Hackathon, LayerZero, zkHack, v.v.
+🎁 Tài trợ từ các chain rất mạnh nếu bạn làm các app có ích.
+🔑 1.3. Làm sản phẩm nhỏ: tool, plugin, dApp MVP
+- Viết explorer, faucet, bridge UI, devtool... rồi bán cho chain nhỏ hoặc mở donation.
+- Làm open-source + collect grant từ ZK, DA stack, L2 Foundation.
+Ex: Cộng đồng Celestia, Optimism, Sui... rất dễ xin grant từ $5k–50k cho dự án open-source hữu ích.
+
+2. Giai đoạn 2: Xây uy tín + Nhóm core
+🎯 Mục tiêu: Tạo cộng đồng nhỏ, tuyển 3–5 người có cùng khát vọng, và bắt đầu nghiên cứu kiến trúc Layer 1 / L2.
+🔑 2.1. Public research & blog
+- Viết bài technical phân tích kiến trúc Celestia, zkRollup, Move VM, LayerZero...
+- Code PoC trên GitHub: minimal L1, DA stack, sovereign rollup, etc.
+- Làm video explain blockchain tech bằng tiếng Việt hoặc tiếng Anh.
+→ Xây cộng đồng Dev + Tech Investor theo dõi bạn.
+🔑 2.2. Tìm đồng đội có cùng tầm nhìn
+- 1 người chuyên infra/backend (Rust, Go)
+- 1 người fullstack dApp + UX
+- 1 người hiểu tokenomics/viết whitepaper tốt
+- 1 người leader truyền thông/cộng đồng
+4 người = đủ mở chain testnet nhỏ với MVP.
+
+3. Giai đoạn 3: Tạo Layer1 hoặc Layer2 made-in-Vietnam
+3.1 Cách tiếp cận khả thi:
+| Lựa chọn                     | Gợi ý                                                     |
+| ---------------------------- | --------------------------------------------------------- |
+| **L1 Modular (Rollup/DA)**   | Dựa trên Celestia, Avail, hoặc Fuel, dùng Rollkit         |
+| **Sovereign Rollup**         | Khởi tạo AppChain riêng dùng Move hoặc EVM                |
+| **zkL2 trên Ethereum**       | Dựa trên zkStack (zkSync), OP Stack, Polygon CDK          |
+| **L2 cho thị trường VN/SEA** | Tập trung dApp localized: GameFi, credit scoring, fintech |
+
+3.2 Đến lúc gọi vốn:
+🧠 Bạn cần:
+- Whitepaper nghiêm túc
+- GitHub MVP
+- Roadmap 6–12 tháng
+- Core team 3–5 người có hồ sơ thật
+🎯 Target:
+- VC Việt Nam: Kyros, HUB Global, Coin98, HC Ventures
+- VC SEA: Hashed, Spartan, Saison Capital
+- Global Infra Grant: Ethereum Foundation, Celestia, Starkware, OP Foundation
+
+4. Tổng kết kế hoạch
+| Giai đoạn                     | Làm gì?                       | Mục tiêu                      |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| **1. Kiếm tiền**              | Dev service, hackathon, grant | $2k–5k/tháng nuôi đội         |
+| **2. Xây uy tín + cộng đồng** | Blog, repo, research, PoC     | Có followers và dev core team |
+| **3. Làm chain**              | Rollup / Sovereign L1 / zkL2  | MVP + gọi vốn                 |

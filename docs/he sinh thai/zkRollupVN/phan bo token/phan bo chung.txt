@@ -1,0 +1,134 @@
+I. Phân bổ chung:
+- Tên token: ZKVN
+- Tổng cung: 1 tỷ token
+- Phân bổ:
+    + 30%: Ecosystem & Grants (vesting 3 năm)
+    + 20%: Team & Advisors (vesting 4 năm)
+    + 20%: Staking & Sequencer Rewards (phát hành dần)
+    + 15%: Seed & Strategic Investors (vesting 2 năm)
+    + 10%: Community Treasury (DAO quản lý)
+    + 5%: Liquidity & Exchanges (khóa 1 năm)
+
+II. Chi tiết phân bổ
+1. 30%: Ecosystem & Grants (vesting 3 năm)
+- Số lượng: 300 triệu ZKVN (30% tổng cung).
+- Mục đích:
+    + Dùng để phát triển hệ sinh thái zkRollupVN, bao gồm tài trợ (grants) cho các nhà phát triển xây dựng DApp (fintech, trading, e-wallet) trên Layer 2.
+    + Hỗ trợ các sáng kiến như hackathon, chương trình khuyến khích người dùng, hoặc tích hợp với các đối tác fintech ở SEA (Việt Nam, Indo, Philippines).
+- Vesting (khóa dần 3 năm):
+    + Token không được phát hành ngay, mà được mở khóa dần trong 3 năm (36 tháng), ví dụ: ~8.33 triệu ZKVN/tháng.
+    + Cơ chế này đảm bảo quỹ được sử dụng dài hạn, tránh lạm chi hoặc bán tháo token.
+- Ví dụ sử dụng:
+    + Cấp 10 triệu ZKVN cho một DApp e-wallet tích hợp fiat onboarding, với điều kiện đạt KPI (như 100,000 người dùng).
+    + Tài trợ 5 triệu ZKVN cho một đội phát triển ở Philippines xây dựng DApp trading.
+- Lợi ích:
+    + Thu hút nhà phát triển, tăng số lượng DApp → tăng TVL (từ $10M Q4/2025 đến $200M Q4/2026).
+    + Tạo hệ sinh thái sôi động, tăng nhu cầu sử dụng ZKVN.
+2. 20%: Team & Advisors (vesting 4 năm)
+- Số lượng: 200 triệu ZKVN (20% tổng cung).
+- Mục đích:
+    + Thưởng cho đội ngũ sáng lập, nhân viên, và cố vấn (advisors) của dự án, những người đóng góp vào phát triển zkRollupVN.
+    + Đảm bảo đội ngũ có động lực gắn bó lâu dài để đạt các mốc roadmap (MVP Q3/2025, mainnet Q2/2026).
+- Vesting (khóa dần 4 năm):
+    + Token được khóa và phát hành dần trong 4 năm (48 tháng), ví dụ: ~4.17 triệu ZKVN/tháng.
+    + Thường có cliff period (ví dụ: khóa hoàn toàn trong 12 tháng đầu, sau đó mở dần).
+- Ví dụ:
+    + Founder (TuấnTA) và core team nhận token theo hiệu suất dự án (như ra mắt mainnet).
+    + Cố vấn về compliance hoặc blockchain (như chuyên gia từ Ethereum/zkSync) nhận 1% tổng cung, phát hành dần.
+- Lợi ích:
+    + Gắn kết đội ngũ, giảm rủi ro họ rời dự án sớm.
+    + Tạo niềm tin cho nhà đầu tư, vì team không thể bán hết token ngay, giúp ổn định giá.
+3. 20%: Staking & Sequencer Rewards (phát hành dần)
+- Số lượng: 200 triệu ZKVN (20% tổng cung).
+- Mục đích:
+    + Dùng làm phần thưởng cho những người stake token ZKVN để tham gia vận hành mạng (như sequencer hoặc validator) hoặc đảm bảo bảo mật.
+    + Khuyến khích người dùng khóa token để nhận thưởng, hỗ trợ hoạt động mạng và quản trị DAO.
+- Phát hành dần:
+    + Không khóa theo vesting cố định như team/investors, mà phát hành dựa trên nhu cầu mạng (ví dụ: số giao dịch, số sequencer tham gia).
+    + Phần thưởng có thể đến từ:
+        * Phí giao dịch (0.01-0.05% mỗi tx, theo slide revenue).
+        * Token mới từ quỹ 200 triệu ZKVN, phát hành theo lịch trình (ví dụ: 5% quỹ/năm).
+- Ví dụ:
+    + Một sequencer stake 10,000 ZKVN để xử lý giao dịch, nhận 5% APR (~500 ZKVN/năm) từ phí tx và token thưởng.
+    + Người dùng stake ZKVN để tham gia DAO, nhận thưởng dựa trên số token khóa.
+- Lợi ích:
+    + Tăng bảo mật mạng, vì sequencer/validator cần stake token để tham gia.
+    + Giảm lượng token lưu thông → hỗ trợ giá ZKVN.
+    + Khuyến khích cộng đồng tham gia, tăng TVL và số giao dịch.
+4. 15%: Seed & Strategic Investors (vesting 2 năm)
+- Số lượng: 150 triệu ZKVN (15% tổng cung).
+- Mục đích:
+    + Phân bổ cho các nhà đầu tư seed round ($500K mục tiêu) và đối tác chiến lược (như quỹ đầu tư blockchain, công ty fintech SEA).
+    + Đổi lại vốn đầu tư để phát triển R&D, infra, audit, và community (theo slide “Use of Funds”).
+- Vesting (khóa dần 2 năm):
+    + Token được khóa và phát hành trong 2 năm (24 tháng), ví dụ: ~6.25 triệu ZKVN/tháng.
+    + Thường có cliff period (ví dụ: khóa 6 tháng đầu, sau đó mở dần).
+- Ví dụ:
+    + Một quỹ đầu tư góp $200K nhận 6% tổng cung (60 triệu ZKVN), mở khóa dần sau 6 tháng.
+    + Đối tác chiến lược như công ty fintech Việt Nam nhận 1% tổng cung để hỗ trợ tích hợp fiat onboarding.
+- Lợi ích:
+    + Đảm bảo nhà đầu tư cam kết dài hạn, không bán tháo token ngay khi lên sàn.
+    + Tăng uy tín dự án, thu hút thêm vốn và đối tác chiến lược.
+5. 10%: Community Treasury (DAO quản lý)
+- Số lượng: 100 triệu ZKVN (10% tổng cung).
+- Mục đích:
+    + Dự trữ quỹ do DAO (Decentralized Autonomous Organization) quản lý, dùng cho các sáng kiến cộng đồng, marketing, hoặc phát triển dài hạn.
+    + DAO cho phép người dùng (đặc biệt là staker) bỏ phiếu để quyết định cách sử dụng quỹ.
+- DAO quản lý:
+    + Token được khóa trong smart contract, chỉ mở khi DAO bỏ phiếu thông qua (ví dụ: cấp quỹ cho một DApp mới).
+    + Không có vesting cố định, nhưng phát hành phụ thuộc vào quyết định cộng đồng.
+- Ví dụ:
+    + DAO bỏ phiếu cấp 5 triệu ZKVN để tài trợ một chiến dịch marketing ở Indo.
+    + Cộng đồng đề xuất dùng 2 triệu ZKVN để thưởng cho người dùng thử DApp e-wallet.
+- Lợi ích:
+    + Tăng tính phi tập trung, trao quyền cho cộng đồng.
+    + Linh hoạt trong sử dụng quỹ, đáp ứng nhu cầu phát triển dài hạn.
+    + Thu hút người dùng tham gia DAO, tăng sự gắn kết.
+6. 5%: Liquidity & Exchanges (khóa 1 năm)
+- Số lượng: 50 triệu ZKVN (5% tổng cung).
+- Mục đích:
+    + Cung cấp thanh khoản cho token ZKVN trên các sàn giao dịch (CEX/DEX) để đảm bảo người dùng có thể mua/bán dễ dàng.
+    + Hỗ trợ niêm yết trên các sàn lớn (như Binance, Uniswap) hoặc tạo pool thanh khoản (như ZKVN/USDT).
+- Khóa 1 năm:
+    + Toàn bộ 50 triệu ZKVN được khóa trong 1 năm để tránh bán tháo ngay khi token lên sàn.
+    + Sau 1 năm, token có thể được sử dụng dần để duy trì thanh khoản hoặc niêm yết thêm sàn.
+- Ví dụ:
+    + Cung cấp 20 triệu ZKVN cho pool thanh khoản trên Uniswap (ZKVN/ETH) để đảm bảo giao dịch mượt mà.
+    + Dự trữ 10 triệu ZKVN để niêm yết trên sàn CEX lớn vào Q2/2026 (mainnet).
+- Lợi ích:
+    + Đảm bảo thanh khoản tốt, tăng trải nghiệm người dùng khi giao dịch ZKVN.
+    + Hỗ trợ giá token ổn định, tránh biến động mạnh do thiếu thanh khoản.
+    + Tăng khả năng niêm yết trên các sàn lớn, thu hút nhà đầu tư mới.
+
+III. Tổng kết
+1. Tổng quan lợi ích của Tokenomics
+- Cân bằng lợi ích: Phân bổ hài hòa giữa phát triển hệ sinh thái (30%), đội ngũ (20%), và cộng đồng/staking (30% staking + treasury).
+- Ổn định giá token:
+    + Vesting (2-4 năm) và khóa (1 năm) giảm lượng token lưu thông ban đầu, tránh bán tháo.
+    + Staking (20%) khóa thêm token, hỗ trợ giá trị dài hạn.
+- Khuyến khích tăng trưởng:
+    + Ecosystem & Grants (30%) thu hút DApp → tăng TVL ($10M → $200M).
+    + Staking & Treasury (30%) khuyến khích người dùng tham gia, tăng giao dịch và revenue ($50K → $1M/tháng).
+- Tạo niềm tin:
+    + Vesting dài hạn cho team/investors và DAO minh bạch cho thấy cam kết lâu dài.
+    + Thanh khoản (5%) đảm bảo token dễ giao dịch, thu hút nhà đầu tư.
+
+2. Biểu đồ minh họa (Đề xuất cho slide 10.5)
+- Biểu đồ tròn (Pie Chart):
+    + Hiển thị 6 hạng mục với màu sắc riêng:
+        * Ecosystem & Grants: Xanh lá (30%)
+        * Team & Advisors: Xanh dương (20%)
+        * Staking & Sequencer: Cam (20%)
+        * Investors: Đỏ (15%)
+        * Treasury: Tím (10%)
+        * Liquidity: Vàng (5%)
+    + Ghi chú bên dưới: “Vesting 2-4 năm, khóa 1 năm, phát hành dần cho staking”.
+- Timeline Vesting (Line Chart):
+    + Trục X: Thời gian (0-4 năm).
+    + Trục Y: % Token mở khóa.
+    + Các đường màu khác nhau cho Team (4 năm), Ecosystem (3 năm), Investors (2 năm), Liquidity (1 năm).
+
+3. Lưu ý
+- Tính minh bạch: Đảm bảo lịch vesting và phát hành staking được công khai (ví dụ: trên whitepaper hoặc website) để tăng niềm tin nhà đầu tư.
+- Điều chỉnh linh hoạt: Nếu TVL/revenue tăng nhanh hơn dự kiến, có thể giảm tốc độ phát hành staking rewards để tránh lạm phát token.
+- Tích hợp vào pitch deck: Slide 10.5 nên nhấn mạnh cách tokenomics hỗ trợ roadmap (MVP → mainnet) và lợi ích cho SEA (fintech, compliance).

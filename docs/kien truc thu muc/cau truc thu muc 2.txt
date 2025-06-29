@@ -386,4 +386,287 @@ flink-job/
     └── test/
         └── java/                        # Unit test
 
+zk-chain/
+│
+├── contracts/                           # Solidity smart contracts
+│   ├── rollup/                          # Rollup core logic
+│   │   ├── Rollup.sol                   # Main contract: state, deposit, withdraw
+│   │   ├── DataCommitment.sol          # Batch metadata (root, CID, etc.)
+│   │   ├── DelayQueue.sol              # Delay before finalization
+│   │   ├── ChallengeJudge.sol          # Handle fraud proof or zk challenge
+│   │   └── VerifierGateway.sol         # Route to zk/fraud verifier
+│   │
+│   ├── tokens/                          # ERC20 + bridge logic
+│   │   ├── L1Bridge.sol                 # Deposit from L1 to L2
+│   │   ├── L2Token.sol                  # L2 token representation
+│   │   └── ForcedExit.sol              # Exit by third party
+│   │
+│   ├── zkbridge/                        # Cross-rollup message passing
+│   │   ├── ZkBridgeSender.sol          # Emit + hash message on source chain
+│   │   ├── ZkBridgeReceiver.sol        # Verify proof, execute msg
+│   │   └── ZkBridgeRegistry.sol        # Mapping dstChain ↔︎ verifier
+│   │
+│   ├── oracle/                          # Oracle contracts
+│   │   ├── PriceOracle.sol             # For ETH/USDC feed, etc.
+│   │   ├── StateOracle.sol             # Sync stateRoot from other chain
+│   │   └── OracleVerifier.sol          # For zk/state proof
+│   │
+│   ├── verifier/                        # zkSNARK/zkSTARK verifier contracts
+│   │   └── ZKVerifier.sol              # Auto-generated
+│   │
+│   ├── interfaces/                     # Solidity interface files
+│   │   ├── IRollup.sol
+│   │   ├── IBridge.sol
+│   │   └── IVerifier.sol
+│   │
+│   └── utils/                          # Libraries
+│       ├── MerkleLib.sol               # Sparse Merkle Tree logic
+│       ├── Poseidon.sol                # Poseidon hash for circuits
+│       └── ExitLeafLib.sol             # Hash leaf for exits/messages
+│
+├── circuits/                           # circom + proof material
+│   ├── transfer.circom                 # Transfer circuit
+│   ├── bridge.circom                   # zkBridge message inclusion
+│   ├── forcedExit.circom               # Forced exit circuit
+│   ├── oracleStateSync.circom          # Verify state root from other chain
+│   ├── withdraw.circom                 # Withdraw circuit
+│   ├── batch_proof/                    # Output: witness, vk, pk, proof.json
+│   └── ZKVerifier.sol                  # Generated verifier
+│
+├── prover/                             # Proof generation engine
+│   ├── index.ts                        # Entrypoint
+│   ├── merkle.ts                       # SMT tree logic
+│   ├── poseidon.ts                     # Poseidon hasher
+│   ├── batcher.ts                      # Batch manager
+│   └── utils.ts                        # Encoding, serialization
+│
+├── sequencer/                          # Off-chain transaction sequencer
+│   ├── index.ts                        # Ingest tx, check validity
+│   ├── smt.ts                          # Sparse Merkle Tree engine
+│   ├── state.db                        # RocksDB/LevelDB state
+│   ├── batcher.ts                      # Create batch from tx pool
+│   ├── daLogger.ts                     # Write full tx to DA layer
+│   ├── submitter.ts                    # Submit zkProof & stateRoot
+│   └── watcher.ts                      # Detect invalid batch (challenge)
+│
+├── client/                             # SDK, CLI or frontend API
+│   ├── wallet.ts                       # Sign tx, manage L2 account
+│   ├── transfer.ts                     # Send L2 → L2 tx
+│   ├── deposit.ts                      # Call L1Bridge
+│   ├── withdraw.ts                     # Request exit proof
+│   ├── oracle.ts                       # Query prices, state
+│   └── bridge.ts                       # Send/receive message via zkBridge
+│
+├── light-client/                       # Optional: verify proof off-chain
+│   ├── verify.ts                       # Verify Merkle path, zkProof
+│   └── monitor.ts                      # Follow new stateRoot from other chains
+│
+├── deploy-config/                      # Deployment settings
+│   └── l1-config.json
+│
+├── scripts/                            # Scripts for deploy/test
+│   ├── deploy.ts
+│   ├── registerAccount.ts
+│   └── verifyProof.ts
+│
+├── test/                               # Tests
+│   ├── Rollup.t.sol                    # Foundry/Hardhat Solidity tests
+│   ├── zk.test.ts                      # zk circuits + verifier
+│   ├── prover.test.ts
+│   └── integration/
+│       ├── bridge.test.ts
+│       └── challenge.test.ts
+│
+├── forge.toml / hardhat.config.ts      # Build config
+└── README.md                           # Docs
+
+ai_agent/
+├── domain/
+│   ├── models/
+│   │   ├── project_meta.py
+│   │   ├── task.py
+│   │   ├── agent_action.py
+│   │   ├── code_knowledge_graph.py
+│   │   └── pull_request_info.py
+│   ├── repositories/
+│   │   ├── codebase_repository.py
+│   │   ├── task_repository.py
+│   │   ├── prompt_strategy_repository.py
+│   │   └── dependency_repository.py
+│   └── services/
+│       ├── code_analysis_service.py
+│       ├── planning_service.py
+│       └── refactoring_service.py
+├── usecases/
+│   ├── base.py
+│   ├── generate_feature.py
+│   ├── refactor_code.py
+│   ├── write_test.py
+│   ├── sync_backend_models.py
+│   ├── update_knowledge_graph.py
+│   ├── review_pull_request.py
+│   ├── generate_docs.py
+│   ├── plan_tasks_from_issue.py
+│   ├── analyze_security.py
+│   ├── optimize_performance.py
+│   ├── update_dependencies.py
+│   ├── generate_monitoring_hints.py
+│   └── suggest_ux_improvements.py
+├── agents/
+│   ├── base.py
+│   ├── code_agent.py
+│   ├── test_agent.py
+│   ├── refactor_agent.py
+│   ├── knowledge_agent.py
+│   ├── git_agent.py
+│   ├── review_agent.py
+│   ├── doc_agent.py
+│   ├── planning_agent.py
+│   ├── security_agent.py
+│   ├── performance_agent.py
+│   ├── dependency_agent.py
+│   ├── monitoring_agent.py
+│   ├── sync_agent.py
+│   └── ux_agent.py
+├── orchestrator/
+│   ├── agent_orchestrator.py
+│   ├── task_planner.py
+│   ├── agent_registry.py
+│   ├── workflow_engine.py
+│   ├── memory_store.py
+│   └── agent_context.py
+├── infrastructure/
+│   ├── github/
+│   │   ├── github_client.py
+│   │   └── pr_parser.py
+│   ├── llm/
+│   │   ├── base.py                     # BaseLLMClient interface
+│   │   ├── llm_provider_factory.py     # LLMFactory đọc config, chọn backend
+│   │   ├── openai_client.py
+│   │   ├── claude_client.py
+│   │   ├── deepseek_client.py
+│   │   ├── mistral_client.py
+│   │   ├── gemini_client.py
+│   │   └── prompt_builder.py           # Hỗ trợ tạo prompt + system message chung
+│   ├── filesystem/
+│   │   ├── file_editor.py
+│   │   └── file_diff.py
+│   ├── observability/
+│   │   ├── monitoring_client.py
+│   │   └── trace_context.py
+│   ├── proto/
+│   │   └── proto_converter.py
+│   ├── config/
+│   │   ├── loader.py
+│   │   ├── schema.py
+│   │   └── env_vars.py
+│   └── plugins/
+│       └── plugin_loader.py
+├── prompts/
+│   ├── meta_guidelines.md
+│   ├── task_templates/
+│   │   └── generate_feature.prompt.md
+│   ├── refactor_templates/
+│   │   └── refactor_api.prompt.md
+│   ├── test_templates/
+│   ├── review_templates/
+│   ├── doc_templates/
+│   ├── security_templates/
+│   ├── performance_templates/
+│   ├── ux_templates/
+│   ├── dependency_templates/
+│   └── planning_templates/
+├── entrypoints/
+│   ├── cli/
+│   │   ├── main.py
+│   │   └── typer_app.py
+│   ├── github_action/
+│   │   └── main.py
+│   └── vscode_extension/
+│   │    └── bridge_api.py
+│   ├── api/
+│   │   ├── main.py                  # Entrypoint FastAPI app
+│   │   ├── routes/
+│   │   │   ├── agents.py            # Trigger 1 agent cụ thể
+│   │   │   ├── orchestrator.py      # Trigger workflow (multi-agent)
+│   │   │   ├── status.py            # Health check / phiên bản
+│   │   │   └── project.py           # Endpoint upload/lấy thông tin project
+│   │   ├── deps/
+│   │   │   ├── auth.py              # Middleware kiểm tra token/api_key (nếu cần)
+│   │   │   ├── config.py            # Dependency load cấu hình
+│   │   │   └── context.py           # Lấy context từ request
+│   │   ├── schemas/
+│   │   │   ├── request_models.py    # Pydantic models cho request (task, agent, file, ...)
+│   │   │   └── response_models.py   # Pydantic models cho response
+│   │   └── middleware/
+│   │       ├── logging.py           # Log request/response
+│   │       └── exception_handler.py # Bắt lỗi chung API
+├── adapters/
+│   ├── cli_adapter.py
+│   ├── api_adapter.py
+│   └── simulation_adapter.py
+├── plugins/
+│   └── example_plugin/
+│       ├── plugin.py
+│       └── config.yaml
+├── shared/
+│   ├── logger.py
+│   ├── constants.py
+│   ├── utils.py
+│   └── exceptions.py
+├── config/
+│   ├── agent_config.yaml
+│   └── logging_config.yaml
+├── tests/
+│   ├── unit/
+│   │   ├── test_code_agent.py
+│   │   ├── test_generate_feature.py
+│   │   └── ...
+│   ├── integration/
+│   │   ├── test_workflow.py
+│   │   └── test_sync_agent.py
+│   ├── fixtures/
+│   │   ├── mock_codebase.py
+│   │   └── mock_llm_response.py
+│   └── test_main.py
+├── scripts/
+│   ├── bootstrap.sh
+│   ├── format_all.sh
+│   └── seed_example_project.py
+├── requirements.txt
+├── requirements-dev.txt
+├── pyproject.toml
+├── .env
+├── .env.example
+├── .gitignore
+├── .pre-commit-config.yaml
+├── README.md
+└── main.py
+
+Tôi dự kiến xây dựng hệ sinh thái bao gồm ví smart account, zkrollup, dịch vụ ico, sàn giao dịch dựa trên zkrollup:
+Giai đoạn xây core:
+    Giai đoạn 1: xây dựng ví smart account;
+    Giai đoạn 2: xây dựng zkrollup;
+    Giai đoạn 3: xây dựng sdk cho zkrollup;
+Giai đoạn xây dựng tiện ích:
+    Giai đoạn 4: xây dựng token hoá trên ico;
+    Giai đoạn 5: xây dựng sàn giao dịch dựa trên zkrollup;
+
+zkRollup trên ether và mở các tài khoản/smart contract  ở các blockchain khác để phục vụ chuyển khoản liên Block ( ví dụ bitcoin, solana) 
+
 chatgpt: bổ sung các lớp java vào thư mục theo kiến trúc clean với e-wallet như sau: đọc từ 10 input topic của pulsar, mỗi topic tương ứng 1K user (chứa các GatewayMessage của user), xử lý theo nghiệp vụ deposit, withdrawal, swap, bridge, placeorder, ..., sau đó gửi kết quả tới 10 output topic của pulsar, mỗi topic tưởng ứng 1K user tương ứng
+
+Ethereum (L1)
+│
+├── zkSync.sol        # Rollup contract chính
+├── Verifier.sol      # Xác minh proof
+└── L1Bridge.sol      # Gửi ETH / token lên L2
+     ▲
+     │ proof, data root
+     ▼
+zkSync Era (L2 full-stack)
+├── zkEVM runtime
+│   └── Smart contract của bạn (Solidity)
+├── AA Bootloader (xử lý ví AA, fee, tx...)
+├── Sequencer (gom tx, update state)
+└── Prover (sinh SNARK proof mỗi batch)

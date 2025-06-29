@@ -1,0 +1,73 @@
+1. Tổng quan các giai đoạn gọi vốn
+| Giai đoạn                 | Mục tiêu                          | Số tiền gọi vốn (ước lượng) | Loại NĐT                                            |
+| ------------------------- | --------------------------------- | --------------------------- | --------------------------------------------------- |
+| **Pre-Seed**              | Proof of Concept, nghiên cứu      | $100K – $500K               | Angel, Crypto VC nhỏ                                |
+| **Seed Round**            | Xây dựng MVP                      | $500K – $2M                 | Crypto Fund, VC chuyên DeFi                         |
+| **Private Round**         | Tăng trưởng, mở testnet           | $2M – $10M                  | Quỹ lớn (a16z, Paradigm, Jump)                      |
+| **Public Sale (IDO/IEO)** | Phân phối cho cộng đồng           | $1M – $5M                   | Retail investor, cộng đồng                          |
+| **Strategic Round**       | Mở rộng hệ sinh thái, cross-chain | Tuỳ (theo tầm quốc tế)      | Chain-specific fund (Polygon, zkSync, Celestia,...) |
+
+2. Chi tiết từng giai đoạn
+2.1 ✅ Giai đoạn 1: Pre-Seed
+- Thời điểm: Trước khi có sản phẩm chạy được.
+- Bạn cần: Team mạnh, whitepaper, deck thuyết phục, plan rõ.
+- Tài liệu nên chuẩn bị:
+    + Litepaper (5–7 trang)
+    + Pitch Deck (10–15 slide)
+    + GitHub PoC hoặc demo giao diện.
+- Kênh gọi vốn:
+    + Nhà đầu tư thiên thần (angel)
+    + Các quỹ nhỏ (Alliance DAO, Lemniscap, Hashed...)
+    + Tham gia hackathon để lấy grant hoặc tài trợ.
+2.2 🚧 Giai đoạn 2: Seed Round
+- Thời điểm: Đã có MVP chạy được (testnet nội bộ, prover demo, UI).
+- Bạn cần: Có roadmap rõ ràng, cần tiền để build mạnh hơn.
+- Gói gọi vốn: ~$1–2M cho 10–15% token.
+- Tài liệu:
+    + Tokenomics v1
+    + Technical Architecture
+    + List nhà cố vấn (nếu có)
+- NĐT mục tiêu:
+    + a16z crypto (nếu bold)
+    + Binance Labs
+    + Dragonfly
+    + Spartan Group
+    + Animoca (nếu có NFT/gamification)
+2.3 🌍 Giai đoạn 3: Private Round
+- Thời điểm: Có testnet mở, lượng user tăng.
+- Gói vốn: $5–10M cho 10% token.
+- Điểm nổi bật cần có:
+    + Builder hoạt động trên mạng
+    + Partnership với L1/L2 khác
+    + Data Metrics: TPS, gas tiết kiệm, hoạt động dApp
+- NĐT mục tiêu:
+    + Jump Crypto
+    + Pantera Capital
+    + OKX Ventures
+    + zk-native quỹ (zkSync, Scroll, StarkNet có grant/VC riêng)
+2.4 🌐 Giai đoạn 4: Public Sale / IDO
+- Thời điểm: Gần ra mainnet hoặc ngay sau mainnet.
+- Phương thức: IDO trên nền tảng (CoinList, DAO Maker, Camelot, zkLaunchPad)
+- Phân phối: 1–5% token cho cộng đồng.
+- Mục tiêu:
+    + Tăng cộng đồng
+    + Phân phối token công bằng
+    + Tăng giá trị mạng
+2.5 🌉 Giai đoạn 5: Strategic / Ecosystem Round
+- Mục đích: Hợp tác lâu dài, cross-chain, L3 → L2
+- Quỹ tham gia:
+    + Celestia Foundation (nếu dùng EigenDA)
+    + Polygon Labs (nếu multi-chain)
+    + Scroll, zkSync (nếu tương thích zkEVM)
+    + LayerZero, Axelar (nếu bridge + zkBridge)
+- Funding: Có thể không đổi token mà chỉ hỗ trợ builder, hạ tầng, co-marketing.
+
+3. Checklist gọi vốn
+| ✅ Mục tiêu        | 📌 Ghi chú                                     |
+| ----------------- | ---------------------------------------------- |
+| Pitch deck        | Tối đa 15 slide (Problem, Solution, Team, Ask) |
+| Tokenomics        | Phân bổ hợp lý, vesting chặt chẽ               |
+| Roadmap           | Có Gantt + milestone rõ ràng                   |
+| GitHub / Demo     | Show khả năng kỹ thuật, update đều             |
+| Advisory / Backer | Có người uy tín ủng hộ                         |
+| Community active  | Discord, Twitter có follower / tương tác       |

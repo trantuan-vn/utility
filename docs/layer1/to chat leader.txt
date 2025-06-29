@@ -1,0 +1,40 @@
+🧠 1. Kiến thức kỹ thuật vững chắc
+- Hiểu rõ kiến trúc Layer 1, Layer 2, rollup, consensus, cryptography (zk, PoS, BFT...).
+- Biết smart contract, Solidity/Rust/Move/Go.
+- Có khả năng đánh giá protocol & stack từ low-level tới high-level.
+🔑 Nếu không phải coder, thì ít nhất phải đủ hiểu sâu để dẫn dắt kỹ sư và chọn đúng công nghệ.
+🎯 2. Tầm nhìn chiến lược
+- Nhìn ra xu hướng công nghệ mới: modular, ZK, shared security, restaking, appchain...
+- Biết đâu là thị trường phù hợp: DeFi, gaming, identity, cross-chain, RWA...
+- Biết chọn đúng thời điểm và lộ trình ra mắt (timing = sống còn).
+🗣️ 3. Khả năng truyền cảm hứng và lãnh đạo cộng đồng
+- Biết xây cộng đồng developer và early adopters.
+- Giao tiếp tốt với investor, user, builder.
+- Là "gương mặt" đại diện cho dự án: AMA, pitch deck, hackathon...
+📌 Ví dụ: Vitalik (Ethereum), Anatoly (Solana), Do Kwon (Terra) từng là người rất thu hút kỹ thuật lẫn truyền thông.
+🤝 4. Kỹ năng kết nối và xây hệ sinh thái
+- Giao tiếp với quỹ đầu tư, đối tác công nghệ, dev tool, oracle, bridge...
+- Dẫn dắt dự án ra testnet/mainnet, tìm validator, CEX listing, audit...
+- Biết tạo incentive hợp lý để giữ chân builder và user (tokenomics, grant, airdrop...).
+⚖️ 5. Tinh thần kỷ luật và đạo đức cao
+- Không bị cuốn vào chiêu trò, rugpull, scam.
+- Cân bằng giữa "đi nhanh" và "đi vững" (auditing, upgrade, governance).
+- Chịu trách nhiệm cao với cộng đồng.
+🧪 6. Khả năng thích nghi và học nhanh
+- Công nghệ thay đổi chóng mặt: từ PoW → PoS → Rollups → DA → Modular → zk → AI+crypto.
+- Một leader phải không ngừng học, cập nhật và thay đổi.
+⚔️ 7. Tinh thần chiến đấu và không bỏ cuộc
+- Web3 là lĩnh vực cạnh tranh cực cao, dễ thất bại, dễ bị FUD, thị trường lên xuống mạnh.
+- Người dẫn đầu phải có sức bền, tâm lý vững, biết vượt qua mùa đông crypto (bear market).
+8. Ví dụ
+| Người                          | Tố chất nổi bật                                                                   |
+| ------------------------------ | --------------------------------------------------------------------------------- |
+| **Vitalik Buterin**            | Tầm nhìn công nghệ, trung thực, định hướng phát triển lâu dài                     |
+| **Anatoly Yakovenko (Solana)** | Kỹ thuật cực mạnh, thiên về tối ưu hóa hệ thống                                   |
+| **Jae Kwon (Cosmos)**          | Triết lý modular và phân quyền, dù gây tranh cãi                                  |
+| **Do Kwon (Terra)**            | Truyền thông giỏi, thu hút quỹ lớn – nhưng thất bại vì over-hype và sai công nghệ |
+9. Một leader blockchain thực thụ cần kết hợp:
+- 30% kỹ thuật,
+- 30% chiến lược & tầm nhìn,
+- 20% truyền thông & cộng đồng,
+- 20% phẩm chất cá nhân & đạo đức.
