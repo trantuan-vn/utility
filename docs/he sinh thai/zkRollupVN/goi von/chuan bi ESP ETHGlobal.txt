@@ -1,0 +1,72 @@
+1. Ethereum Foundation – ESP
+- Phân loại grant:
+    + Small grants tối đa $30K (quy trình nhanh, ~2 tuần) https://esp.ethereum.foundation/applicants?utm_source=chatgpt.com
+    + Project grants không giới hạn ngân sách, đánh giá sâu, thường nhiều giai đoạn https://esp.ethereum.foundation/applicants?utm_source=chatgpt.com
+- Các lĩnh vực ưu tiên: cơ sở hạ tầng, research, developer tools, community, education… không ưu tiên front-end dapps nếu không phải reference/giáo dục https://esp.ethereum.foundation/applicants?utm_source=chatgpt.com
+- Tiêu chí: rõ ràng – có mục tiêu cụ thể, open-source, timeline và ngân sách hợp lý, tác động rõ rệt đến Ethereum .
+2. ETHGlobal
+- Cho phép hackathoners tiếp tục nhận tài trợ impact sau hackathons https://ethglobal.com/events/ethamsterdam/prizes/aave-grants-dao?utm_source=chatgpt.com
+- Có các chương trình grants như Compound Grants, GHO Grants, Aave Grants DAO, v.v., với prize pool cụ thể từ $5K – $25K https://ethglobal.com/events/ethonline2023/prizes/compound-grants?utm_source=chatgpt.com
+- Đôi khi tận dụng các workshop như Questbook để hướng dẫn viết proposal chất lượng https://ethglobal.com/talks/questbook-how-to-write-a-great-grants-proposal-deep-dive-into-the-best-proposals-in-web3-21mmt?utm_source=chatgpt.com
+
+3. Xây dựng dự án & chuẩn bị proposal
+3.1 Chọn đúng chương trình cấp vốn
+- Nếu bạn có sản phẩm/source code/proof-of-concept: ứng tuyển vào Small grant (≤ $30K) hoặc các đợt grants chuyên đề như Account Abstraction ($300–350K) hoặc Academic ($2M) https://esp.ethereum.foundation/academic-grants?utm_source=chatgpt.com
+- Nếu vừa tham gia hackathon ETHGlobal: follow Compound Grants, Aave Grants… Ngoài ra, tham dự workshop Questbook để biết cách viết proposal thuyết phục https://ethglobal.com/talks/questbook-how-to-write-a-great-grants-proposal-deep-dive-into-the-best-proposals-in-web3-21mmt?utm_source=chatgpt.com
+3.2 Cấu trúc proposal mẫu
+    Tóm tắt dự án (1 page)
+        – Mục tiêu, vấn đề bạn giải quyết, tác động đối với Ethereum.
+    Chi tiết kỹ thuật
+        – Mô tả trạng thái hiện tại, kiến trúc, stack, milestone, timeline (6–12 tháng).
+    Budget & resource sử dụng
+        – Phân chia rõ ràng: dev, marketing, infrastructure… hợp lý với ngân sách (ví dụ đề xuất $25K thì nên nhỏ gọn).
+    Output & deliverables cụ thể
+        – Công bố mã nguồn, tài liệu, workshop, số liệu adoption hoặc research paper (Academic grant).
+    Kinh nghiệm team
+        – Hồ sơ Github, dự án đã làm; nếu Academic hãy kèm publication.
+    Plan open‑source & community engagement
+        – Giấy phép MIT/Apache, kế hoạch workshops, office hours, tài liệu, demo livestream...
+3.3 Dùng template & review
+- ESP Academic grants có template PDF sẵn
+    + https://esp.ethereum.foundation/account-abstraction-grants?utm_source=chatgpt.com
+    + https://ethglobal.com/showcase/granted-vtxne?utm_source=chatgpt.com
+    + https://esp.ethereum.foundation/academic-grants?utm_source=chatgpt.com
+- ETHGlobal – Questbook workshop có ví dụ proposal tốt sản phẩm Web3
+    + https://ethglobal.com/events/ethonline2023/prizes/compound-grants?utm_source=chatgpt.com
+
+4. Kịch bản gọi vốn thành công từ Ethereum Foundation / ETHGlobal
+| **Bước**                 | **Hành động cụ thể**                                                                                                                                                |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Chuẩn bị trước**    | - Chọn đúng track grant phù hợp (Account Abstraction, Small Grant, v.v.)<br>- Kiểm tra deadline, tải template hoặc guideline chính thức từ website                  |
+| **2. Tạo proposal**      | - Viết proposal theo cấu trúc chuẩn<br>- Nhấn mạnh **"impact to Ethereum"** và **tính open-source**<br>- Xác định rõ milestone, timeline, deliverables              |
+| **3. Phản biện nội bộ**  | - Gửi bản draft cho mentor/đồng đội góp ý<br>- Tối ưu hóa: làm nổi bật tính sáng tạo, độc đáo và lợi ích hệ sinh thái                                               |
+| **4. Nộp hồ sơ**         | - **ESP (Ethereum Foundation)**: nộp qua cổng online, đính kèm PDF, link GitHub repo<br>- **ETHGlobal**: submit tại sự kiện hoặc thông qua Questbook nếu có         |
+| **5. Theo dõi & hỗ trợ** | - Tham gia các buổi Office Hours của ESP để hỏi trực tiếp (nếu cần)<br>- Tham gia Discord ETHGlobal, chủ động hỏi feedback, kết nối mentor và các đối tác tiềm năng |
+| **6. Nếu được duyệt**    | - Chuẩn bị đầy đủ báo cáo tài chính, tiến độ, minh bạch về hoạt động<br>- Cam kết hoàn thành đúng thời hạn để tăng uy tín và khả năng nhận grant tiếp theo          |
+
+5. Mẹo vàng để tăng cơ hội
+- Rõ ràng & cụ thể: # gì, # bao lâu, # ai làm.
+- Open-source & permissive license: tuân thủ tuyệt đối.
+- Community engagement: plan workshop, blog, docs.
+- Kinh nghiệm team: ít nhất 1–2 thành viên coder/giáo dục/Web3 proven track.
+- Sử dụng các kênh hỗ trợ: office hours ESP, mentor ETHGlobal.
+- Theo dõi kế hoạch: milestone, demo video, báo cáo kỹ càng.
+
+6. Ví dụ outline proposal
+- Title: “Universal Bundler Explorer – Dashboard & API cho AA bundlers”
+- Problem: thiếu công cụ theo dõi bundler / user operations cho Account Abstraction.
+- Solution: build dashboard + API public, open-source.
+- Milestones (M1–M4):
+    + M1: backend index OP pool (Tháng 1–2, $8K)
+    + M2: front-end dashboard (Tháng 2–4, $7K)
+    + M3: public API + docs + workshop (Tháng 4–6, $10K)
+- Team: anh A (Full-stack + ETH dev), chị B (technical writer).
+- Budget: tổng $25K.
+- Output: code MIT, dashboard live, docs, session demo ETHGlobal.
+- Ecosystem Impact: hỗ trợ dev building trên AA, tăng visibility adoption, thúc đẩy UX.
+
+7. Kết luận 
+- Bám sát format & tiêu chí:
+    + Ethereum Foundation: mission infrastructure/research/tools, clear deliverables, open-source, cộng đồng.
+    + ETHGlobal: tiếp tục sau hackathon, dùng examples như Compound/Aave grants, tham gia workshops Questbook.
+- Thực hiện nghiêm ngặt từng phase: Chuẩn bị – Viết – Nộp – Theo dõi – Report để xây dựng uy tín và mở cửa cho vòng tiếp theo.

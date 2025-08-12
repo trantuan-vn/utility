@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <title>zkKYC + OP Stack cho STO Exchange</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 900px; margin: auto; }
+    h1, h2, h3 { color: #003366; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    th { background-color: #f2f2f2; }
+    code { background: #f4f4f4; padding: 2px 6px; }
+    .highlight { background-color: #e6f7ff; padding: 10px; border-left: 5px solid #1890ff; }
+  </style>
+</head>
+<body>
+
+<h1>Đề xuất đầu tư Seed Round: Nền tảng STO Exchange sử dụng zkKYC + Layer2 trên OP Stack</h1>
+
+<h2>1. Bối cảnh và Cơ hội</h2>
+<p>Thị trường chứng khoán số hóa (STO - Security Token Offering) đang nổi lên như một giải pháp thay thế minh bạch, toàn cầu và phi tập trung cho các mô hình IPO truyền thống. Tuy nhiên, các rào cản pháp lý (KYC, AML, giới hạn khu vực...) là thách thức lớn.</p>
+<p>Chúng tôi đề xuất giải pháp <strong>zkKYC + Layer2 modular rollup</strong> để giải quyết bài toán:</p>
+<ul>
+  <li>Bảo mật danh tính nhà đầu tư bằng công nghệ zk-SNARK</li>
+  <li>Tuân thủ pháp lý đa khu vực</li>
+  <li>Giảm phí giao dịch và tăng khả năng mở rộng thông qua OP Stack</li>
+</ul>
+
+<h2>2. Lý do chọn OP Stack làm nền tảng Layer2</h2>
+<table>
+  <tr><th>Tiêu chí</th><th>OP Stack</th><th>Lợi ích</th></tr>
+  <tr><td>Khả năng mô-đun (modular)</td><td>Cao</td><td>Tuỳ chỉnh KYC, sequencer, gas token theo vùng</td></tr>
+  <tr><td>Chi phí gas</td><td>Rẻ hơn Ethereum ~20-50x</td><td>Phù hợp thanh toán lô nhỏ</td></tr>
+  <tr><td>Hệ sinh thái</td><td>Lớn nhất Layer2 (Base, Zora, Mode…)</td><td>Dễ tích hợp, dễ mở rộng</td></tr>
+  <tr><td>Chứng minh độ tin cậy</td><td>Fraud-proof + Ethereum</td><td>Bảo vệ nhà đầu tư và dApp</td></tr>
+</table>
+
+<h2>3. Kiến trúc hệ thống modular</h2>
+<div class="highlight">
+<pre id="cannon" class="mermaid">
+graph TD
+    A[Investor Wallet]
+    
+    A -->|Mua STO Token| A1[zkKYC Proof]
+    A1 --> B[KYC Verifier]
+    B --> C[STO DEX Frontend]
+
+    A -->|Mua Crypto Token| C
+
+    C --> D1{Token Loại nào?}
+
+    D1 -->|STO| E1[Smart Contract: ERC-3643]
+    D1 -->|Crypto| E2[Smart Contract: ERC-20]
+
+    E1 --> F1[Settlement: zkRollup / OP Stack]
+    F1 --> G1[Compliance Oracle Layer]
+    E1 --> H1[Regulator Portal ZK Audit Only]
+
+    E2 --> F2[Settlement: zkRollup / OP Stack]
+  
+</pre>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      mermaid.initialize({ startOnLoad: false, theme: "forest" });
+      const cannon = document.querySelector("#cannon");
+      mermaid.run({ nodes: [cannon] });
+    });
+</script>
+</div>
+<p>🔒 <strong>Modular hóa KYC</strong>: Nếu nhà đầu tư chỉ mua crypto thông thường (ETH, USDC), không cần KYC. Nếu mua STO, bắt buộc chứng minh KYC qua zero-knowledge proof.</p>
+
+<h2>4. Tuân thủ pháp lý tại Việt Nam và quốc tế</h2>
+<ul>
+  <li><strong>Việt Nam</strong>: STO có thể triển khai theo hướng “token đại diện cổ phần” nếu có đối tác pháp lý (sandbox hoặc thông qua công ty bảo lãnh).</li>
+  <li><strong>EU (MiCA)</strong>: STO được công nhận với chuẩn lưu ký rõ ràng.</li>
+  <li><strong>Singapore</strong>: MAS hỗ trợ phát hành chứng khoán số qua DLT.</li>
+  <li><strong>UAE</strong>: Sandbox ADGM cho các công ty phát hành STO.</li>
+</ul>
+
+<h2>5. Giai đoạn MVP đề xuất</h2>
+<table>
+  <tr><th>Hạng mục</th><th>Chi tiết</th></tr>
+  <tr>
+    <td>zkKYC SDK</td>
+    <td>Zero-knowledge circuit, proving key, Merkle tree, demo frontend + doc</td>
+  </tr>
+  <tr>
+    <td>Rollup OP Stack</td>
+    <td>Testnet rollup với sequencer riêng, tích hợp zkKYC</td>
+  </tr>
+  <tr>
+    <td>STO Exchange DApp</td>
+    <td>Frontend DEX, đặt lệnh, mua cổ phần token hóa, audit portal</td>
+  </tr>
+  <tr>
+    <td>Legal</td>
+    <td>Đối tác tư vấn pháp lý tại VN và EU</td>
+  </tr>
+</table>
+
+<h3>KPI Giai đoạn Seed</h3>
+<table>
+  <tr><th>Hạng mục</th><th>KPI</th></tr>
+  <tr><td>zkKYC SDK</td><td>1 repo open-source, testnet, 1 dApp mẫu</td></tr>
+  <tr><td>Rollup</td><td>1 OP Stack testnet chain + 2 smart contract</td></tr>
+  <tr><td>STO DApp</td><td>Truy cập ví, đặt lệnh mock, read-only audit view</td></tr>
+  <tr><td>Legal</td><td>1 văn bản tư vấn hợp pháp STO tại VN/EU</td></tr>
+  <tr><td>Cộng đồng</td><td>500 Discord, 1000 Twitter follower</td></tr>
+</table>
+
+<h2>6. Demo sản phẩm</h2>
+
+<h3>1️⃣ zkKYC + Rollup Layer (OP Stack)</h3>
+<ul>
+  <li>Repo GitHub SDK: <code>github.com/zkkyc-rollup/zkKYC-SDK</code></li>
+  <li>Layer2 testnet: <code>rollup.zkkyc.exchange</code></li>
+  <li>Hướng dẫn tích hợp dApp: README + DevDocs</li>
+</ul>
+
+<h3>2️⃣ STO Exchange DApp</h3>
+<ul>
+  <li>Frontend DEX: <code>app.zksto.exchange</code></li>
+  <li>Demo ví KYC / non-KYC</li>
+  <li>Audit Portal: <code>regulator.zksto.exchange</code></li>
+</ul>
+
+<h3>3️⃣ Liên lạc & Cộng đồng</h3>
+<ul>
+  <li>Discord: <code>discord.gg/zksto</code></li>
+  <li>Slack: <code>sto-rollup.slack.com</code></li>
+  <li>Twitter: <code>@zkSTO_Layer2</code></li>
+</ul>
+
+<h2>7. Chiến lược Go-To-Market</h2>
+<ul>
+  <li>Hợp tác với startup gọi vốn cổ phần thông qua STO</li>
+  <li>Cung cấp bộ white-label STO Exchange cho thị trường Đông Nam Á</li>
+  <li>Truyền thông “sở hữu cổ phần onchain hợp pháp” qua cộng đồng blockchain, fintech, startup</li>
+</ul>
+
+<h2>8. Lý do đầu tư Seed $500K</h2>
+<p>Đầu tư giai đoạn seed sẽ được sử dụng để:</p>
+<ul>
+  <li>Phát triển sản phẩm (zkKYC SDK, Rollup, dApp)</li>
+  <li>Chi phí hạ tầng (RPC, sequencer, proving key, audit)</li>
+  <li>Tư vấn pháp lý</li>
+  <li>Marketing và xây dựng cộng đồng</li>
+</ul>
+<p><strong>Lợi ích cho nhà đầu tư:</strong> equity/token option + ưu tiên series A + danh tiếng với giải pháp pháp lý đầu tiên cho STO Đông Nam Á.</p>
+
+
+
+<h2>9. Dự trù kinh phí MVP (~500K USD)</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Hạng mục</th>
+        <th>Dự toán</th>
+        <th>Ghi chú</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Nhân sự kỹ thuật (5 dev x 4 tháng)</td>
+        <td>$120,000</td>
+        <td>Rust/Circom, Solidity, OP Stack</td>
+    </tr>
+    <tr>
+        <td>Smart Contract Audit</td>
+        <td>$60,000</td>
+        <td>ERC3643 + Rollup</td>
+    </tr>
+    <tr>
+        <td>Hạ tầng OP Stack</td>
+        <td>$30,000</td>
+        <td>RPC + block explorer</td>
+    </tr>
+    <tr>
+        <td>zkKYC Prover Infra</td>
+        <td>$40,000</td>
+        <td>GPU server, proving keys</td>
+    </tr>
+    <tr>
+        <td>Chi phí pháp lý, xây dựng cộng đồng & sandbox</td>
+        <td>$100,000</td>
+        <td>Sandbox VN, Singapore</td>
+    </tr>
+    <tr>
+        <td>DApp frontend & UX/UI</td>
+        <td>$50,000</td>
+        <td>STO web app</td>
+    </tr>
+    <tr>
+        <td>Chi phí vận hành</td>
+        <td>$50,000</td>
+        <td>PM, design, admin</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>10. Kết luận cho nhà đầu tư Seed</h2>
+<p>Dự án giải quyết bài toán niềm tin – pháp lý – hạ tầng cho tài sản chứng khoán số. Công nghệ đã sẵn sàng (zk-SNARK, OP Stack, ERC-3643), thị trường rõ ràng, đội ngũ giàu kinh nghiệm.</p>
+<p><strong>500.000 USD seed round</strong> giúp hoàn thành MVP, chứng minh thị trường, sẵn sàng mở rộng gọi vốn Series A sau 6–9 tháng.</p>
+
+</body>
+</html>

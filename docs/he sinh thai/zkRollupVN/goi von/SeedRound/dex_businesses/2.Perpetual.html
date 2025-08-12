@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mô hình kinh doanh DEX Futures (Perpetual) - Tổng hợp</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 30px; 
+      line-height: 1.6; 
+      background: #f9f9f9; 
+      color: #333; 
+    }
+    h1, h2, h3 { 
+      color: #2c3e50; 
+    }
+    table { 
+      border-collapse: collapse; 
+      width: 100%; 
+      margin-top: 10px; 
+      margin-bottom: 20px;
+    }
+    th, td { 
+      border: 1px solid #ccc; 
+      padding: 10px; 
+      text-align: left; 
+    }
+    th { 
+      background-color: #f2f2f2; 
+    }
+    code { 
+      background-color: #f8f8f8; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+    }
+    .note { 
+      font-style: italic; 
+      color: #555; 
+    }
+    pre { 
+      background-color: #f8f8f8; 
+      padding: 10px; 
+      border-radius: 4px; 
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mô hình kinh doanh Futures (Perpetual) trên DEX</h1>
+
+  <h2>1. Tổng quan</h2>
+  <ul>
+    <li>Trader mở Long/Short với đòn bẩy (leverage).</li>
+    <li>Vault LP đóng vai trò đối tác đối ứng (counterparty).</li>
+    <li>Lãi/lỗ (PnL) của trader → ảnh hưởng trực tiếp đến LP Vault.</li>
+    <li>Cơ chế <b>funding fee</b> và <b>position fee</b> giúp cân bằng thị trường và tạo doanh thu.</li>
+  </ul>
+
+  <h2>2. Các bên tham gia</h2>
+  <ul>
+    <li><strong>Trader:</strong> Người Long hoặc Short tài sản bằng margin</li>
+    <li><strong>LP (Liquidity Providers):</strong> Cung cấp thanh khoản vào Vault, chịu PnL từ Trader</li>
+    <li><strong>DEX Platform (VD: PancakeSwap, GMX):</strong> Quản lý smart contract, nhận một phần phí</li>
+    <li><strong>Liquidator:</strong> Bot hoặc người thực hiện thanh lý lệnh khi bị thua lỗ vượt quá margin</li>
+  </ul>
+
+  <h2>3. Các loại phí</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Loại phí</th>
+        <th>Phát sinh khi</th>
+        <th>Ai trả</th>
+        <th>Ai nhận</th>
+        <th>Mục đích/Ý nghĩa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Position Fee</b></td>
+        <td>Mở/đóng lệnh</td>
+        <td>Trader</td>
+        <td>LP Vault / DAO</td>
+        <td>Phí giao dịch cơ bản (0.05%–0.2%)</td>
+      </tr>
+      <tr>
+        <td><b>Borrowing Fee</b></td>
+        <td>Giữ lệnh lâu</td>
+        <td>Trader</td>
+        <td>LP Vault</td>
+        <td>Phí vay vốn từ vault, tính theo thời gian</td>
+      </tr>
+      <tr>
+        <td><b>Funding Fee</b></td>
+        <td>Theo giờ/block</td>
+        <td>Trader đông hơn</td>
+        <td>Trader ít hơn</td>
+        <td>Cân bằng vị thế Long/Short, thường cập nhật mỗi giờ</td>
+      </tr>
+      <tr>
+        <td><b>Liquidation Fee</b></td>
+        <td>Lệnh bị thanh lý</td>
+        <td>Trader</td>
+        <td>Liquidator / Vault</td>
+        <td>Thưởng cho thanh lý (partial hoặc full)</td>
+      </tr>
+      <tr>
+        <td><b>Slippage</b> (gián tiếp)</td>
+        <td>Lệnh lớn/thị trường mỏng</td>
+        <td>Trader</td>
+        <td>Không cố định</td>
+        <td>Không phải "phí" nhưng gây lỗ thêm</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4. Cơ chế cân bằng Long/Short</h2>
+  <ul>
+    <li><strong>Funding Rate</strong> được tính mỗi giờ hoặc mỗi block để cân bằng thị trường</li>
+    <li>Bên Long nhiều hơn → trả phí cho bên Short và ngược lại</li>
+    <li>Giúp giữ giá của contract sát với giá Spot</li>
+    <li>Funding Rate động điều chỉnh theo chênh lệch OI mỗi block</li>
+  </ul>
+
+  <h3>Ví dụ Funding Rate:</h3>
+  <pre><code>
+Long OI = 6M, Short OI = 2M, Vault = 10M
+Funding Rate = (6M - 2M) / 10M * 0.01% = 0.004% mỗi giờ
+→ Trader Long trả 0.004% mỗi giờ cho Short
+  </code></pre>
+
+  <h2>5. Dòng tiền tổng quát</h2>
+  <ul>
+    <li>Trader nạp margin (USDC)</li>
+    <li>Smart contract mở vị thế ảo dựa trên giá Oracle</li>
+    <li>LP Vault làm đối tác đối ứng ảo (virtual AMM hoặc Synthetics)</li>
+    <li>Trader mở lệnh → trả <b>position fee</b> và <b>borrow fee</b>.</li>
+    <li>Funding fee → luân chuyển giữa 2 phía Long & Short.</li>
+    <li>Khi đóng lệnh: nếu lời → Vault trả PnL. Nếu lỗ → Vault thu.</li>
+    <li>Nếu bị thanh lý → margin còn lại chia cho Vault & Liquidator.</li>
+    <li>Các loại phí được chia lại cho Vault, DAO, Liquidator, Trader khác (funding)</li>
+  </ul>
+
+  <h2>6. Quản lý PnL & Rủi ro</h2>
+
+  <h3>Rủi ro đối với LP Vault:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Rủi ro</th>
+        <th>Mô tả</th>
+        <th>Tác động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Trader lời lớn</td>
+        <td>Trader đoán đúng xu hướng thị trường → Vault lỗ PnL</td>
+        <td>Vault bị giảm vốn</td>
+      </tr>
+      <tr>
+        <td>OI lệch nhiều</td>
+        <td>Toàn Long hoặc toàn Short → không có funding balance</td>
+        <td>Vault chịu 1 chiều lỗ</td>
+      </tr>
+      <tr>
+        <td>Oracle manipulation</td>
+        <td>MEV, front-run oracle, delay price update</td>
+        <td>Vault bị khai thác lỗ</td>
+      </tr>
+      <tr>
+        <td>Leverage cao</td>
+        <td>Biến động mạnh → PnL lớn hơn tài sản thực</td>
+        <td>Vault mất vốn đột ngột</td>
+      </tr>
+      <tr>
+        <td>Bad Debt</td>
+        <td>Không thanh lý kịp, margin không đủ bù</td>
+        <td>Vault chịu nợ</td>
+      </tr>
+      <tr>
+        <td>Bank run LP</td>
+        <td>LP rút hàng loạt khi Vault giảm mạnh</td>
+        <td>Thiếu thanh khoản, sập hệ thống</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Cơ chế phòng chống rủi ro:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Cơ chế</th>
+        <th>Mục tiêu</th>
+        <th>Áp dụng</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Funding Rate động</td>
+        <td>Cân bằng lực Long/Short</td>
+        <td>GMX, PancakeSwap</td>
+      </tr>
+      <tr>
+        <td>OI Limit</td>
+        <td>Giới hạn rủi ro trên từng tài sản</td>
+        <td>Gains, GMX</td>
+      </tr>
+      <tr>
+        <td>Dynamic Fee</td>
+        <td>Giảm incentive mở thêm ở phía lệch nhiều</td>
+        <td>Level, GMX</td>
+      </tr>
+      <tr>
+        <td>Partial Liquidation</td>
+        <td>Giảm mức độ lỗ khi thanh lý</td>
+        <td>dYdX, GMX</td>
+      </tr>
+      <tr>
+        <td>Price Oracle TWAP</td>
+        <td>Giảm front-run / flashloan</td>
+        <td>Pyth, Chainlink</td>
+      </tr>
+      <tr>
+        <td>Insurance Fund</td>
+        <td>Đệm khi Vault lỗ lớn</td>
+        <td>dYdX, GMX</td>
+      </tr>
+      <tr>
+        <td>LP Cooldown</td>
+        <td>Chống rút hàng loạt</td>
+        <td>GMX</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>7. Cấu trúc kỹ thuật</h2>
+  <ul>
+    <li><strong>Smart Contracts:</strong> FuturesPosition.sol, Vault.sol, Funding.sol, OracleManager.sol</li>
+    <li><strong>Price Feed:</strong> Dựa trên Chainlink, Pyth, hoặc TWAP (nên dùng TWAP oracle từ nhiều nguồn: Pyth + Chainlink + Uniswap TWAP)</li>
+    <li><strong>Backend:</strong> Indexer để theo dõi Funding Rate, OI, Liquidation Queue</li>
+  </ul>
+
+  <h2>8. Doanh thu của DEX</h2>
+  <ul>
+    <li>Trích % từ Position Fee và Borrowing Fee</li>
+    <li>Không nhận từ Funding Fee (chuyển giữa trader với nhau)</li>
+    <li>DAO có thể nhận một phần từ Liquidation hoặc Vault</li>
+    <li>Tạo <b>insurance fund</b> từ 10–15% tổng phí Position để bảo hiểm Vault</li>
+  </ul>
+
+  <h2>9. Gợi ý kỹ thuật</h2>
+  <ul>
+    <li>Đặt <b>OI cap</b> mỗi asset tối đa 10–15% Vault Value.</li>
+    <li>Thêm cooldown 4–6 giờ khi rút LP nếu drawdown lớn.</li>
+    <li>Thiết kế cơ chế dynamic fee tăng khi thị trường mất cân bằng.</li>
+    <li>Triển khai partial liquidation để giảm shock cho hệ thống.</li>
+  </ul>
+
+</body>
+</html>

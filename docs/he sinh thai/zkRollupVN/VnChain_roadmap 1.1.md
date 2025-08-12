@@ -6,9 +6,10 @@ gantt
     excludes    weekends
 
     section ⬤ Chú giải trạng thái (Legend)
-        ✓ Đã hoàn thành (done): done, done_label, 2025-08-15, 3d
-        ● Đang thực hiện (active): active, active_label, 2025-08-15, 3d
-        ○ Chưa bắt đầu (default): default_label, 2025-08-15, 3d
+        ✓ Đã hoàn thành (done): done, 2025-08-15, 7d
+        ● Đang thực hiện (active): active, 2025-08-15, 7d
+        ○ Chưa bắt đầu (default): default, 2025-08-15, 7d
+        x Quan trọng (critical): crit, 2025-08-15, 7d
 
     section Giai đoạn 0 - Khởi động
         ✓ Nghiên cứu giải pháp zk phù hợp (zkEVM, STARK, R1CS): active, task0a, 2025-07-01, 30d

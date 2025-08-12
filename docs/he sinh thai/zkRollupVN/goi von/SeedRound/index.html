@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seed Round Project Navigator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      height: 100vh;
+      background-color: #f5f7fa;
+    }
+
+    #sidebar {
+      width: 280px;
+      background-color: #ffffff;
+      border-right: 1px solid #ddd;
+      padding: 20px 10px;
+      overflow-y: auto;
+    }
+
+    h2 {
+      margin: 10px 15px;
+      font-size: 20px;
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 10px 15px;
+      margin: 5px 10px;
+      background-color: #f1f1f1;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+
+    li:hover {
+      background-color: #dce8ff;
+    }
+
+    li span.icon {
+      margin-right: 10px;
+      color: #555;
+    }
+
+    #content {
+      flex-grow: 1;
+      padding: 0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #fff;
+    }
+
+    .active {
+      background-color: #c3ddff;
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h2>📁 SeedRound</h2>
+    <ul id="navList">
+      <li onclick="loadPage(this, '0_DeFi_2035.html')"><span class="icon">📄</span>DeFi 2035</li>
+      <li onclick="loadPage(this, '1_Genius Act.html')"><span class="icon">📄</span>Genius Act</li>
+      <li onclick="loadPage(this, '2.0_STO_exchange.html')"><span class="icon">📄</span>STO Exchange</li>
+      <li onclick="loadPage(this, '2.1_competitor.html')"><span class="icon">📄</span>Competitor</li>
+      <li onclick="loadPage(this, '3_zkKYC_opstack_architecture.html')"><span class="icon">📄</span>zkKYC Architecture</li>
+      <li onclick="loadPage(this, '4_opstack_architecture.html')"><span class="icon">📄</span>OP Stack Architecture</li>
+      <li onclick="loadPage(this, '5_roadmap.html')"><span class="icon">📄</span>Roadmap</li>
+      <li onclick="loadPage(this, '6_whitepaper.html')"><span class="icon">📄</span>Whitepaper</li>
+      <li onclick="loadPage(this, '7_seed_round.html')"><span class="icon">📄</span>MVP introduction</li>
+    </ul>
+  </div>
+
+  <div id="content">
+    <iframe id="viewer" src="0_DeFi_2035.html"></iframe>
+  </div>
+
+  <script>
+    function loadPage(element, file) {
+      document.getElementById('viewer').src = file;
+      const items = document.querySelectorAll('#navList li');
+      items.forEach(item => item.classList.remove('active'));
+      element.classList.add('active');
+    }
+  </script>
+</body>
+</html>

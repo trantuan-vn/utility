@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài nguyên phát triển DEX</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --warning-color: #f39c12;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        
+        h1, h2, h3 {
+            color: var(--dark-color);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        h2 {
+            margin-top: 40px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            color: var(--primary-color);
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            margin-top: 25px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .repo-card {
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border-radius: 0 5px 5px 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .repo-card:hover {
+            transform: translateX(5px);
+            background-color: #f1f8fe;
+        }
+        
+        .repo-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .repo-title .emoji {
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+        
+        .repo-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            word-break: break-all;
+        }
+        
+        .repo-link:hover {
+            text-decoration: underline;
+        }
+        
+        .repo-features {
+            margin-top: 10px;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .feature-list li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: var(--secondary-color);
+            position: absolute;
+            left: 5px;
+            font-weight: bold;
+        }
+        
+        .conclusion {
+            background-color: var(--light-color);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 5px solid var(--warning-color);
+        }
+        
+        .conclusion-title {
+            color: var(--dark-color);
+            margin-top: 0;
+        }
+        
+        .conclusion-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .conclusion-list li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .conclusion-list li:before {
+            content: "→";
+            color: var(--warning-color);
+            position: absolute;
+            left: 10px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Tài nguyên phát triển DEX</h1>
+    
+    <div class="section">
+        <h2>1. Next.js DEX Frontend (Web)</h2>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> Uniswap Interface (Next.js + TypeScript)
+            </div>
+            <a href="https://github.com/Uniswap/interface" class="repo-link" target="_blank">🔗 GitHub: https://github.com/Uniswap/interface</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Giao diện chính thức của Uniswap (phiên bản mới nhất).</li>
+                    <li>Hỗ trợ Ethereum, Polygon, Arbitrum, Optimism.</li>
+                    <li>Tích hợp WalletConnect, MetaMask, Coinbase Wallet.</li>
+                    <li>Codebase sạch, dễ tùy chỉnh (TypeScript + Next.js).</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> PancakeSwap Frontend (Next.js)
+            </div>
+            <a href="https://github.com/pancakeswap/pancake-frontend" class="repo-link" target="_blank">🔗 GitHub: https://github.com/pancakeswap/pancake-frontend</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Hỗ trợ BNB Chain, Ethereum, Aptos.</li>
+                    <li>Tích hợp AMM, Farms, Staking, NFT Marketplace.</li>
+                    <li>Có ví dụ về multichain routing.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> 1inch DEX Aggregator Frontend
+            </div>
+            <a href="https://github.com/1inch/1inch-webfrontend" class="repo-link" target="_blank">🔗 GitHub: https://github.com/1inch/1inch-webfrontend</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>DEX Aggregator (tìm giá tốt nhất trên nhiều sàn).</li>
+                    <li>Tích hợp WalletConnect, Ledger, Trezor.</li>
+                    <li>Codebase dễ mở rộng.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>2. React Native DEX Mobile App</h2>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> Trust Wallet Core (React Native + Web3)
+            </div>
+            <a href="https://github.com/trustwallet/wallet-core" class="repo-link" target="_blank">🔗 GitHub: https://github.com/trustwallet/wallet-core</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Ví đa chuỗi (Ethereum, BSC, Solana, Cosmos…).</li>
+                    <li>Hỗ trợ WalletConnect, DApp Browser.</li>
+                    <li>Có thể tùy biến thành DEX Mobile App.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> Web3Modal React Native (Wallet Connect)
+            </div>
+            <a href="https://github.com/WalletConnect/web3modal-react-native" class="repo-link" target="_blank">🔗 GitHub: https://github.com/WalletConnect/web3modal-react-native</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Tích hợp MetaMask, Trust Wallet, WalletConnect.</li>
+                    <li>Dễ kết nối với DEX backend.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> DeFi Mobile App Template (React Native)
+            </div>
+            <a href="https://github.com/blockchain/blockchain-wallet-react-native" class="repo-link" target="_blank">🔗 GitHub: https://github.com/blockchain/blockchain-wallet-react-native</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Codebase sẵn sàng để phát triển DEX Mobile.</li>
+                    <li>Hỗ trợ Ethereum, Bitcoin, ERC-20 tokens.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>3. Backend Rust + Web3 Integration</h2>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> Solana Program (Rust Smart Contract)
+            </div>
+            <a href="https://github.com/solana-labs/solana-program-library" class="repo-link" target="_blank">🔗 GitHub: https://github.com/solana-labs/solana-program-library</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Ví dụ Rust Smart Contract cho DEX trên Solana.</li>
+                    <li>Có thể kết hợp với Next.js/React Native frontend.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> Substrate Blockchain (Rust)
+            </div>
+            <a href="https://github.com/paritytech/substrate" class="repo-link" target="_blank">🔗 GitHub: https://github.com/paritytech/substrate</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Framework để xây DEX blockchain riêng bằng Rust.</li>
+                    <li>Tích hợp Polkadot/Kusama ecosystem.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> Serum DEX Backend (Rust)
+            </div>
+            <a href="https://github.com/project-serum/serum-dex" class="repo-link" target="_blank">🔗 GitHub: https://github.com/project-serum/serum-dex</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Order Book DEX chạy trên Solana.</li>
+                    <li>Code Rust có thể tái sử dụng.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>4. Full-stack DEX Boilerplate (Next.js + Rust)</h2>
+        
+        <div class="repo-card">
+            <div class="repo-title">
+                <span class="emoji">📌</span> Full-stack DEX with Next.js + Rust
+            </div>
+            <a href="https://github.com/0xProject/0x-starter-project" class="repo-link" target="_blank">🔗 GitHub: https://github.com/0xProject/0x-starter-project</a>
+            <div class="repo-features">
+                <div>✅ Tính năng nổi bật:</div>
+                <ul class="feature-list">
+                    <li>Frontend: Next.js + Web3.js.</li>
+                    <li>Backend: Rust (có thể kết hợp với Actix/Axum).</li>
+                    <li>Hỗ trợ Ethereum, Polygon, BSC.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="conclusion">
+        <h3 class="conclusion-title">Kết luận</h3>
+        <ul class="conclusion-list">
+            <li><strong>Nếu bạn muốn phát triển Web DEX</strong> → Fork Uniswap Interface hoặc PancakeSwap Frontend.</li>
+            <li><strong>Nếu muốn làm Mobile DEX</strong> → Dùng Trust Wallet Core hoặc Web3Modal React Native.</li>
+            <li><strong>Nếu cần Rust backend</strong> → Tham khảo Solana Program Library hoặc Substrate.</li>
+        </ul>
+    </div>
+</body>
+</html>

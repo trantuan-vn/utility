@@ -1,0 +1,34 @@
+1. Grant (tài trợ không hoàn lại để phát triển)
+| Tổ chức / Chain             | Link                                                                                                         | Mô tả                                          |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------- |
+| **Ethereum Foundation**     | [ethereum.org/grants](https://ethereum.foundation/grants)                                                    | Hỗ trợ dự án hạ tầng, bảo mật, zk, giáo dục…   |
+| **Celestia**                | [https://docs.celestia.org/learn/grants](https://docs.celestia.org/learn/grants)                             | Ưu tiên Rollkit, DA tooling, modular dev tools |
+| **Optimism RetroPGF**       | [https://app.optimism.io/retropgf](https://app.optimism.io/retropgf)                                         | Hỗ trợ open-source, được cộng đồng vote thưởng |
+| **Polygon DevX**            | [https://polygon.technology/grants](https://polygon.technology/grants)                                       | Hỗ trợ app chạy trên zkEVM/CDK                 |
+| **StarkWare Grants**        | [https://community.starknet.io/grants](https://community.starknet.io/grants)                                 | Ưu tiên Cairo tooling, zkApp                   |
+| **zkSync**                  | [https://github.com/matter-labs/awesome-zksync#grants](https://github.com/matter-labs/awesome-zksync#grants) | Dev tools, infra cho zkStack                   |
+| **Arbitrum Foundation**     | [https://arbitrum.foundation/grants](https://arbitrum.foundation/grants)                                     | Tài trợ infra, education, dApp mới             |
+| **Aptos Grant**             | [https://aptosfoundation.org/grants](https://aptosfoundation.org/grants)                                     | Dự án Move VM, GameFi, infra                   |
+| **Sui Builder House Grant** | [https://sui.io](https://sui.io)                                                                             | Dự án Move, NFT infra, zk...                   |
+| **Linea Build Program**     | [https://linea.build](https://linea.build)                                                                   | Layer2 zkEVM, hỗ trợ dApp, tooling             |
+
+2. Hackathon Web3 – đang/mới mở
+| Hackathon                      | Link                                                         | Deadline                      |
+| ------------------------------ | ------------------------------------------------------------ | ----------------------------- |
+| **ETHGlobal (mỗi tháng)**      | [https://ethglobal.com](https://ethglobal.com)               | Liên tục, cả online & offline |
+| **DoraHacks Hackathons**       | [https://dorahacks.io/buidl](https://dorahacks.io/buidl)     | Hầu như có mỗi tuần           |
+| **ZK Hack** (zkRollup)         | [https://www.zkhack.dev/](https://www.zkhack.dev/)           | Vòng 7 sắp mở lại             |
+| **Move Hackathon (Sui/Aptos)** | aptos/sui Discord thường xuyên cập nhật                      | Luôn có các đợt mini          |
+| **Solana Hyperdrive**          | [https://solana.com/events](https://solana.com/events)       | Tháng 7/8/2025                |
+| **0xHack** (DeFi/Privacy)      | [https://0xhack.dev](https://0xhack.dev)                     | 2025 đợt mới sắp công bố      |
+| **Chainlink Hackathon**        | [https://chain.link/hackathon](https://chain.link/hackathon) | Hàng quý                      |
+
+3. Job tốt Web3 / Blockchain (fulltime & freelance)
+| Nền tảng             | Link                                               | Đặc điểm                                |
+| -------------------- | -------------------------------------------------- | --------------------------------------- |
+| **CryptoJobsList**   | [cryptojobslist.com](https://cryptojobslist.com)   | Việc kỹ thuật từ L1/L2 hàng đầu         |
+| **Web3 Career**      | [web3.career](https://web3.career)                 | Có filter theo Solidity, Rust, Remote   |
+| **Refractor.dev**    | [refractor.dev](https://refractor.dev)             | Dễ tìm client freelance, audit, infra   |
+| **UseWeb3.jobs**     | [useweb3.xyz/jobs](https://www.useweb3.xyz/jobs)   | Cho Solidity dev, dApp builder          |
+| **Layer3 Quests**    | [layer3.xyz](https://layer3.xyz)                   | Làm nhiệm vụ on-chain nhận USDC/token   |
+| **Bounties Network** | [bounties.gitcoin.co](https://bounties.gitcoin.co) | Làm theo task nhận thưởng (dễ tiếp cận) |

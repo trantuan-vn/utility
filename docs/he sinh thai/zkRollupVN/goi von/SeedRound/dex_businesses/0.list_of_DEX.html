@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <title>Pancakeswap businesses</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: #fff;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .mermaid-box {
+      background: #eef;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+<h1>📈 Mô hình kinh doanh của các sàn DEX</h1>
+
+<div class="grid-container">
+
+  <div class="mermaid-box">
+    <h2><a href="https://pancakeswap.finance/" target="_blank">1. PancakeSwap</a></h2>
+    <p><strong>Tổng doanh thu: ~ $120 triệu</strong></p>
+    <pre id="PancakeSwap" class="mermaid">
+pie
+    "AMM DEX (phí giao dịch spot)": 35
+    "Perpetual Futures": 20
+    "Yield Farming + Staking": 15
+    "Prediction Market": 8
+    "NFT & Profile": 3
+    "IFO (Initial Farm Offering)": 5
+    "Cross-chain Swap": 7
+    "Lottery": 2
+    "Referral & Affiliate": 3
+    "DAO Voting / Treasury Investment": 2
+</pre>
+  </div>
+
+  <div class="mermaid-box">
+    <h2><a href="https://uniswap.org/" target="_blank">2. UniSwap</a></h2>
+    <p><strong>Tổng doanh thu: ~ $450 triệu</strong></p>
+    <pre id="UniSwap" class="mermaid">
+pie
+    "AMM DEX (phí giao dịch spot)": 70
+    "UniswapX (RFQ/Aggregator)": 10
+    "Protocol Fee (0.05% nếu bật)": 5
+    "Uniswap Wallet": 5
+    "Cross-chain Swap": 5
+    "SDK/API License": 3
+    "DAO Treasury / Investment": 2
+</pre>
+  </div>
+
+  <div class="mermaid-box">
+    <h2><a href="https://dydx.exchange/" target="_blank">3. DyDx</a></h2>
+    <p><strong>Tổng doanh thu: ~ $250 triệu</strong></p>
+    <pre id="DyDx" class="mermaid">
+pie
+    "Perpetual Futures (Trading Fees)": 85
+    "Liquidation Fees": 7
+    "Staking DYDX (validator commission)": 3
+    "dYdX Chain Fees (gas sharing)": 3
+    "DAO Treasury / Investment": 2
+</pre>
+  </div>
+
+
+
+</div>
+
+<div class="grid-container">
+  <div class="mermaid-box">
+    <h2><a href="https://www.sushi.com" target="_blank">4. SushiSwap</a></h2>
+    <p><strong>Tổng doanh thu: ~ $90 triệu</strong></p>
+    <pre id="SushiSwap" class="mermaid">
+pie
+    "AMM DEX (phí giao dịch spot)": 60
+    "Kashi Lending": 10
+    "Sushi Bar (xSUSHI staking)": 10
+    "Miso Launchpad": 5
+    "Trident AMM (liquidity pools)": 5
+    "NFT Marketplace": 5
+    "DAO Treasury / Investment": 5
+</pre>
+  </div>
+
+  <div class="mermaid-box">
+    <h2><a href="https://curve.fi/" target="_blank">5. Curve</a></h2>
+    <p><strong>Tổng doanh thu: ~ $110 triệu</strong></p>
+    <pre id="Curve" class="mermaid">
+pie
+  "AMM DEX (phí giao dịch stablecoin)": 80
+  "veCRV Staking (boosted rewards)": 10
+  "DAO Treasury / Investment": 5
+  "Cross-chain Swap": 3
+  "SDK/API License": 2
+</pre>
+  </div>
+
+  <div class="mermaid-box">
+    <h2><a href="https://gmx.io/" target="_blank">6. GMX</a></h2>
+    <p><strong>Tổng doanh thu: ~ $80 triệu</strong></p>
+    <pre id="GMX" class="mermaid">
+pie
+  "Perpetual Futures (Trading Fees)": 75
+  "Swap Fees (Spot)": 10
+  "Liquidation Fees": 7
+  "Staking GMX/GLP (Rewards)": 5
+  "DAO Treasury / Investment": 3
+</pre>
+  </div>  
+</div>
+
+<div class="grid-container">
+
+<div class="mermaid-box">
+  <h2><a href="https://thorchain.org/" target="_blank">7. THORChain</a></h2>
+  <p><strong>Tổng doanh thu: ~ $70 triệu</strong></p>
+  <pre id="Thorchain" class="mermaid">
+pie
+  "Swap Fees (Cross-chain)": 60
+  "Liquidity Provider Rewards": 20
+  "Node Operator Rewards": 10
+  "Staking RUNE": 5
+  "DAO Treasury / Investment": 5
+</pre>
+</div>
+
+<div class="mermaid-box">
+  <h2><a href="https://app.perp.com/markets/BTC:USD" target="_blank">8. Perpetual Protocol</a></h2>
+  <p><strong>Tổng doanh thu: ~ $60 triệu</strong></p>
+  <pre id="PerpetualProtocol" class="mermaid">
+pie
+  "Perpetual Futures (Trading Fees)": 80
+  "Staking PERP (Rewards)": 10
+  "Protocol Fee (Insurance Fund)": 5
+  "DAO Treasury / Investment": 5
+</pre>
+</div>
+
+<div class="mermaid-box">
+  <h2><a href="https://curve.fi/" target="_blank">9. Curve Finance</a></h2>
+  <p><strong>Tổng doanh thu: ~ $110 triệu</strong></p>
+  <pre id="CurveFinance" class="mermaid">
+pie
+  "AMM DEX (Stablecoin Trading Fees)": 75
+  "veCRV Staking (Boosted Rewards)": 15
+  "Cross-chain Swap": 5
+  "DAO Treasury / Investment": 5
+</pre>
+</div>
+</div>
+<div class="grid-container">
+  <div class="mermaid-box">
+    <h2><a href="https://balancer.fi/" target="_blank">10. Balancer</a></h2>
+    <p><strong>Tổng doanh thu: ~ $55 triệu</strong></p>
+    <pre id="Balancer" class="mermaid">
+  pie
+    "AMM DEX (phí giao dịch spot)": 60
+    "Liquidity Pools (Custom Weights)": 20
+    "veBAL Staking (Rewards)": 10
+    "DAO Treasury / Investment": 5
+    "SDK/API License": 5
+  </pre>
+  </div>
+  <div class="mermaid-box">
+    <h2><a href="https://jup.ag/" target="_blank">11. Jupiter</a></h2>
+    <p><strong>Tổng doanh thu: ~ $102 triệu</strong></p>
+    <pre id="Jupiter" class="mermaid">
+    pie
+        "Perpetuals (Perps)" : 84
+        "Ultra Swaps (Spot)" : 25
+        "Other services (Limit/DCA/VA/etc.)" : 5
+    </pre>
+  </div>
+  <div class="mermaid-box">
+    <h2><a href="https://traderjoexyz.com/" target="_blank">12. Trader Joe</a></h2>
+    <p><strong>Tổng doanh thu: ~ $45 triệu</strong></p>
+    <pre id="TraderJoe" class="mermaid">
+pie
+  "AMM DEX (phí giao dịch spot)": 65
+  "Liquidity Pools (LP Rewards)": 15
+  "Lending (Banker Joe)": 8
+  "NFT Marketplace": 5
+  "DAO Treasury / Investment": 5
+  "Launchpad (Rocket Joe)": 2
+</pre>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    mermaid.initialize({ startOnLoad: false, theme: "forest" });
+    const charts = [
+      "#PancakeSwap", "#UniSwap", "#DyDx", "#SushiSwap", "#Curve", "#GMX",
+      "#Thorchain", "#PerpetualProtocol", "#CurveFinance", "#Balancer",
+      "#Jupiter", "#TraderJoe"
+    ];
+    const nodes = charts.map(id => document.querySelector(id));
+    mermaid.run({ nodes });
+  });
+</script>
+
+</body>
+</html>

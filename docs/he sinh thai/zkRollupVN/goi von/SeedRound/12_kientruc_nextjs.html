@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <title>Next.js DEX Stack Overview</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+    h1, h2, h3 { color: #333; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background-color: #f2f2f2; }
+    code, pre { background: #f8f8f8; padding: 8px; display: block; overflow-x: auto; }
+    .code-block { background-color: #f9f9f9; border: 1px solid #ddd; padding: 10px; margin-top: 10px; }
+    .mermaid {
+      background: #eef;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-family: monospace;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>🧩 Tổng quan kiến trúc DEX sử dụng Next.js</h1>
+    <pre id="cannon" class="mermaid">
+        graph TD
+        A[Client UI - Next.js]
+        B[API Routes / App Router Next.js]
+        C[Node.js Backend + Services]
+        D[Database - Postgres / Mongo]
+        E[Blockchain / Smart Contracts]
+        F[Realtime Price Service WebSocket]
+
+        A -->|SSR/ISR/CSR| B
+        A -->|SWR/React Query| B
+        A -->|WebSocket| F
+        B -->|Server Action/API| C
+        C --> D
+        C --> E
+        F --> A
+        F --> D
+        F --> E 
+    </pre>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        mermaid.initialize({ startOnLoad: false, theme: "forest" });
+        const cannon = document.querySelector("#cannon");
+        mermaid.run({ nodes: [cannon] });
+        });
+    </script>
+
+  <h2>🧱 Các Module & Stack đề xuất</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>Stack & Công nghệ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Landing page, SEO</td>
+        <td>Next.js + SSG/ISR + SEO meta + robots.txt + sitemap.xml</td>
+      </tr>
+      <tr>
+        <td>Danh sách cặp token</td>
+        <td>ISR + SWR, query từ DB</td>
+      </tr>
+      <tr>
+        <td>Chi tiết pool/token</td>
+        <td>SSR + SWR cập nhật giá</td>
+      </tr>
+      <tr>
+        <td>Orderbook + giao dịch</td>
+        <td>WebSocket + React Query fallback</td>
+      </tr>
+      <tr>
+        <td>Xác thực / Profile user</td>
+        <td>Next Auth + API Routes + Zustand/SWR</td>
+      </tr>
+      <tr>
+        <td>Đặt lệnh / Hủy lệnh</td>
+        <td>Mutation với React Query hoặc API Routes</td>
+      </tr>
+      <tr>
+        <td>Lịch sử giao dịch</td>
+        <td>API Routes + SWR</td>
+      </tr>
+      <tr>
+        <td>Admin Dashboard</td>
+        <td>SSR + Role guard</td>
+      </tr>
+      <tr>
+        <td>Tích hợp Web3</td>
+        <td>wagmi, viem, ethers</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>🧪 Ví dụ Orderbook (WebSocket)</h2>
+  <div class="code-block">
+    <pre><code>import { useEffect, useState } from 'react'
+import { io } from 'socket.io-client'
+
+export default function Orderbook() {
+  const [bids, setBids] = useState([])
+  const [asks, setAsks] = useState([])
+
+  useEffect(() => {
+    const socket = io('https://dex.example.com')
+
+    socket.on('orderbook_update', (data) => {
+      setBids(data.bids)
+      setAsks(data.asks)
+    })
+
+    return () => socket.disconnect()
+  }, [])
+
+  return (
+    &lt;div&gt;
+      &lt;h3&gt;Orderbook&lt;/h3&gt;
+      {/* render bảng lệnh */}
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+  </div>
+
+  <h2>⚡ Chiến lược tối ưu hiệu suất</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Chiến lược</th>
+        <th>Áp dụng cho</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ISR (Incremental Static Regeneration)</td>
+        <td>Trang pool/token</td>
+      </tr>
+      <tr>
+        <td>SWR + fallback</td>
+        <td>Thông tin token, giá</td>
+      </tr>
+      <tr>
+        <td>WebSocket</td>
+        <td>Orderbook, lệnh, giá</td>
+      </tr>
+      <tr>
+        <td>React Query + mutation</td>
+        <td>Đặt lệnh, xóa lệnh</td>
+      </tr>
+      <tr>
+        <td>Middleware</td>
+        <td>Route bảo vệ (admin, trade...)</td>
+      </tr>
+      <tr>
+        <td>API Routes + Zod</td>
+        <td>Xử lý request từ frontend</td>
+      </tr>
+      <tr>
+        <td>Vercel Edge Function</td>
+        <td>API realtime cực nhanh</td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

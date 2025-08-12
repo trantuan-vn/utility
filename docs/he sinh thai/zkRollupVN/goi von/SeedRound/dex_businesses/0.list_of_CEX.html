@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân tích doanh thu 12 sàn CEX lớn nhất 2024</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 20px;
+        }
+        .note {
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Phân tích doanh thu 12 sàn CEX lớn nhất 2024</h1>
+        
+        <!-- Tổng quan thị phần 12 sàn -->
+        <div class="chart-container">
+            <h2 style="display: flex; justify-content: center; align-items: center;">1. Tổng doanh thu năm 2024 từ top 12 sàn CEX</h2>
+            <div class="mermaid" style="display: flex; justify-content: center; align-items: center;">
+                pie 
+                    title Tổng doanh thu từ top 12 sàn CEX 2024
+                    "Binance" : 35.2
+                    "Coinbase" : 18.5
+                    "Kraken" : 9.8
+                    "Bybit" : 8.3
+                    "OKX" : 7.6
+                    "Bitget" : 5.4
+                    "Deribit" : 4.1
+                    "HTX (Huobi)" : 3.9
+                    "KuCoin" : 3.2
+                    "Bitfinex" : 2.5
+                    "MEXC" : 1.8
+                    "Gate.io" : 1.7
+            </div>
+        </div>
+
+        <!-- Chi tiết từng sàn -->
+        <h2>2. Cơ cấu doanh thu từng sàn</h2>
+        <div class="grid">
+            <!-- Binance -->
+            <div class="chart-container">
+                <h3>Binance</h3>
+                <div class="mermaid">
+                    pie title Binance Revenue Breakdown (2024)
+                        "Phí giao dịch spot" : 45
+                        "Phí giao dịch futures" : 30
+                        "Phí staking/lending" : 12
+                        "Phí listing & launchpad" : 8
+                        "Khác (NFT, API, v.v.)" : 5
+                </div>
+            </div>
+
+            <!-- Coinbase -->
+            <div class="chart-container">
+                <h3>Coinbase</h3>
+                <div class="mermaid">
+                    pie title Coinbase Revenue Breakdown (2024)
+                        "Spot Trading Fees" : 50
+                        "Institutional Services" : 25
+                        "Staking/Earn" : 15
+                        "Custody & Other" : 10
+                </div>
+            </div>
+
+            <!-- Kraken -->
+            <div class="chart-container">
+                <h3>Kraken</h3>
+                <div class="mermaid">
+                    pie title Kraken Revenue Breakdown (2024)
+                        "Spot Trading" : 40
+                        "Futures/Margin" : 35
+                        "Staking" : 20
+                        "NFT Marketplace" : 5
+                </div>
+            </div>
+
+            <!-- Bybit -->
+            <div class="chart-container">
+                <h3>Bybit</h3>
+                <div class="mermaid">
+                    pie title Bybit Revenue Breakdown (2024)
+                        "Derivatives Trading" : 60
+                        "Spot Trading" : 25
+                        "Copy Trading" : 10
+                        "Launchpad" : 5
+                </div>
+            </div>
+
+            <!-- OKX -->
+            <div class="chart-container">
+                <h3>OKX</h3>
+                <div class="mermaid">
+                    pie title OKX Revenue Breakdown (2024)
+                        "Futures/Options" : 55
+                        "Spot Trading" : 30
+                        "Earn Products" : 10
+                        "Web3 Services" : 5
+                </div>
+            </div>
+
+            <!-- Bitget -->
+            <div class="chart-container">
+                <h3>Bitget</h3>
+                <div class="mermaid">
+                    pie title Bitget Revenue Breakdown (2024)
+                        "Futures Trading" : 65
+                        "Spot Trading" : 20
+                        "Copy Trading" : 10
+                        "Promotions" : 5
+                </div>
+            </div>
+
+            <!-- Deribit -->
+            <div class="chart-container">
+                <h3>Deribit</h3>
+                <div class="mermaid">
+                    pie title Deribit Revenue Breakdown (2024)
+                        "Options Trading" : 70
+                        "Futures Trading" : 25
+                        "Liquidation Fees" : 5
+                </div>
+            </div>
+
+            <!-- HTX (Huobi) -->
+            <div class="chart-container">
+                <h3>HTX (Huobi)</h3>
+                <div class="mermaid">
+                    pie title HTX Revenue Breakdown (2024)
+                        "Spot Trading" : 45
+                        "Futures Trading" : 40
+                        "HTX Ventures" : 10
+                        "Other" : 5
+                </div>
+            </div>
+
+            <!-- KuCoin -->
+            <div class="chart-container">
+                <h3>KuCoin</h3>
+                <div class="mermaid">
+                    pie title KuCoin Revenue Breakdown (2024)
+                        "Spot Trading" : 50
+                        "Futures Trading" : 30
+                        "KuCoin Earn" : 15
+                        "KCS Benefits" : 5
+                </div>
+            </div>
+
+            <!-- Bitfinex -->
+            <div class="chart-container">
+                <h3>Bitfinex</h3>
+                <div class="mermaid">
+                    pie title Bitfinex Revenue Breakdown (2024)
+                        "Margin Trading" : 60
+                        "Spot Trading" : 30
+                        "Lending" : 10
+                </div>
+            </div>
+
+            <!-- MEXC -->
+            <div class="chart-container">
+                <h3>MEXC</h3>
+                <div class="mermaid">
+                    pie title MEXC Revenue Breakdown (2024)
+                        "Spot Trading" : 55
+                        "Futures Trading" : 35
+                        "Launchpad" : 10
+                </div>
+            </div>
+
+            <!-- Gate.io -->
+            <div class="chart-container">
+                <h3>Gate.io</h3>
+                <div class="mermaid">
+                    pie title Gate.io Revenue Breakdown (2024)
+                        "Spot Trading" : 50
+                        "Futures Trading" : 40
+                        "HODL & Earn" : 7
+                        "Startup IEOs" : 3
+                </div>
+            </div>
+        </div>
+
+        <p class="note">* Số liệu ước lượng dựa trên đặc điểm hoạt động của từng sàn năm 2024 | Nguồn tham khảo: CoinGecko, TokenInsight</p>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            fontFamily: 'Arial'
+        });
+    </script>
+</body>
+</html>

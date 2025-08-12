@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Uniswap Interface + Tokeny (T-REX & ERC-3643) — Sơ đồ & Giải thích</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;line-height:1.6;color:#0f172a;background:#f8fafc;padding:32px}
+    .container{max-width:1000px;margin:0 auto;background:white;padding:28px;border-radius:12px;box-shadow:0 6px 24px rgba(2,6,23,0.08)}
+    h1{font-size:22px;margin-bottom:6px}
+    h2{font-size:18px;margin-top:18px}
+    pre{background:#0b1220;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto;}
+    .note{background:#eef2ff;padding:10px;border-radius:8px;margin:8px 0}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .full{grid-column:1/-1}
+    .chip{display:inline-block;background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-size:13px}
+  </style>
+</head>
+<body>
+    <h2>Sơ đồ kiến trúc (mermaid)</h2>
+    <style>
+      .mermaid {
+        background: #eef;
+        padding: 24px;
+        border-radius: 16px;
+        margin: 24px 0;
+        font-family: monospace;
+        font-size: 16px;
+        height: 550px; /* Set a larger height */
+      }
+    </style>
+    <pre id="cannon" class="mermaid">
+    flowchart LR
+        subgraph User_Browser["💻 Trình duyệt người dùng"]
+            UI["React / Next.js UI (Uniswap Interface)"]
+            SDK["@uniswap/sdk / sdk-core / sdk-v3"]
+            Wallet["Ví Web3 (MetaMask, WalletConnect)"]
+        end
+
+        subgraph Blockchain["⛓ Ethereum / L2 (Arbitrum, Optimism...)"]
+            SC_AMM["Smart Contracts Uniswap V2/V3"]
+            
+            subgraph T_REX["T-REX Contracts (Tokeny)"]
+                ERC3643["ERC-3643 Security Token (compliant)"]
+                IdentityRegistry["Identity Registry (KYC/AML)"]
+                Compliance["Compliance Rules Engine"]
+                TokenAgent["Token Agent / Transfer Manager"]
+            end
+        end
+
+        subgraph RPC_Provider["🌐 RPC Provider"]
+            RPC["Infura / Alchemy / Ankr ..."]
+        end
+
+        subgraph OffChain_Services["🗄 Off-chain Services"]
+            KYCAML["KYC/AML Provider (Off-chain verification)"]
+            TokenListAPI["Token List API"]
+            Subgraph["The Graph (Liquidity & Price Data)"]
+        end
+
+        %% Flow UI to Blockchain
+        UI --> SDK
+        SDK -->|Fetch pool/token data| RPC
+        RPC --> SC_AMM
+        RPC --> ERC3643
+        SDK -->|Tạo transaction data| Wallet
+        Wallet -->|Ký & gửi| SC_AMM
+        Wallet -->|Ký & gửi| ERC3643
+        SC_AMM -->|Trạng thái giao dịch| RPC
+        ERC3643 -->|Check KYC/AML| IdentityRegistry
+        IdentityRegistry -->|Truy vấn| KYCAML
+        Compliance -->|Áp quy tắc giao dịch| ERC3643
+        RPC --> UI
+
+        %% Off-chain data for UI
+        TokenListAPI --> UI
+        Subgraph --> UI
+
+    </pre>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          mermaid.initialize({ startOnLoad: false });
+          const cannon = document.querySelector("#cannon");
+          mermaid.run({ nodes: [cannon] });
+        });
+    </script>
+
+  <div class="container">
+    <h1>Uniswap Interface + Tokeny (T-REX &amp; ERC-3643)</h1>
+    <p class="note">Tài liệu này chứa sơ đồ mermaid (rendered) và giải thích ngắn gọn bằng tiếng Việt về các thành phần: <span class="chip">T-REX</span>, <span class="chip">ERC-3643 (EIP-3643)</span>, <span class="chip">uniswap-v2-sdk-trex</span>, và <span class="chip">uniswap-interface</span>.</p>
+
+
+
+    <h2>Giải thích các thành phần (tóm tắt)</h2>
+    <div class="grid">
+      <div>
+        <h3>T-REX (Tokeny)</h3>
+        <p>T-REX là bộ hợp đồng thông minh do Tokeny cung cấp để phát hành, quản lý token chứng khoán (security tokens). Thông thường bao gồm:</p>
+        <ul>
+          <li><strong>Token Agent / Token Factory</strong>: triển khai token mới theo chuẩn ERC-3643 hoặc các chuẩn tuỳ biến.</li>
+          <li><strong>Identity Registry</strong>: danh sách địa chỉ đã được KYC/AML — dùng để whitelist/blacklist.</li>
+          <li><strong>Transfer Manager / Compliance Engine</strong>: áp quy tắc chuyển nhượng (ví dụ: chỉ cho chuyển giữa các địa chỉ đã KYC, giới hạn số lượng, hạn chế theo quốc gia...)</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>EIP-3643 (ERC-3643)</h3>
+        <p>ERC-3643 (EIP-3643) là một tiêu chuẩn token để hỗ trợ security tokens với tính năng quản lý danh tính và tuân thủ. Điểm chính:</p>
+        <ul>
+          <li>Hỗ trợ <em>Identity Registry</em> để kiểm tra KYC trước khi chuyển token.</li>
+          <li>Cung cấp hooks để gọi <em>transfer checks</em> trước khi thực hiện chuyển.</li>
+          <li>Thiết kế để tích hợp dễ với off-chain KYC providers và on-chain registry.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>uniswap-v2-sdk-trex</h3>
+        <p>Đây là phần mở rộng / helper (không chính thức trong mọi repo) — ý tưởng là có một lớp SDK hoặc adapter cho Uniswap V2/Uniswap SDK để:</p>
+        <ul>
+          <li>Hiểu các token ERC-3643 (ví dụ: check cần approve đặc biệt, hoặc cần whitelist check trước khi swap).</li>
+          <li>Tự động gọi các check/approve cần thiết với T-REX contracts trước khi thực hiện swap.</li>
+          <li>Kết hợp với UI để hiển thị lý do nếu giao dịch không thể thực hiện vì chính sách compliance.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Uniswap Interface</h3>
+        <p>Giao diện frontend chính (React / Next.js) mà người dùng tương tác. Vai trò liên quan Tokeny:</p>
+        <ul>
+          <li>Hiển thị token list (có thể bao gồm security token từ Tokeny/T-REX).</li>
+          <li>Sử dụng SDK để tính route và tạo tx. Nếu token là ERC-3643, UI/SDK cần gọi các contract compliance/registry trước khi emit tx.</li>
+          <li>Thông báo cho người dùng nếu token không thể chuyển do không KYC, hoặc do rule.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Flow ví dụ khi người dùng bấm "Swap" token ERC-3643</h2>
+    <ol>
+      <li>UI gọi SDK để tính toán trade và kiểm tra cần thiết.</li>
+      <li>SDK (hoặc adapter uniswap-v2-sdk-trex) kiểm tra IdentityRegistry xem cả hai địa chỉ (người gửi & recipient của pool) đã được whitelist chưa.</li>
+      <li>Nếu cần, SDK yêu cầu người dùng thực hiện steps: đăng ký KYC, approve token, hoặc mint token agent call.</li>
+      <li>Khi mọi checks pass, UI gửi tx (ký bởi ví) để tương tác với Uniswap pool hoặc trực tiếp transfer token qua ERC-3643 (tùy flow).
+      <li>Smart contract ERC-3643 gọi Compliance Engine/Identity Registry trong quá trình transfer để xác nhận giao dịch hợp lệ.
+      <li>Giao dịch hoàn tất on-chain; UI nhận receipt qua RPC và hiển thị kết quả.</li>
+    </ol>
+
+    <h2>Ghi chú & Tài liệu tham khảo</h2>
+    <ul>
+      <li>Repo Tokeny thường chứa hợp đồng T-REX, Identity Registry và ví dụ tích hợp ERC-3643.</li>
+      <li>EIP-3643: mô tả chi tiết interface token security với hooks cho compliance.</li>
+      <li>uniswap-interface &amp; uniswap SDK repos: tham khảo cách SDK tạo trade và transaction data.</li>
+    </ul>
+
+    <p style="margin-top:18px">Muốn mình bổ sung <strong>sequence diagram</strong> chi tiết (step-by-step từ click → KYC → tx) hoặc xuất HTML này để tải về không?</p>
+  </div>
+
+</body>
+</html>

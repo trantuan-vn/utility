@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cấu trúc thư mục Next.js App Router</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #fdfdfd;
+      color: #333;
+      padding: 2rem;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      border: 1px solid #ddd;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cấu trúc thư mục Next.js App Router (Toàn diện)</h1>
+
+  <p>Dưới đây là cấu trúc đề xuất cho một hệ thống Next.js sử dụng App Router, gồm layout, middleware, API và từng module tính năng như buy crypto, perps, bridge, earn, play, v.v.</p>
+
+  <h2>📁 Cấu trúc thư mục</h2>
+
+  <pre><code>app/
+├── layout.tsx
+├── middleware.ts
+
+├── (public)/
+│   ├── buy-crypto/
+│   │   ├── page.tsx
+│   │   ├── loading.tsx
+│   │   └── error.tsx
+│   ├── perps/
+│   │   ├── page.tsx
+│   │   ├── loading.tsx
+│   │   └── error.tsx
+│   ├── bridge/
+│   │   ├── page.tsx
+│   │   ├── loading.tsx
+│   │   └── error.tsx
+│   ├── earn/
+│   │   ├── page.tsx
+│   │   ├── loading.tsx
+│   │   └── error.tsx
+│   ├── play/
+│   │   ├── page.tsx
+│   │   ├── loading.tsx
+│   │   └── error.tsx
+│   ├── info/
+│   │   ├── page.tsx
+│   │   ├── loading.tsx
+│   │   └── error.tsx
+│   ├── blog/
+│   │   ├── page.tsx
+│   │   ├── [slug]/
+│   │   │   └── page.tsx
+│   │   └── error.tsx
+│   ├── docs/
+│   │   ├── [[...slug]]/
+│   │   │   └── page.tsx
+│   │   └── error.tsx
+
+├── (dashboard)/
+│   ├── burn/
+│   │   ├── page.tsx
+│   │   └── error.tsx
+│   ├── ifo/
+│   │   ├── page.tsx
+│   │   └── error.tsx
+│   ├── voting/
+│   │   ├── page.tsx
+│   │   └── error.tsx
+
+├── connect/
+│   ├── page.tsx
+│   └── error.tsx
+
+├── api/
+│   ├── buy-crypto/
+│   │   └── route.ts
+│   ├── perps/
+│   │   └── route.ts
+│   ├── bridge/
+│   │   └── route.ts
+│   ├── earn/
+│   │   └── route.ts
+│   ├── play/
+│   │   └── route.ts
+│   ├── info/
+│   │   └── route.ts
+│   ├── blog/
+│   │   ├── route.ts
+│   │   └── [slug]/
+│   │       └── route.ts
+│   ├── docs/
+│   │   └── [[...slug]]/
+│   │       └── route.ts
+│   ├── burn/
+│   │   └── route.ts
+│   ├── ifo/
+│   │   └── route.ts
+│   ├── voting/
+│   │   └── route.ts
+</code></pre>
+
+  <h2>🧩 Middleware</h2>
+  <pre><code>export function middleware(request: NextRequest) {
+  const token = request.cookies.get('token')?.value
+  const isPublic = request.nextUrl.pathname.startsWith('/connect') ||
+                   request.nextUrl.pathname.startsWith('/buy-crypto') ||
+                   request.nextUrl.pathname.startsWith('/docs') ||
+                   request.nextUrl.pathname.startsWith('/blog')
+
+  if (!token && !isPublic) {
+    return NextResponse.redirect(new URL('/connect', request.url))
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/((?!_next|favicon.ico).*)'],
+}</code></pre>
+
+  <h2>🗂️ Tổng hợp URL và API tương ứng</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>UI Page</th>
+        <th>API Route</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Buy Crypto</td><td>/buy-crypto</td><td>/api/buy-crypto</td></tr>
+      <tr><td>Perps</td><td>/perps</td><td>/api/perps</td></tr>
+      <tr><td>Bridge</td><td>/bridge</td><td>/api/bridge</td></tr>
+      <tr><td>Earn</td><td>/earn</td><td>/api/earn</td></tr>
+      <tr><td>Play</td><td>/play</td><td>/api/play</td></tr>
+      <tr><td>Info</td><td>/info</td><td>/api/info</td></tr>
+      <tr><td>Burn Dashboard</td><td>/burn</td><td>/api/burn</td></tr>
+      <tr><td>IFO</td><td>/ifo</td><td>/api/ifo</td></tr>
+      <tr><td>Voting</td><td>/voting</td><td>/api/voting</td></tr>
+      <tr><td>Blog</td><td>/blog, /blog/[slug]</td><td>/api/blog, /api/blog/[slug]</td></tr>
+      <tr><td>Docs</td><td>/docs, /docs/a/b</td><td>/api/docs, /api/docs/a/b</td></tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

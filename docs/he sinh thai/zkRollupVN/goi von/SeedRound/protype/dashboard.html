@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coinbase Trading UI Clone</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0d111c;
+      color: #fff;
+    }
+    header {
+      background-color: #1c1f2a;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header .left, header .right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .main {
+      display: flex;
+      height: calc(100vh - 60px);
+    }
+    .sidebar {
+      width: 60px;
+      background-color: #1c1f2a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+    }
+    .sidebar i {
+      margin: 20px 0;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+    }
+    .chart-area {
+      flex: 2;
+      border-right: 1px solid #333;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .orderbook-area {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      background-color: #141824;
+    }
+    h4 {
+      margin-bottom: 10px;
+      color: #00b4ff;
+    }
+    .table {
+      font-size: 12px;
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .table th, .table td {
+      padding: 4px 6px;
+      border-bottom: 1px solid #2a2e3a;
+      text-align: right;
+    }
+    .table th {
+      color: #ccc;
+    }
+    .account-status {
+      background-color: #2a2e3a;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: auto;
+    }
+    .account-status h3 {
+      margin: 0 0 10px 0;
+      color: #00b4ff;
+    }
+    .button {
+      background-color: #2962ff;
+      padding: 6px 12px;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #orders-today {
+      margin-top: 20px;
+    }
+    #orders-today .table td {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="left">
+      <img src="https://cryptologos.cc/logos/coinbase-coinbase-logo.png" alt="Coinbase" width="28"/>
+      <div>BTC-USDC</div>
+      <div style="font-size: 14px;">$118,810.16 <span style="color: #00ff80;">(+1.3%)</span></div>
+    </div>
+    <div class="right">
+      <button class="button">Deposit</button>
+      <button class="button">Manage Funds</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="sidebar">
+      <i>📊</i>
+      <i>💼</i>
+      <i>📁</i>
+      <i>⚙️</i>
+    </div>
+
+    <div class="content">
+      <div class="chart-area">
+        <h4>BTC/USDC Chart (TradingView)</h4>
+        <div id="tradingview-widget" style="height: 400px;"></div>
+
+        <div id="orders-today">
+          <h4>Orders đã đặt trong ngày</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Side</th>
+                <th>Price (USD)</th>
+                <th>Amount (BTC)</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>04:55:12</td>
+                <td>Limit</td>
+                <td style="color:#00ff80;">Buy</td>
+                <td>118800.00</td>
+                <td>0.025</td>
+                <td>Filled</td>
+              </tr>
+              <tr>
+                <td>05:10:35</td>
+                <td>Market</td>
+                <td style="color:#ff4d4d;">Sell</td>
+                <td>118812.00</td>
+                <td>0.050</td>
+                <td>Filled</td>
+              </tr>
+              <tr>
+                <td>05:33:02</td>
+                <td>Limit</td>
+                <td style="color:#00ff80;">Buy</td>
+                <td>118790.00</td>
+                <td>0.030</td>
+                <td>Open</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="orderbook-area">
+        <div>
+          <h4>Order Book</h4>
+          <table class="table">
+            <thead>
+              <tr><th>Amount (BTC)</th><th>Price (USD)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0.0542</td><td style="color:#ff4d4d;">118812.20</td></tr>
+              <tr><td>0.0211</td><td style="color:#ff4d4d;">118811.10</td></tr>
+              <tr><td>0.0345</td><td style="color:#ff4d4d;">118810.16</td></tr>
+              <tr><td>0.0442</td><td style="color:#00ff80;">118809.12</td></tr>
+              <tr><td>0.0501</td><td style="color:#00ff80;">118808.40</td></tr>
+              <tr><td>0.0602</td><td style="color:#00ff80;">118806.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <h4>Trade History</h4>
+          <table class="table">
+            <thead>
+              <tr><th>Time</th><th>Price</th><th>Amount</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>05:40:01</td><td style="color:#ff4d4d;">118812.20</td><td>0.0231</td></tr>
+              <tr><td>05:39:50</td><td style="color:#00ff80;">118808.90</td><td>0.0512</td></tr>
+              <tr><td>05:39:30</td><td style="color:#00ff80;">118807.65</td><td>0.0310</td></tr>
+              <tr><td>05:39:12</td><td style="color:#ff4d4d;">118810.00</td><td>0.0422</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="account-status">
+          <h3>Account under review</h3>
+          <p>We're reviewing your account to help keep it safe. Trading is temporarily unavailable. We'll email you when it's done.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TradingView Widget -->
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+    new TradingView.widget({
+      "autosize": true,
+      "symbol": "COINBASE:BTCUSD",
+      "interval": "5",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1",
+      "locale": "en",
+      "toolbar_bg": "#1c1f2a",
+      "enable_publishing": false,
+      "hide_top_toolbar": false,
+      "container_id": "tradingview-widget"
+    });
+  </script>
+</body>
+</html>

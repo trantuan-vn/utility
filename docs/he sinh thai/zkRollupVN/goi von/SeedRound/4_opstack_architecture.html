@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <title>STO Rollup trên OP Stack</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 2rem;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1, h2 {
+      color: #1a73e8;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background: #e0e0e0;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Thiết kế STO Chain sử dụng OP Stack</h1>
+  <div class="section">
+    <h2>1. Tùy biến Lớp Core của OP Stack</h2>
+    <table>
+      <thead>
+        <tr><th>Thành phần</th><th>Tùy biến cho STO</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sequencer</td><td>Dùng sequencer riêng để tránh frontrunning và quản lý theo whitelist nhà đầu tư</td></tr>
+        <tr><td>Data Availability</td><td>Tùy chọn Celestia, EigenDA hoặc lớp riêng để giữ dữ liệu nhạy cảm</td></tr>
+        <tr><td>Derivation Pipeline</td><td>Điều chỉnh logic ghi nhận block phù hợp quy tắc STO</td></tr>
+        <tr><td>Fraud Proof</td><td>Giữ nguyên hoặc tùy chỉnh nhẹ theo cơ chế OP</td></tr>
+        <tr><td>Gas Accounting</td><td>Tùy chỉnh chi phí giao dịch phù hợp đặc thù STO</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>2. Compliance Layer</h2>
+    <table>
+      <thead>
+        <tr><th>Thành phần</th><th>Chi tiết</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Smart Contract</td><td>Dùng ERC-1400 hoặc ERC-3643, hỗ trợ KYC, phân quyền sở hữu, hạn chế giao dịch</td></tr>
+        <tr><td>Onchain Identity</td><td>DID/Soulbound Token đại diện danh tính hợp lệ</td></tr>
+        <tr><td>Transfer Restrictions</td><td>Chỉ cho phép chuyển nếu người nhận đạt chuẩn</td></tr>
+        <tr><td>Compliance Oracle</td><td>Tích hợp Chainlink/Oracle cập nhật trạng thái KYC</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>3. Governance Layer</h2>
+    <ul>
+      <li>Multisig DAO quản lý danh sách nhà đầu tư & tạm dừng hệ thống nếu cần</li>
+      <li>Cơ chế RetroPGF funding cho các dự án phụ trợ</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>4. Tích hợp Bridge có KYC</h2>
+    <ul>
+      <li>Dùng bridge nội bộ tích hợp ZK hoặc attestation KYC</li>
+      <li>Bridge chỉ mint/burn token nếu người dùng hợp lệ</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>5. Developer Tooling & SDK</h2>
+    <ul>
+      <li>SDK phát hành STO token</li>
+      <li>Dashboard quản lý cap-table, vesting, whitelist</li>
+      <li>Giám sát & báo cáo giao dịch token</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>6. Dịch vụ khởi nghiệp (BaaS)</h2>
+    <ul>
+      <li>STO Launchpad</li>
+      <li>Compliance-as-a-Service</li>
+      <li>Legal Templates SDK</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>7. Kiến trúc tổng quát (Mô hình)</h2>
+    <pre id="roadmap" class="mermaid">
+      graph TD
+        A[L1 Ethereum] -->|Data Commit + Fraud Proof| B[STO Rollup OP Stack]
+        B --> C[Custom Sequencer - with KYC rules]
+        B --> D[Smart Contracts: ERC-3643, compliance guard]
+        B --> E[Bridge with KYC/ZK support]
+        B --> F[DAO/Multisig Governance]
+        B --> G[Data Availability: EigenDA/Celestia]
+        B --> H[Dev SDK for STO issuing]
+        D --> I[Onchain Identity DID/SBT]
+        D --> J[Transfer Compliance Oracle]
+    </pre>
+  </div>  
+  <div class="section">
+    <h2>8. Kiến trúc cannon</h2>
+    <pre id="cannon" class="mermaid">
+      flowchart TD
+        subgraph L2 Rollup Chain
+            A1[Rollup Node<br>sử dụng OP Stack]
+            A2[Generate Block Output<br>State Root]
+            A3[Submit Output<br>StateRoot + Calldata<br>to L1]
+        end
+        subgraph Ethereum L1
+            B1[Verifier Smart Contract]
+            B2[Fraud Proof Dispute Game]
+            B3[Final Verdict<br>Accept or Reject Block]
+        end
+        subgraph Challenger
+            C1[Run op-cannon<br>MIPS VM Emulator]
+            C2[Input: Calldata + Pre-State<br>from L1 Verifier]
+            C3[Check Mismatch<br>via Binary Search]
+            C4[Submit Proof<br>with Faulty Execution Step]
+        end
+        subgraph Monitoring Agents
+            D1[Watchers<br>Theo dõi trạng thái L2]
+            D2[Verifiers<br>Chạy lại logic L2 để đối chiếu]
+            D3[Challenge bots<br>Tự động nộp bằng chứng]
+            D4[Node monitor<br>Theo dõi uptime/sequencer]
+        end
+        %% Flow chính
+        A1 --> A2 --> A3 --> B1
+        C1 --> C2 --> C3 --> C4 --> B2
+        B2 --> B3
+        B1 -->|Trigger| B2
+        B3 -->|If fraud| A1
+        %% Flow từ các agent
+        D1 --> C1
+        D2 --> C1
+        D3 --> C4
+        D4 --> A1
+    </pre>
+  </div>  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      mermaid.initialize({ startOnLoad: false, theme: "forest" });
+      const element = document.querySelector("#roadmap");
+      const cannon = document.querySelector("#cannon");
+      mermaid.run({ nodes: [element,cannon] });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reown Features — Kết nối ví, Mua Crypto, Swap</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  </script>
+  <style>
+    :root{
+      --bg:#f4f6f9;
+      --card:#ffffff;
+      --muted:#555;
+      --accent:#0077cc;
+      --white:#222;
+    }
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px;
+    }
+    .container{max-width:1100px;margin:0 auto;}
+    header{display:flex;gap:16px;align-items:center;margin-bottom:24px;}
+    header h1{margin:0;font-size:22px;color:var(--accent);}
+    header p{margin:0;color:var(--muted);font-size:14px;}
+    .grid{display:grid;grid-template-columns:1fr;gap:20px;}
+    @media(min-width:900px){ .grid{grid-template-columns:1fr 1fr;} }
+    .card{
+      background:var(--card);
+      border:1px solid rgba(0,0,0,0.08);
+      border-radius:12px;
+      padding:18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+    .full{grid-column:1/-1;}
+    h2{font-size:18px;margin:0 0 8px 0;color:var(--accent);}
+    p.desc{margin:0 0 12px 0;color:var(--muted);font-size:14px;}
+    .mermaid{background:#fdfdfd;padding:12px;border-radius:8px;border:1px solid #ddd;}
+    .note{margin-top:10px;color:var(--muted);font-size:13px;}
+    footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Giới thiệu 3 Tính năng chính tích hợp Reown</h1>
+        <p>Kết nối ví • Mua crypto • Swap — kèm sơ đồ luồng (Mermaid) và mô tả chi tiết.</p>
+      </div>
+    </header>
+
+    <!-- CONNECT WALLET -->
+    <section class="card full">
+      <h2>1. Kết nối ví (Connect Wallet)</h2>
+      <p class="desc">Luồng kết nối ví khi DApp tích hợp Reown SDK (WalletConnect). Reown là lớp trung gian giúp DApp và ví giao tiếp — session keys, QR/deeplink, user approval.</p>
+
+      <div class="mermaid">
+        %%{init:{"theme":"default"}}%%
+        sequenceDiagram
+            participant User
+            participant Client
+            participant Backend
+            participant Wallet
+
+            User->>Client: Mở dApp, chọn "Connect Wallet"
+            Client->>Wallet: Mở modal Reown, user chọn ví, kết nối
+            Wallet->>Client: Trả về địa chỉ ví (address)
+            Client->>Backend: Yêu cầu challenge (nonce) kèm địa chỉ ví
+            Backend->>Client: Trả về message challenge
+            Client->>Wallet: Yêu cầu ký message challenge
+            Wallet->>User: Hiển thị prompt ký
+            User->>Wallet: Ký message, trả về chữ ký
+            Wallet->>Client: Trả chữ ký
+            Client->>Backend: Gửi địa chỉ ví + chữ ký để xác thực
+            Backend->>Backend: Verify chữ ký hợp lệ
+            alt Nếu hợp lệ
+                Backend->>Client: Tạo session, set HttpOnly cookie
+                Client->>User: Hiển thị trạng thái đăng nhập
+            else Nếu không hợp lệ
+                Backend->>Client: Trả lỗi xác thực
+            end
+
+            Note over Client,Backend: Các request API tiếp theo từ client sẽ kèm cookie để xác thực phiên
+
+            Client->>Backend: Gọi API cần bảo mật (ví dụ lấy dữ liệu cá nhân)
+            Backend->>Backend: Xác thực session từ cookie
+            Backend->>Client: Trả dữ liệu
+
+            Client->>Wallet: Khi user gửi giao dịch blockchain (swap, chuyển token)
+            Wallet->>User: Hiển thị prompt ký giao dịch
+            User->>Wallet: Ký giao dịch
+            Wallet->>Blockchain: Gửi giao dịch lên blockchain
+
+      </div>
+
+      <div class="note">Ghi chú: Session key có thể lưu trên Reown Cloud hoặc backend của bạn.</div>
+    </section>
+
+    <!-- BUY CRYPTO -->
+    <section class="card">
+      <h2>2. Mua Crypto (Buy — On-Ramp)</h2>
+      <p class="desc">Flow mua crypto (fiat → crypto) tích hợp Reown/AppKit Pay + Meld/on-ramp provider.</p>
+
+      <div class="mermaid">
+        %%{init:{"theme":"default"}}%%
+        sequenceDiagram
+          participant U as 🧑 User
+          participant D as 🌐 DApp
+          participant W as 💼 Wallet
+          participant R as 💳 On-Ramp Provider
+          participant P as 🏦 Payment Gateway
+          participant B as ⛓ Blockchain
+          participant L as 💧 Liquidity Pool
+
+          U->>D: Chọn Buy Crypto
+          D->>W: Yêu cầu kết nối ví
+          W-->>U: Xác nhận kết nối
+          U-->>W: Đồng ý
+          D->>R: Gửi thông tin đơn hàng
+          R->>P: Điều hướng thanh toán
+          U-->>P: Thanh toán
+          P-->>R: Xác nhận thành công
+          R->>B: Gửi giao dịch mua token
+          B->>L: Swap/mint token
+          L-->>B: Cung cấp token
+          B-->>W: Token về ví user
+      </div>
+
+      <div class="note">Ghi chú: Provider thu phí, bạn có thể nhận commission nếu có hợp đồng affiliate.</div>
+    </section>
+
+    <!-- SWAP -->
+    <section class="card">
+      <h2>3. Swap (Token A → Token B)</h2>
+      <p class="desc">Luồng swap: Reown lấy quote từ 1inch, tạo calldata cho router contract, user ký và gửi tx.</p>
+
+      <div class="mermaid">
+        %%{init:{"theme":"default"}}%%
+        sequenceDiagram
+          autonumber
+          participant U as User
+          participant WA as Web App
+          participant WC as Reown SDK
+          participant QC as Quote API
+          participant SC as Smart Contract
+          participant BC as Blockchain
+          participant LP as Liquidity Pool
+
+          U->>WA: Chọn tokenA → tokenB
+          WA->>QC: Gọi quote API
+          QC-->>WA: Trả quote + calldata
+          U->>WC: Connect wallet
+          WC-->>WA: Trả address
+          alt Cần approve
+            U->>WA: Click Approve
+            WA->>WC: Gửi approve tx
+            WC->>BC: Broadcast
+            BC-->>WC: Tx mined
+          end
+          U->>WA: Click Swap
+          WA->>WC: Ký & gửi swap tx
+          WC->>SC: Broadcast
+          SC->>LP: Swap tokenA → tokenB
+          LP-->>SC: Trả tokenB
+          SC->>BC: Hoàn tất tx
+          BC-->>WA: Notify kết quả
+          WA-->>U: Hiển thị kết quả
+      </div>
+
+      <div class="note">Ghi chú: Reown không giữ token; swap diễn ra trên DEX/aggregator contract.</div>
+    </section>
+
+    <footer>
+      © 2025 — Demo luồng tính năng Reown
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quy trình Token hóa chứng khoán theo Securitize</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #f9f9f9;
+      color: #222;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    ul {
+      margin-top: 0;
+      margin-bottom: 1em;
+    }
+    code {
+      background: #eee;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .highlight {
+      background-color: #e1f5fe;
+      border-left: 4px solid #0288d1;
+      padding: 10px 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    a {
+      color: #0288d1;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quy trình Token hóa chứng khoán theo Securitize</h1>
+  <p><em>Tổng hợp chi tiết cách Securitize thực hiện token hóa chứng khoán (Security Token Offering - STO) theo chuẩn và thực tiễn, bao gồm smart contract, quy trình pháp lý, compliance, và phân phối token.</em></p>
+
+  <h2>1. Tổng quan</h2>
+  <p>Securitize là một nền tảng cung cấp giải pháp <strong>token hóa chứng khoán</strong> đầy đủ với vai trò là <strong>transfer agent kỹ thuật số</strong>, giúp issuer phát hành, quản lý, và phân phối chứng khoán số theo chuẩn, đồng thời tuân thủ quy định pháp luật.</p>
+
+  <h2>2. Các thành phần chính</h2>
+  <ul>
+    <li><strong>Token Smart Contract</strong>: ERC-1400/3643 compatible - hỗ trợ phân chia quyền, whitelist, hạn chế chuyển nhượng, partition.</li>
+    <li><strong>Compliance Contract</strong>: Kiểm soát whitelist, quyền chuyển nhượng, lockup, blacklist theo luật.</li>
+    <li><strong>Issuer & Transfer Agent Roles</strong>: Phân quyền quản trị, cập nhật whitelist, cấp phát token, thu hồi token.</li>
+    <li><strong>Registry Off-chain</strong>: Quản lý danh tính nhà đầu tư, lưu trữ KYC/AML, liên kết wallet với ID.</li>
+    <li><strong>Corporate Actions Module</strong>: Snapshot, cổ tức, chia cổ phiếu thưởng, quyền mua thêm.</li>
+    <li><strong>Market & ATS Integration</strong>: Giao dịch token tuân thủ, thanh toán atomic.</li>
+  </ul>
+
+  <h2>3. Quy trình chi tiết</h2>
+  <ol>
+    <li><strong>Chuẩn bị và đăng ký</strong>: Issuer ký hợp đồng với Securitize làm transfer agent, hoàn tất KYC/AML với nhà đầu tư.</li>
+    <li><strong>Phát hành token</strong>: Smart contract token hóa được deploy với chức năng permissioned token (ERC-1400/3643).</li>
+    <li><strong>Whitelist nhà đầu tư</strong>: Transfer agent cập nhật danh sách wallet được phép sở hữu token.</li>
+    <li><strong>Bán token</strong>: Nhà đầu tư được cấp token qua đợt bán, token được ghi nhận on-chain, compliance kiểm tra chuyển nhượng.</li>
+    <li><strong>Quản lý chuyển nhượng</strong>: Chỉ cho phép chuyển token giữa các ví nằm trong whitelist theo quy định pháp luật.</li>
+    <li><strong>Thực hiện quyền cổ đông</strong>: Snapshot danh sách cổ đông, phát cổ tức tiền mặt hoặc cổ phiếu thưởng, sử dụng Merkle tree để tối ưu chi phí claim.</li>
+    <li><strong>Báo cáo và audit</strong>: Lưu giữ đầy đủ lịch sử giao dịch, danh sách cổ đông phục vụ báo cáo regulator.</li>
+  </ol>
+
+  <h2>4. Các điểm kỹ thuật nổi bật</h2>
+  <ul>
+    <li><strong>ERC-1400/3643 Token:</strong> Kết hợp giữa chức năng ERC-20 và hạn chế chuyển nhượng, hỗ trợ partition (phân loại cổ phiếu), compliance check trước mỗi giao dịch.</li>
+    <li><strong>Compliance Contract:</strong> Phân quyền quản trị whitelist, blacklist, lockup, từ chối giao dịch không hợp lệ.</li>
+    <li><strong>Whitelist Off-chain và On-chain:</strong> Danh sách nhà đầu tư xác thực liên tục được đồng bộ với smart contract.</li>
+    <li><strong>Snapshot và Merkle Tree:</strong> Snapshot danh sách cổ đông được tạo off-chain, tạo Merkle root và lưu on-chain để hỗ trợ phân phối cổ tức, cổ phiếu thưởng hoặc airdrop.</li>
+    <li><strong>Quản lý đợt quyền (distribution campaigns):</strong> Mỗi đợt phân phối được ghi nhận riêng biệt, theo dõi trạng thái claim của từng nhà đầu tư.</li>
+    <li><strong>Multisig và Governance:</strong> Hỗ trợ quyền admin an toàn, quản lý nâng cấp hợp đồng.</li>
+  </ul>
+
+  <h2>5. Ví dụ minh họa mã smart contract (ERC-1400 token snippet)</h2>
+  <pre><code>contract SecurityToken is IERC1400 {
+    mapping(address =&gt; uint256) private _balances;
+    mapping(address =&gt; bool) private _whitelist;
+
+    function transfer(address to, uint256 amount) public override returns (bool) {
+      require(_whitelist[msg.sender] &amp;&amp; _whitelist[to], "Sender or receiver not whitelisted");
+      _balances[msg.sender] -= amount;
+      _balances[to] += amount;
+      emit Transfer(msg.sender, to, amount);
+      return true;
+    }
+
+    function addToWhitelist(address investor) external onlyTransferAgent {
+      _whitelist[investor] = true;
+      emit WhitelistUpdated(investor, true);
+    }
+  }
+  </code></pre>
+
+  <h2>6. Quy trình phát cổ tức / cổ phiếu thưởng</h2>
+  <p>Để trả cổ tức bằng cổ phiếu (stock dividend), Securitize sẽ:</p>
+  <ul>
+    <li>Lấy snapshot danh sách cổ đông tại ngày chốt sổ.</li>
+    <li>Tính toán số cổ phiếu thưởng tương ứng với tỷ lệ.</li>
+    <li>Tạo Merkle tree danh sách phân phối và lưu Merkle root on-chain.</li>
+    <li>Cấp phát token thưởng bằng cách cho phép nhà đầu tư <code>claim</code> dựa trên Merkle proof.</li>
+  </ul>
+
+  <h2>7. Tổng kết</h2>
+  <p>Securitize xây dựng hệ sinh thái token chứng khoán chuẩn mực, kết hợp on-chain và off-chain để:</p>
+  <ul>
+    <li>Tuân thủ quy định nghiêm ngặt của regulator.</li>
+    <li>Đảm bảo tính minh bạch và bảo mật.</li>
+    <li>Tối ưu chi phí on-chain bằng cơ chế Merkle proof.</li>
+    <li>Quản lý toàn diện vòng đời chứng khoán số.</li>
+  </ul>
+
+  <h2>8. Tài liệu tham khảo</h2>
+  <ul>
+    <li><a href="https://securitize.io/technology/" target="_blank" rel="noopener noreferrer">Securitize Technology Overview</a></li>
+    <li><a href="https://github.com/Securitize/securitize-contracts" target="_blank" rel="noopener noreferrer">Securitize Contracts GitHub</a></li>
+    <li><a href="https://eips.ethereum.org/EIPS/eip-1400" target="_blank" rel="noopener noreferrer">Ethereum EIP-1400 Standard</a></li>
+    <li><a href="https://eips.ethereum.org/EIPS/eip-3643" target="_blank" rel="noopener noreferrer">Ethereum EIP-3643 Standard</a></li>
+  </ul>
+
+  <h2>9. Ví dụ minh họa: Token hóa 100,000 cổ phiếu Tesla (TSLA) để giao dịch trên Securitize</h2>
+  <p><em>Quy trình “partial tokenization” một mã chứng khoán niêm yết như Tesla cho nhóm nhà đầu tư nhất định trên Securitize:</em></p>
+  <ol>
+    <li><strong>Thiết lập pháp lý và xin phép</strong><br />
+      Tesla là công ty đại chúng nên không trực tiếp tham gia token hóa này (trừ khi họ chủ động hợp tác).<br />
+      Một Special Purpose Vehicle (SPV) hoặc trust được lập ra tại jurisdiction phù hợp (Delaware hoặc Cayman) để nắm giữ 100,000 cổ TSLA thật trên thị trường.<br />
+      SPV đăng ký chứng khoán với SEC hoặc dùng miễn trừ phù hợp (Reg D / Reg S / Reg A+).<br />
+      SPV ký hợp đồng với Securitize để phát hành token đại diện số cổ phiếu TSLA đang nắm giữ.
+    </li>
+    <li><strong>Mua và lưu ký cổ phiếu gốc</strong><br />
+      SPV mua 100,000 cổ TSLA từ thị trường thứ cấp qua broker-dealer được cấp phép.<br />
+      Cổ phiếu lưu ký tại custodian hoặc transfer agent được SEC chấp thuận.<br />
+      Cổ phiếu này không thể đem bán ngoài SPV, đảm bảo backing 1:1 với token.
+    </li>
+    <li><strong>Phát hành token bảo mật</strong><br />
+      Securitize tạo smart contract theo chuẩn ERC-1400 (hoặc ERC-1404) để phát hành token TSLA-S.<br />
+      Mỗi token TSLA-S = 1 cổ TSLA thực tế SPV nắm giữ.<br />
+      Whitelist chỉ gồm NĐT đã qua KYC/AML và đủ điều kiện pháp lý.<br />
+      Token có restrictions: không thể chuyển cho địa chỉ ngoài whitelist, không thể gửi ra ngoài hạ tầng Securitize nếu không được phép.
+    </li>
+    <li><strong>Phân phối token cho nhóm NĐT</strong><br />
+      NĐT nạp tiền (USD, USDC, USDT) vào tài khoản tại Securitize.<br />
+      Securitize phát hành token TSLA-S tương ứng, gửi vào ví blockchain NĐT (Ethereum, Polygon...).<br />
+      NĐT sở hữu token, nhưng pháp lý vẫn ghi nhận quyền sở hữu cổ phiếu TSLA nằm trong SPV.
+    </li>
+    <li><strong>Giao dịch thứ cấp trên ATS</strong><br />
+      Token TSLA-S được giao dịch trên Securitize Markets (ATS) giữa các NĐT trong whitelist.<br />
+      Không thể chuyển token cho ví ngoài whitelist, tuân thủ luật SEC.<br />
+      ATS ghi nhận giao dịch, update cap table SPV.
+    </li>
+    <li><strong>Thực hiện quyền cổ tức, chia tách, cổ phiếu thưởng</strong><br />
+      Nếu Tesla trả cổ tức tiền mặt hoặc cổ phiếu thưởng:<br />
+      Custodian nhận cổ tức tiền mặt → SPV phân bổ theo tỷ lệ → Securitize chuyển USDC vào ví NĐT.<br />
+      Nếu cổ phiếu thưởng / stock split → SPV nhận → Securitize mint thêm token tương ứng cho NĐT.<br />
+      Mọi corporate action đều thông qua SPV để phản ánh trên token.
+    </li>
+  </ol>
+  <div class="highlight">
+    <strong>Lưu ý quan trọng:</strong> Không thể tự ý lấy 100,000 cổ TSLA và phát token cho NĐT ngoài whitelist — vi phạm luật chứng khoán Mỹ.<br />
+    Chuẩn ERC-1400/1404 enforce chuyển nhượng hợp lệ trên blockchain, tránh bán token ngoài whitelist.<br />
+    Mô hình tương tự "bọc" cổ phiếu thật trong SPV và phát hành phiên bản blockchain quản lý.
+  </div>
+
+  <h2>10. Ví dụ một số smart contract Securitize đã deploy trên Ethereum</h2>
+  <ul>
+    <li><strong>Token Securitize</strong><br />
+      <a href="https://ethplorer.io/address/0xae962d11e0a74ce271f7a111a0c3f538ed3dede6" target="_blank" rel="noopener noreferrer">
+        0xae962d11e0a74ce271f7a111a0c3f538ed3dede6
+      </a><br />
+      Đây là một ví dụ về token chứng khoán được phát hành trên nền tảng Securitize.<br />
+      Thông tin chi tiết có thể xem trên các explorer như Ethplorer hoặc Etherscan.
+    </li>
+    <li><strong>ERC-1400 Smart Contract</strong><br />
+      <a href="https://etherscan.io/address/0x5ef03102da24a7d953047ec2a7bf0816fb5a1ee0" target="_blank" rel="noopener noreferrer">
+        0x5ef03102da24a7d953047ec2a7bf0816fb5a1ee0
+      </a><br />
+      Một smart contract triển khai chuẩn ERC-1400, thường dùng cho token chứng khoán.<br />
+      Mã nguồn contract này đã được xác minh trên Etherscan.
+    </li>
+    <li><strong>Token Exodus (EXIT)</strong><br />
+      <a href="https://etherscan.io/address/0x78102a37f04eb263c1f626702f1c1f98618ea3de" target="_blank" rel="noopener noreferrer">
+        0x78102a37f04eb263c1f626702f1c1f98618ea3de
+      </a><br />
+      Exodus là token chứng khoán lớn phát hành qua Securitize, giá trị khoảng 400 triệu USD.<br />
+      Có thể tra cứu trên Etherscan.
+    </li>
+    <li><strong>Token BUIDL của BlackRock</strong><br />
+      <a href="https://etherscan.io/address/0x5ef03102da24a7d953047ec2a7bf0816fb5a1ee0" target="_blank" rel="noopener noreferrer">
+        0x5ef03102da24a7d953047ec2a7bf0816fb5a1ee0
+      </a><br />
+      Token đại diện quỹ tiền tệ kỹ thuật số BlackRock, phát hành trên nền tảng Securitize.<br />
+      Thông tin có thể xem trên Etherscan.
+    </li>
+  </ul>
+
+</body>
+</html>

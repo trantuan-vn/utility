@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo toàn diện: CEX vs DEX (2024-2034)</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .chart-container {
+            margin-bottom: 30px;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+        }
+        .trend-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .highlight {
+            background-color: #fffde7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .note {
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background: #eee;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background: #3498db;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BÁO CÁO TOÀN DIỆN: CEX vs DEX (2024-2034)</h1>
+        
+        <!-- Phần 1: Tổng quan thị phần -->
+        <div class="section">
+            <h2>I. Tổng quan thị phần 2024</h2>
+            <div class="grid-2col">
+                <div class="chart-container">
+                    <h3 style="display: flex; justify-content: center; align-items: center;">
+                        <div style="text-align: center;">
+                            Top 12 sàn CEX tập trung<br>
+                            (Tổng giá trị giao dịch hàng ngày của 12 sàn: ~$50 - $60 tỷ)
+                        </div>
+                    </h3>
+                    <div class="mermaid" style="display: flex; justify-content: center; align-items: center;">
+                        pie 
+                            "Binance" : 35.2
+                            "Coinbase" : 18.5
+                            "Kraken" : 9.8
+                            "Bybit" : 8.3
+                            "OKX" : 7.6
+                            "Bitget" : 5.4
+                            "Deribit" : 4.1
+                            "HTX" : 3.9
+                            "KuCoin" : 3.2
+                            "Bitfinex" : 2.5
+                            "MEXC" : 1.8
+                            "Gate.io" : 1.7
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3 style="display: flex; justify-content: center; align-items: center;">
+                        <div style="text-align: center;">
+                                    Top 12 sàn DEX phi tập trung<br>
+                        (Tổng giá trị giao dịch hàng ngày của 12 sàn: ~$15 - $20 tỷ)
+                        </div>
+                    </h3>
+                    <div class="mermaid" style="display: flex; justify-content: center; align-items: center;">
+                        pie 
+                            "Uniswap" : 32
+                            "PancakeSwap" : 18
+                            "Curve" : 12
+                            "dYdX" : 10
+                            "Balancer" : 6
+                            "SushiSwap" : 5
+                            "Trader Joe" : 4
+                            "GMX" : 3
+                            "Maverick" : 3
+                            "Aerodrome" : 3
+                            "THORSwap" : 2
+                            "Orca" : 2
+                    </div>
+                </div>
+            </div>
+            <div class="highlight">
+                <p><strong>Nhận xét:</strong> Thị phần CEX vẫn chiếm ưu thế (~75% tổng volume giao dịch) nhờ tính thanh khoản cao và hỗ trợ fiat, trong khi DEX phát triển mạnh ở phân khúc crypto-native với ưu điểm không cần KYC.</p>
+            </div>
+        </div>
+
+        <!-- Phần 2: So sánh chi tiết -->
+        <div class="section">
+            <h2>II. So sánh CEX vs DEX</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>Tiêu chí</th>
+                    <th>CEX</th>
+                    <th>DEX</th>
+                </tr>
+                <tr>
+                    <td><strong>Mô hình</strong></td>
+                    <td>Tập trung (custodial)</td>
+                    <td>Phi tập trung (non-custodial)</td>
+                </tr>
+                <tr>
+                    <td><strong>Doanh thu chính</strong></td>
+                    <td>Phí giao dịch spot/futures, staking, listing</td>
+                    <td>Phí swap AMM, incentives liquidity</td>
+                </tr>
+                <tr>
+                    <td><strong>Ưu điểm</strong></td>
+                    <td>Thanh khoản cao, tốc độ nhanh, hỗ trợ fiat</td>
+                    <td>Không cần KYC, tự giữ private key, composability</td>
+                </tr>
+                <tr>
+                    <td><strong>Nhược điểm</strong></td>
+                    <td>Rủi ro bị hack, quy định pháp lý</td>
+                    <td>Trải nghiệm phức tạp, phí gas cao</td>
+                </tr>
+                <tr>
+                    <td><strong>Phí giao dịch trung bình</strong></td>
+                    <td>0.1-0.2% (spot), 0.02-0.05% (futures)</td>
+                    <td>0.3-0.5% (AMM), + phí network</td>
+                </tr>
+                <tr>
+                    <td><strong>Đối tượng</strong></td>
+                    <td>Trader truyền thống, tổ chức</td>
+                    <td>DeFi users, crypto-native</td>
+                </tr>
+            </table>
+
+            <div class="trend-card">
+                <h3>🔍 Xu hướng nổi bật (2024):</h3>
+                <ul>
+                    <li><strong>CEX</strong>: Tăng cường tuân thủ (MiCA, FATF), phát triển dịch vụ institutional (Coinbase, Binance)</li>
+                    <li><strong>DEX</strong>: Cải tiến AMM (Uniswap v4, Maverick), mở rộng sang L2 (Arbitrum, Base)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Phần 3: Dự báo 10 năm tới -->
+        <div class="section">
+            <h2>III. Dự báo xu hướng (2025-2034)</h2>
+            <div class="grid-2col">
+                <div>
+                    <h3>1. CEX</h3>
+                    <div class="trend-card">
+                        <h4>📈 Cơ hội</h4>
+                        <ul>
+                            <li>Tokenization tài sản truyền thống (RWA)</li>
+                            <li>Tích hợp AI cho trading (signal, risk management)</li>
+                            <li>One-stop-shop (CEX + Web3 Wallet + NFT)</li>
+                        </ul>
+                    </div>
+                    <div class="trend-card" style="border-left-color: #e74c3c;">
+                        <h4>📉 Thách thức</h4>
+                        <ul>
+                            <li>Áp lực từ quy định toàn cầu</li>
+                            <li>Cạnh tranh với DEX có liquidity ngang bằng</li>
+                            <li>Rủi ro bảo mật (hack, insider)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h3>2. DEX</h3>
+                    <div class="trend-card">
+                        <h4>📈 Cơ hội</h4>
+                        <ul>
+                            <li>Cross-chain trading không cần bridge (THORChain)</li>
+                            <li>AMM thế hệ mới (dynamic fees, MEV protection)</li>
+                            <li>DeFi composability với RWAs và derivatives</li>
+                        </ul>
+                    </div>
+                    <div class="trend-card" style="border-left-color: #e74c3c;">
+                        <h4>📉 Thách thức</h4>
+                        <ul>
+                            <li>Khó tiếp cận người dùng đại chúng</li>
+                            <li>Phụ thuộc vào incentives token không bền vững</li>
+                            <li>Cạnh tranh với CEX có UX tương tự</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>🎯 Kịch bản 2030:</h3>
+                <p><strong>"Hybrid Exchange"</strong> sẽ thống trị: kết hợp ưu điểm CEX (tốc độ, UX) và DEX (self-custody). Ví dụ:</p>
+                <ul>
+                    <li>CEX áp dụng công nghệ ZK-proofs để xác minh dự trữ</li>
+                    <li>DEX tích hợp off-chain order book + on-chain settlement</li>
+                    <li>Phân khúc institutional chuyển sang sử dụng DEX có compliance (KYC optional)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Phần 4: Đề xuất chiến lược -->
+        <div class="section">
+            <h2>IV. Đề xuất cho các bên liên quan</h2>
+            <div class="grid-2col">
+                <div>
+                    <h3>💼 Cho doanh nghiệp</h3>
+                    <ul>
+                        <li><strong>CEX</strong>: Đầu tư vào R&D để tương thích quy định toàn cầu</li>
+                        <li><strong>DEX</strong>: Phát triển giải pháp abstract gas fee cho người mới</li>
+                        <li>Cả hai: Tích hợp AI/ML để cải thiện liquidity management</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>👨‍💻 Cho nhà đầu tư/trader</h3>
+                    <ul>
+                        <li>Đa dạng hóa qua cả CEX và DEX để tối ưu phí</li>
+                        <li>Theo dõi các DEX chuyên sâu derivatives (dYdX, GMX)</li>
+                        <li>Chú ý CEX có token utility mạnh (BNB, OKB)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <p class="note">* Báo cáo dựa trên dữ liệu ước lượng Q1/2024 từ CoinGecko, DefiLlama và Token Terminal | Cập nhật lần cuối: 08/2024</p>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            fontFamily: 'Segoe UI',
+            pie: {
+                textPosition: 0.8,
+                useWidth: 600
+            }
+        });
+    </script>
+</body>
+</html>

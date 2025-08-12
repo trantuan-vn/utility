@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mô hình kinh doanh AMM DEX (Spot Trading Fees)</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; background-color: #f5f5f5; color: #333; }
+    h1, h2 { color: #2c3e50; }
+    ul { margin-left: 20px; }
+    .code { background: #eee; padding: 4px 8px; border-radius: 4px; font-family: monospace; }
+    .highlight { background: #fff3cd; padding: 8px; border-left: 5px solid #ffc107; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+  <h1>Mô hình kinh doanh AMM DEX (Spot Trading Fees) - PancakeSwap</h1>
+
+  <h2>1. Cơ bản về AMM DEX</h2>
+  <p>PancakeSwap hoạt động như một sàn DEX theo mô hình AMM (Automated Market Maker) sử dụng công thức:</p>
+  <p class="code">x * y = k</p>
+  <ul>
+    <li><strong>x, y</strong>: Số lượng hai token trong một pool thanh khoản.</li>
+    <li><strong>k</strong>: Hằng số không đổi.</li>
+  </ul>
+
+  <h2>2. Giao diện tương tác</h2>
+  <p>Frontend của PancakeSwap tương tác với 3 loại smart contract:</p>
+  <ul>
+    <li><strong>Factory</strong>: Tạo cặp giao dịch (Pair).</li>
+    <li><strong>Pair</strong>: Quản lý thanh khoản cho từng cặp.</li>
+    <li><strong>Router</strong>: Thực hiện swap, add/remove liquidity.</li>
+  </ul>
+
+  <h2>3. Cấu trúc smart contract</h2>
+  <ul>
+    <li>Mỗi cặp token có <strong>1 smart contract riêng (Pair)</strong>.</li>
+    <li><strong>Factory</strong> quản lý danh sách các Pair.</li>
+    <li><strong>Router</strong> đóng vai trò là cổng kết nối giữa frontend ↔ Factory & Pair.</li>
+    <li>Mỗi mạng (BSC, Ethereum...) đều có bộ Factory, Router, Pair riêng.</li>
+  </ul>
+
+  <h2>4. Cách LP cung cấp thanh khoản</h2>
+  <p>LP (Liquidity Provider) cung cấp cặp token theo tỷ lệ hiện tại của pool:</p>
+  <ul>
+    <li>Ví dụ: nếu giá đang là 1 BNB = 500 USDT, thì để thêm thanh khoản cần nạp theo đúng tỷ lệ đó.</li>
+    <li>Tổng tài sản trong pool chính là <strong>x và y</strong> (được cộng dồn từ tất cả LP).</li>
+    <li>Swap làm thay đổi x, y nhưng vẫn giữ x * y = k.</li>
+  </ul>
+
+  <h2>5. Ví dụ thực tế</h2>
+  <div class="highlight">
+    <p>Pool ban đầu: 2 BNB + 1000 USDT → k = 2000</p>
+    <p>Người dùng swap 1 BNB lấy USDT → làm giảm y, tăng x</p>
+    <p>Giá mới: 1 BNB ≈ 675 USDT (chênh với thị trường → arbitrage)</p>
+  </div>
+
+  <h2>6. Arbitrage (Kiếm lời từ chênh lệch giá)</h2>
+  <ul>
+    <li>Khi giá trong pool lệch so với thị trường → các trader arbitrage sẽ swap để hưởng chênh lệch.</li>
+    <li>Việc swap của arbitrage giúp pool “quay lại cân bằng” theo thị trường.</li>
+  </ul>
+
+  <h2>7. Doanh thu đến từ đâu?</h2>
+  <ul>
+    <li>Mỗi lần swap, PancakeSwap thu <strong>0.25% phí giao dịch</strong> (tuỳ cấu hình).</li>
+    <li>Phí này chia như sau:
+      <ul>
+        <li>0.17% cho LPs (người cung cấp thanh khoản)</li>
+        <li>0.03% cho Treasury hoặc dùng để mua lại / đốt CAKE</li>
+        <li>0.05% có thể dùng cho phát triển hệ sinh thái</li>
+      </ul>
+    </li>
+    <li><strong>Frontend (giao diện web)</strong> không mặc định được chia phí từ smart contract gốc.</li>
+    <li>Nếu muốn, frontend có thể viết <strong>router riêng</strong> để thu thêm phí hoặc hợp tác với DEX để được chia doanh thu.</li>
+  </ul>
+
+  <h2>8. Huy động thanh khoản</h2>
+  <p>Để có thể hoạt động, DEX cần có người cung cấp thanh khoản (LP):</p>
+  <ul>
+    <li>Giai đoạn đầu cần <strong>gọi vốn thanh khoản cho các pool chính</strong>.</li>
+    <li>Các LP được thưởng bằng phí giao dịch và có thể nhận thêm token thưởng (liquidity mining).</li>
+  </ul>
+
+  <h2>9. Hỗ trợ các chain không có smart contract như Bitcoin</h2>
+  <ul>
+    <li>Bitcoin không thể triển khai smart contract trực tiếp.</li>
+    <li>Giải pháp:
+      <ul>
+        <li>Dùng wrapped token như WBTC, BTCB trên Ethereum/BSC</li>
+        <li>Tích hợp bridge: LayerZero, Wormhole, THORChain</li>
+        <li>DEX như THORChain cho phép swap BTC thật ↔ ETH ↔ BNB</li>
+      </ul>
+    </li>
+  </ul>
+  <h2>10. Cách kiểm soát pool giai đoạn đầu</h2>
+  <ul>
+    <li><strong>Khóa thanh khoản</strong> (Liquidity Lock): Khóa LP token bằng các nền tảng như Unicrypt, Team Finance</li>
+    <li><strong>Chỉ whitelist hoặc cho team tạo pool</strong> để tránh tạo giá ảo</li>
+    <li><strong>Cung cấp thanh khoản đúng tỉ lệ giá thị trường</strong> (dựa vào oracle hoặc CEX)</li>
+    <li><strong>Giới hạn swap vài block đầu</strong> để tránh bot MEV/Front-run</li>
+    <li><strong>Dùng mô hình Bootstrapping Pool</strong> như Balancer LBP để tự điều chỉnh giá ban đầu</li>
+    <li><strong>Team backup hoặc market maker</strong> hỗ trợ thanh khoản giai đoạn đầu</li>
+  </ul>
+
+  <h2>11. Chainlink và thao túng giá</h2>
+  <ul>
+    <li>Chainlink lấy dữ liệu từ nhiều node operator + nguồn sàn CEX (Binance, Coinbase, etc).</li>
+    <li>Dữ liệu được tổng hợp và chuẩn hóa qua median/quorum rule, giảm nguy cơ thao túng.</li>
+    <li>Chainlink không tác động trực tiếp giá pool, mà cung cấp giá tham chiếu ban đầu cho LP đầu tiên.</li>
+  </ul>
+
+  <h2>12. Tính toán cụ thể khi góp LP</h2>
+  <p>Ví dụ: Pool có 2 BNB và 1000 USDT → 1 BNB = 500 USDT.</p>
+  <p>Bạn muốn góp 1 BNB + 550 USDT (tỷ lệ không đúng) → Router sẽ tự điều chỉnh, chỉ chấp nhận phần đúng tỷ lệ và hoàn trả phần dư.</p>
+  <p>LP token nhận được ≈ sqrt(x * y) của phần bạn góp thêm.</p>  
+
+  <h2>13. Quy trình tạo một pool bất kỳ</h2>
+  <ol>
+    <li>Chọn token A và B (ví dụ: BNB và USDT).</li>
+    <li>Dùng contract Factory gọi <code>createPair(tokenA, tokenB)</code> để tạo contract Pair mới.</li>
+    <li>Góp thanh khoản ban đầu thông qua <code>Router.addLiquidity()</code>.</li>
+    <li>Nhận về LP token theo tỉ lệ √(x * y).</li>
+    <li>Pool mở công khai, cho phép swap và các LP khác tham gia.</li>
+  </ol>
+
+  <h2>14. Tổng kết</h2>
+  <ul>
+    <li>AMM DEX như PancakeSwap tạo ra doanh thu ổn định từ phí giao dịch.</li>
+    <li>LP là nguồn lực chính giúp DEX hoạt động trơn tru.</li>
+    <li>Quản lý tốt smart contract + frontend + incentive cho LP là chìa khóa thành công.</li>
+  </ul>
+
+</body>
+</html>

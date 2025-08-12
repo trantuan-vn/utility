@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <title>Danh sách thành phần OP Stack</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      padding: 2rem;
+      color: #212529;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }    
+    h2 {
+      color: #2c3e50;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+    thead {
+      background-color: #343a40;
+      color: white;
+    }
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #dee2e6;
+      text-align: left;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f1f3f5;
+    }
+    tbody tr.group-header td {
+      background-color: #ced4da;
+      font-weight: bold;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: #212529;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+    .mermaid {
+      background: #eef;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>KIẾN TRÚC OP STACK</h1>
+    <h2>1. Danh sách thành phần trong hệ sinh thái OP Stack</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nhóm</th>
+          <th>Tên thành phần</th>
+          <th>Mô tả ngắn</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="group-header"><td colspan="4">Core Components</td></tr>
+        <tr><td>1</td><td></td><td>op-node</td><td>Node chính chạy mạng Optimism.</td></tr>
+        <tr><td>2</td><td></td><td>op-geth</td><td>Client Ethereum (Geth) tùy chỉnh cho Optimism.</td></tr>
+        <tr><td>3</td><td></td><td>op-batcher</td><td>Gộp giao dịch trước khi gửi lên Ethereum L1.</td></tr>
+        <tr><td>4</td><td></td><td>op-proposer</td><td>Đề xuất khối/giao dịch lên L1.</td></tr>
+        <tr><td>5</td><td></td><td>op-challenger</td><td>Thách thức gian lận (fraud proof) trong hệ thống.</td></tr>
+        <tr><td>6</td><td></td><td>op-conductor</td><td>Điều phối hoạt động mạng Optimism.</td></tr>
+        <tr><td>7</td><td></td><td>op-program</td><td>Thực thi chương trình trong OP Stack.</td></tr>
+        <tr><td>8</td><td></td><td>op-reth</td><td>Client Ethereum (Reth) bằng Rust cho Optimism.</td></tr>
+        <tr><td>9</td><td></td><td>contracts-bedrock</td><td>Hợp đồng thông minh nền tảng của Optimism.</td></tr>
+        <tr><td>10</td><td></td><td>cannon</td><td>Công cụ thực thi giao dịch/xử lý dữ liệu L2.</td></tr>
+
+        <tr class="group-header"><td colspan="4">Data Availability</td></tr>
+        <tr><td>11</td><td></td><td>da-server</td><td>Máy chủ đảm bảo khả năng truy cập dữ liệu (Data Availability).</td></tr>
+        <tr><td>12</td><td></td><td>eigenda-proxy</td><td>Proxy tích hợp với EigenDA (giải pháp lưu trữ dữ liệu).</td></tr>
+        <tr><td>13</td><td></td><td>blob-archiver</td><td>Lưu trữ dữ liệu dạng blob (binary large object).</td></tr>
+        <tr><td>14</td><td></td><td>indexer</td><td>Công cụ lập chỉ mục dữ liệu blockchain.</td></tr>
+
+        <tr class="group-header"><td colspan="4">Monitoring & Security</td></tr>
+        <tr><td>15</td><td></td><td>op-dispute-mon</td><td>Giám sát tranh chấp (dispute) trong mạng.</td></tr>
+        <tr><td>16</td><td></td><td>op-defender</td><td>Bảo vệ mạng chống tấn công.</td></tr>
+        <tr><td>17</td><td></td><td>op-monitorism</td><td>Hệ thống giám sát nâng cao.</td></tr>
+        <tr><td>18</td><td></td><td>chain-mon</td><td>Theo dõi trạng thái chuỗi (blockchain).</td></tr>
+        <tr><td>19</td><td></td><td>op-conductor-mon</td><td>Giám sát hoạt động của op-conductor.</td></tr>
+        <tr><td>20</td><td></td><td>op-interop-mon</td><td>Giám sát khả năng tương tác đa chuỗi.</td></tr>
+        <tr><td>21</td><td></td><td>fault-detector</td><td>Phát hiện lỗi hệ thống.</td></tr>
+        <tr><td>22</td><td></td><td>sentinel</td><td>Hệ thống an ninh giám sát bất thường.</td></tr>
+        <tr><td>23</td><td></td><td>replica-healthcheck</td><td>Kiểm tra sức khỏe bản sao dữ liệu (replica).</td></tr>
+        <tr><td>24</td><td></td><td>wd-mon</td><td>Giám sát hệ thống withdraw (rút tiền).</td></tr>
+
+        <tr class="group-header"><td colspan="4">Infrastructure & DevOps</td></tr>
+        <tr><td>25</td><td></td><td>ci-builder</td><td>Hệ thống tự động hóa quy trình tích hợp (CI).</td></tr>
+        <tr><td>26</td><td></td><td>ci-builder-rust</td><td>Phiên bản CI Builder viết bằng Rust.</td></tr>
+        <tr><td>27</td><td></td><td>op-deployer</td><td>Triển khai hợp đồng/node tự động.</td></tr>
+        <tr><td>28</td><td></td><td>proxyd</td><td>Proxy cho các yêu cầu RPC.</td></tr>
+        <tr><td>29</td><td></td><td>op-signer</td><td>Dịch vụ ký giao dịch.</td></tr>
+        <tr><td>30</td><td></td><td>op-txproxy</td><td>Proxy trung chuyển giao dịch.</td></tr>
+        <tr><td>31</td><td></td><td>peer-mgmt-service</td><td>Quản lý kết nối peer-to-peer.</td></tr>
+        <tr><td>32</td><td></td><td>bailiff</td><td>Giám sát và quản lý tài nguyên hệ thống.</td></tr>
+        <tr><td>33</td><td></td><td>op-conductor-ops</td><td>Vận hành (operations) cho op-conductor.</td></tr>
+
+        <tr class="group-header"><td colspan="4">Testing & Dev Tools</td></tr>
+        <tr><td>34</td><td></td><td>op-test-sequencer</td><td>Trình sắp xếp giao dịch dành cho môi trường test.</td></tr>
+        <tr><td>35</td><td></td><td>proofs-tools</td><td>Công cụ kiểm tra bằng chứng (proof).</td></tr>
+        <tr><td>36</td><td></td><td>op-migrate</td><td>Di chuyển dữ liệu/hợp đồng giữa các phiên bản.</td></tr>
+        <tr><td>37</td><td></td><td>op-rbuilder</td><td>Xây dựng lại dữ liệu hoặc trạng thái hệ thống.</td></tr>
+        <tr><td>38</td><td></td><td>cci-stats</td><td>Thống kê hiệu suất hệ thống CI.</td></tr>
+        <tr><td>39</td><td></td><td>issue-metrics</td><td>Đo lường và phân tích các vấn đề (issue) trong dự án.</td></tr>
+
+        <tr class="group-header"><td colspan="4">Ecosystem & Interop</td></tr>
+        <tr><td>40</td><td></td><td>autorelayer-interop</td><td>Tự động chuyển tiếp giao dịch đa chuỗi.</td></tr>
+        <tr><td>41</td><td></td><td>ecosystem-autorelayer-interop</td><td>Phiên bản tích hợp hệ sinh thái của autorelayer.</td></tr>
+        <tr><td>42</td><td></td><td>ecosystem-ponder-interop</td><td>Phân tích dữ liệu đa chuỗi trong hệ sinh thái.</td></tr>
+        <tr><td>43</td><td></td><td>ecosystem-sponsored-sender</td><td>Hỗ trợ giao dịch miễn phí (sponsored) cho người dùng.</td></tr>
+        <tr><td>44</td><td></td><td>ponder-interop</td><td>Công cụ phân tích tương tác đa chuỗi.</td></tr>
+        <tr><td>45</td><td></td><td>sponsored-sender</td><td>Hỗ trợ giao dịch được tài trợ phí gas.</td></tr>
+
+        <tr class="group-header"><td colspan="4">Utilities</td></tr>
+        <tr><td>46</td><td></td><td>op-faucet</td><td>Phân phối token thử nghiệm (testnet).</td></tr>
+        <tr><td>47</td><td></td><td>op-dripper</td><td>Kiểm soát phân phối tài nguyên/token theo lô.</td></tr>
+        <tr><td>48</td><td></td><td>op-heartbeat</td><td>Kiểm tra nhịp hoạt động (heartbeat) của mạng.</td></tr>
+        <tr><td>49</td><td></td><td>op-ufm</td><td>Cơ chế tính phí linh hoạt (Universal Fee Market).</td></tr>
+        <tr><td>50</td><td></td><td>ufm-metamask</td><td>Tích hợp cơ chế phí UFM với ví MetaMask.</td></tr>
+        <tr><td>51</td><td></td><td>op-supervisor</td><td>Giám sát và quản lý tiến trình hệ thống.</td></tr>
+        <tr><td>52</td><td></td><td>op-acceptor</td><td>Tiếp nhận và xử lý yêu cầu giao dịch/dữ liệu.</td></tr>
+        <tr><td>53</td><td></td><td>asterisc</td><td>Công cụ xử lý dữ liệu hoặc giao tiếp nội bộ.</td></tr>
+      </tbody>
+    </table>
+    <h2>2. Sơ đồ thu gọn </h2>
+    <pre id="cannon" class="mermaid">
+        flowchart TB
+            subgraph User Clients
+                U1[User App 1]
+                U2[User App 2]
+                U3[Wallet / RPC Client]
+            end
+
+            subgraph Load Balancer
+                LB[Load Balancer HAProxy]
+            end
+
+            subgraph K8s Cluster - Production Namespace
+                subgraph Rollup Services
+                OpGeth[op-geth StatefulSet<br>Exposes RPC<br>Handles tx]
+                OpNode[op-node Deployment<br>+ Horizontal Pod Autoscaler]
+                OpBatcher[op-batcher StatefulSet]
+                OpProposer[op-proposer StatefulSet]
+                end
+
+                subgraph Monitoring & Logs
+                Prometheus
+                Grafana
+                Loki[Log Collector Loki/Fluentd]
+                Alertmanager
+                end
+
+                subgraph Secrets & Storage
+                Secrets[Vault / K8s Secrets]
+                PVCs[Persistent Volume Claims]
+                end
+
+                subgraph CI/CD
+                ArgoCD
+                GitOpsRepo[GitOps Repo]
+                end
+            end
+
+            subgraph L1 Chain
+                EthereumL1[L1 Full Node - Infura/Alchemy]
+            end
+
+            %% Connections
+            U1 --> LB --> OpGeth
+            U2 --> LB
+            U3 --> LB
+            OpGeth --> OpNode
+            OpNode --> Prometheus
+            OpNode --> Loki
+            OpBatcher --> EthereumL1
+            OpProposer --> EthereumL1
+            CI/CD --> OpNode
+            CI/CD --> OpBatcher
+            CI/CD --> OpProposer
+            CI/CD --> OpGeth
+            Secrets --> OpNode
+            Secrets --> OpGeth
+            PVCs --> OpGeth
+
+    </pre>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        mermaid.initialize({ startOnLoad: false, theme: "forest" });
+        const cannon = document.querySelector("#cannon");
+        mermaid.run({ nodes: [cannon] });
+        });
+    </script>   
+    <h2>3. Mã nguồn </h2>     
+    <p>Repo: <a href="https://github.com/ethereum-optimism/optimism.git" target="_blank">Optimism GitHub</a></p>
+  </div>
+  
+
+</body>
+</html>

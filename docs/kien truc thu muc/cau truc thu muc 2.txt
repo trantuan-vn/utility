@@ -388,13 +388,14 @@ flink-job/
 
 zk-chain/
 │
-├── contracts/                           # Solidity smart contracts
+├── lib/forge-std
+├── src                                  # Solidity smart contracts
 │   ├── rollup/                          # Rollup core logic
 │   │   ├── Rollup.sol                   # Main contract: state, deposit, withdraw
-│   │   ├── DataCommitment.sol          # Batch metadata (root, CID, etc.)
-│   │   ├── DelayQueue.sol              # Delay before finalization
-│   │   ├── ChallengeJudge.sol          # Handle fraud proof or zk challenge
-│   │   └── VerifierGateway.sol         # Route to zk/fraud verifier
+│   │   ├── DataCommitment.sol           # Batch metadata (root, CID, etc.)
+│   │   ├── DelayQueue.sol               # Delay before finalization
+│   │   ├── ChallengeJudge.sol           # Handle fraud proof or zk challenge
+│   │   └── VerifierGateway.sol          # Route to zk/fraud verifier
 │   │
 │   ├── tokens/                          # ERC20 + bridge logic
 │   │   ├── L1Bridge.sol                 # Deposit from L1 to L2

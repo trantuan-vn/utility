@@ -105,3 +105,14 @@ Tóm lại: muốn vượt zkSync Era? Cần:
 | **Osmosis**           | Cosmos chain         | ✅ (IBC)           | ❌                   | ❌             | ❌            |
 | **Radiant / Tapioca** | Arbitrum / LayerZero | ✅                 | ❌                   | ✅             | ❌            |
 | **DEX của bạn**       | zkRollup             | ✅ **(LayerZero)** | ✅ **(zkRollup)**    | ✅             | ✅ **(WBTC)** |
+
+5. Vì sao mô hình này tiên tiến?
+
+| Yếu tố công nghệ                                               | Giải thích                                                                                                 |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **zkRollup**                                                   | Là hình thức mở rộng (scaling) L2 tiên tiến nhất hiện nay: chi phí thấp, tốc độ cao, bảo mật từ Ethereum   |
+| **LayerZero**                                                  | Hạ tầng cross-chain message hàng đầu hiện nay: không chỉ transfer token mà truyền **logic/phản hồi tùy ý** |
+| **DEX trên zkRollup**                                          | Cạnh tranh được với cả CEX về hiệu năng mà vẫn phi tập trung                                               |
+| **WBTC/BTC.b integration**                                     | Cho phép đưa tài sản lớn nhất thế giới vào DEX của bạn một cách hiệu quả                                   |
+| **Off-chain infrastructure modular**                           | Có thể dùng oracle/relayer sẵn có hoặc tự xây → linh hoạt về bảo mật                                       |
+| **User từ nhiều chain truy cập DEX mà không cần chuyển chain** | UX rất tốt, không cần user "bridging" thủ công                                                             |

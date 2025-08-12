@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <title>Quy trình Tokenization chứng khoán cơ sở thành TSC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .sequence-diagram {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        .optimized-process {
+            background-color: #f0f7ff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #eee;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .subsection {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quy trình Tokenization chứng khoán cơ sở thành TSC</h1>
+        
+        <div class="section">
+            <h2>1. Sequence Diagram</h2>
+            <div class="sequence-diagram">
+                <pre class="mermaid">sequenceDiagram
+    participant NĐT as Nhà đầu tư (DEX UI)
+    participant DEX as Sàn DEX
+    participant DNSE as CTCK NĐT (DNSE)
+    participant VSDC as VSDC
+    participant CTCK_TSC as CTCK quản lý TSC
+    participant TSC as Đối tượng tạo TSC
+    participant Ethereum as Smart Contract TSC (Ethereum)
+
+    %% Step 1: Login & Link
+    NĐT->>DEX: Đăng nhập (Reown + OAuth2 DNSE)
+    DEX->>NĐT: Hiển thị TK CK đã liên kết với ví on-chain
+
+    %% Step 2: Lệnh Tokenization
+    NĐT->>DEX: Yêu cầu "Deposit for Tokenization" (1000 FPT)
+    DEX->>DNSE: Gửi request tokenization (reference_id, qty, wallet_address, ...)
+    
+    %% Step 3: DNSE gửi yêu cầu tới VSDC
+    DNSE->>VSDC: ISO15022 Transfer request (064C000001 -> 064P0000001)
+    
+    %% Step 4: VSDC xử lý và xác nhận
+    VSDC-->>VSDC: Kiểm tra số dư, quyền chuyển
+    VSDC->>DNSE: Attestation (vsdc_signature, vsdc_tx_id)
+    VSDC->>CTCK_TSC: Attestation (vsdc_signature, vsdc_tx_id)
+
+    %% Step 5: DNSE báo về DEX
+    DNSE->>DEX: Chuyển cơ sở thành công, pending mint
+
+    %% Step 6: CTCK gửi chỉ thị mint
+    CTCK_TSC-->>CTCK_TSC: Xác thực evidence từ VSDC
+    CTCK_TSC->>TSC: thông báo nhận 1000 FPT
+    
+    %% Step 7: TSC Mint Token
+    TSC ->> Ethereum: claimAndMint(attestation, tsc_signature)
+    Ethereum-->>Ethereum: Verify signatures, replay check
+    Ethereum->>NĐT: Mint 1000 FPTdnse tới ví on-chain
+    Ethereum->>DEX: Emit Tokenized event
+
+    %% Step 8: Cập nhật trạng thái
+    DEX->>NĐT: Thông báo "Mint hoàn tất"</pre>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. Quy trình tối ưu hóa</h2>
+            <div class="optimized-process">
+                <h3>1) Luồng tối ưu (tóm tắt từng bước — atomic & auditable)</h3>
+                <p>NĐT đăng nhập vào DEX (qua Reown/OAuth2) và link TK chứng khoán tại CTCK (DNSE) với địa chỉ ví on-chain (ECDSA address). DEX lưu mapping user_id ↔ account_id_chứng_khoán ↔ wallet_address (kèm KYC token/claim).</p>
+                <p>NĐT thực hiện lệnh "deposit for tokenization" trên DEX — DEX gửi request tokenization (webhook / signed message) tới DNSE gồm: account_from, account_to(TSC custody account), quantity, wallet_address, reference_id, timestamp, signature.</p>
+                
+                <h3>2) Giao thức chứng thực (attestation) — nguyên tắc</h3>
+                <p>Ai ký? Ít nhất CTCK quản lý TSC và/hoặc VSDC phải là signer được smart contract tin cậy (public key pre-registered). Tốt nhất VSDC ký (vì là nguồn sự thật về chuyển chứng khoán). Nếu VSDC không ký, CTCK ký sau khi nhận STP từ VSDC.</p>
+                
+                <h3>3) Mẫu payload (ví dụ JSON EIP-712) — webhook / attestation</h3>
+                <pre>DNSE → VSDC (ISO15022-like) — off-chain (ví dụ fields quan trọng):
+{ 
+  "reference_id": "DEX-20250810-000123",
+  "instr": "Transfer",
+  "account_from": "064C000001",
+  "account_to": "064P0000001",
+  "symbol": "FPT",
+  "quantity": 1000,
+  "wallet_address": "0xf920...AFf3Ff74aeC8",
+  "requested_by": "DNSE",
+  "requested_at": "2025-08-10T09:30:00+07:00",
+  "callback_url": "https://dnse.api/tokenization/callback"
+}</pre>
+                
+                <h3>4) Smart contract TSC — interface gợi ý & quyền</h3>
+                <p>Chuẩn token: ERC-1400 / ERC-3643 (security token) hoặc ERC-20 + role extensions. ERC-1400 hỗ trợ partition/transfer restrictions.</p>
+                <p>Chức năng then:</p>
+                <pre>function claimAndMint(Attestation calldata a, bytes signature) external;
+Verify signature(s) from CTCK and/or VSDC (ecrecover / verify PKI).
+Check usedReference[a.reference_id] == false.
+Mint a.quantity to a.wallet_address.
+Emit Tokenized(...).</pre>
+                
+                <h3>5) Xử lý lỗi, timeout, rollback, idempotency</h3>
+                <p>Nếu VSDC từ chối: DNSE thông báo cho DEX ngay, hiển thị lỗi.</p>
+                <p>Nếu VSDC chấp nhận nhưng mint không xảy ra (ví dụ CTCK offline): giữ evidence và đánh dấu "pending−mint"; cho phép CTCK retry claimAndMint trong window (expiry).</p>
+                
+                <h3>6) Tối ưu cho UX & gas</h3>
+                <p>Meta-transaction / Gasless: cho người dùng không cần ETH — DEX hoặc relayer trả gas khi CTCK gửi mint tx (CTCK là actor trả gas).</p>
+                
+                <h3>7) Security & Compliance</h3>
+                <p>KYC/AML binding: mapping account_chứng_khoán ↔ wallet_address phải được xác minh KYC (tài liệu, signed consent).</p>
+                
+                <h3>8) Mẫu sequence ngắn (kỹ thuật)</h3>
+                <ol>
+                    <li>User (DEX UI) → DNSE: /api/tokenize (signed by DEX backend)</li>
+                    <li>DNSE → VSDC: ISO15022 transfer request (STP)</li>
+                    <li>VSDC → DNSE & CTCK: signed attestation (vsdc_signature)</li>
+                    <li>DNSE → DEX callback: transfer completed + vsdc_tx_id</li>
+                    <li>CTCK (or relay) → TSC smart contract: claimAndMint(attestation, ctck_signature)</li>
+                    <li>TSC verifies & mints → emits Tokenized</li>
+                    <li>DEX listens to Tokenized and updates UX</li>
+                </ol>
+                
+                <h3>9) Ví dụ payload EIP-712 + solidity verify (tóm tắt)</h3>
+                <p>Use EIP-712 so CTCK can sign structured data and smart contract verify via ecrecover.</p>
+                
+                <h3>10) Checklist triển khai (triage)</h3>
+                <ul>
+                    <li>Thống nhất fields reference_id và mapping giữa DNSE/CTCK/VSDC/DEX</li>
+                    <li>Đăng ký public key(s) của VSDC & CTCK trên TSC contract</li>
+                    <li>Thiết kế API webhook + retry + idempotency</li>
+                    <li>Quy tắc KYC linking wallet ↔ securities account</li>
+                    <li>HSM / multisig key management cho CTCK/VSDC</li>
+                    <li>Test end-to-end: success / VSDC fail / CTCK offline / on-chain reorg</li>
+                    <li>Audit & log retention policy (7 yrs? theo quy định)</li>
+                    <li>Legal: hợp đồng giữa parties + regulatory approvals</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

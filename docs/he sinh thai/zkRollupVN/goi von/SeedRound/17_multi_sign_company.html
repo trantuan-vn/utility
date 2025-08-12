@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hướng dẫn Multi‑sig cho Công ty</title>
+  <style>
+    :root{--bg:#0f172a;--card:#0b1220;--muted:#9aa4bf;--accent:#7c3aed}
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Helvetica,Arial; background:linear-gradient(180deg,#071029 0%, #07121a 100%); color:#e6eef8; margin:0; padding:32px}
+    .container{max-width:960px;margin:0 auto}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0 0 6px;font-size:1.6rem}
+    p.lead{margin:0;color:var(--muted)}
+    .card{background:var(--card);border-radius:12px;padding:20px;margin-top:20px;box-shadow:0 6px 24px rgba(2,6,23,0.6)}
+    h2{margin-top:0}
+    ul{line-height:1.6}
+    .note{background:rgba(124,58,237,0.08);color:#dcd7ff;border-left:4px solid var(--accent);padding:10px;border-radius:6px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:700px){.grid{grid-template-columns:1fr}}
+    footer{margin-top:28px;color:var(--muted);font-size:0.9rem}
+    .kbd{background:#07132a;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.03);font-family:monospace}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>I. Chiến lược 3 lớp lưu trữ Seed Phrase (Defense in Depth)</h1>
+        <p class="lead">Hướng dẫn tổng hợp các phương án lưu trữ an toàn cho seed phrase — áp dụng cho cá nhân và tổ chức.</p>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>Giới thiệu ngắn</h2>
+      <p>Seed phrase (12–24 từ) là chìa khóa truy cập ví. Mục tiêu của chiến lược này là kết hợp <em>bảo mật vật lý</em>, <em>bảo mật logic</em> và <em>quy trình tổ chức</em> để giảm tối đa rủi ro mất mát, lộ thông tin, và hư hỏng vật lý.</p>
+    </div>
+
+    <div class="card">
+      <h2>Lớp 1 — Bảo mật vật lý</h2>
+      <ul>
+        <li><strong>Thép khắc (recommended):</strong> Cryptosteel, Billfodl, Keystone Tablet — chống cháy, nước, ăn mòn.</li>
+        <li><strong>Két sắt gia đình:</strong> Chọn loại chống cháy ≥ 1 giờ; đặt ở vị trí kín đáo.</li>
+        <li><strong>Safe deposit box (ngân hàng):</strong> Lưu một bản sao kể cả cho trường hợp thiên tai ở nhà.</li>
+        <li><strong>Không lưu trên thiết bị điện tử:</strong> Tránh ảnh, note, USB, cloud.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Lớp 2 — Bảo mật logic</h2>
+      <ul>
+        <li><strong>Passphrase (BIP39 passphrase):</strong> Thêm mật khẩu thứ hai không ghi chung với seed — nếu seed bị lộ nhưng không có passphrase thì vẫn an toàn.</li>
+        <li><strong>Sharding / Secret Sharing:</strong> Chia seed thành nhiều phần (ví dụ 2‑of‑3, hoặc dùng Shamir's SSS). Lưu các mảnh ở địa điểm khác nhau.</li>
+        <li><strong>Multi‑vendor:</strong> Dùng nhiều hãng ví cứng khác nhau để tránh rủi ro firmware/supply‑chain.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Lớp 3 — Bảo mật tổ chức (áp dụng cho công ty)</h2>
+      <ul>
+        <li><strong>Multi‑sig:</strong> Dùng cấu hình 3‑of‑5 hoặc tương tự; phân quyền cho lãnh đạo, pháp chế, kho, bên thứ ba.</li>
+        <li><strong>Quy trình phê duyệt:</strong> Mọi giao dịch phải qua hệ thống đề xuất → phê duyệt → ký.</li>
+        <li><strong>Đào tạo & SOP:</strong> Hướng dẫn chống phishing, xử lý khi mất thiết bị, và kiểm toán định kỳ.</li>
+        <li><strong>Audit & backup test:</strong> Đặt lịch 6–12 tháng để thử khôi phục từ backup (dry run).</li>
+      </ul>
+    </div>
+
+    <div class="card note">
+      <strong>Chiến lược mẫu (Cá nhân):</strong>
+      <ul>
+        <li>Bản 1 (thép) ở nhà trong két chống cháy.</li>
+        <li>Bản 2 (thép) ở ngân hàng kèm passphrase.</li>
+        <li>Passphrase ghi tay, cất ở địa điểm khác (ví dụ gửi người tin tưởng).</li>
+        <li>Test khôi phục 1 năm/lần.</li>
+      </ul>
+    </div>
+
+    <div class="card note" style="margin-top:12px">
+      <strong>Chiến lược mẫu (Công ty):</strong>
+      <ul>
+        <li>3‑of‑5 multi‑sig:</li>
+        <ul>
+          <li>2 key lãnh đạo</li>
+          <li>1 key pháp chế</li>
+          <li>1 key két công ty</li>
+          <li>1 key ở law firm/custodian</li>
+        </ul>
+        <li>Seed phrase mỗi ví lưu ở két riêng biệt, 2 bản sao ở 2 thành phố khác nhau.</li>
+        <li>Giao dịch cần 3/5 chữ ký → có log kiểm toán.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Checklist thực thi</h2>
+      <ol>
+        <li>Chọn vật liệu backup (thép khắc) và mua 2 bản.</li>
+        <li>Quyết định mô hình: cá nhân (2 bản + passphrase) hoặc tổ chức (multi‑sig).</li>
+        <li>Tạo seed offline trên máy air‑gapped hoặc hardware wallet.</li>
+        <li>Khắc/ghi seed, kiểm tra chính xác chữ cái và thứ tự.</li>
+        <li>Lưu trữ bản sao ở 2 địa điểm khác nhau (nhà + ngân hàng hoặc 2 thành phố khác nhau).</li>
+        <li>Ghi passphrase riêng (nếu dùng) → lưu ở nơi khác, không chung với seed.
+        </li>
+        <li>Lên SOP(Standard Operating Procedure) báo mất / restore và test khôi phục định kỳ (6–12 tháng/lần).</li>
+      </ol>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>II. Hướng dẫn tổ chức Multi‑sig cho Công ty</h1>
+        <p class="lead">Quy trình, mô hình phân quyền, vận hành và lưu ý bảo mật để áp dụng ví đa chữ ký trong môi trường doanh nghiệp.</p>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>1️⃣ Mục tiêu</h2>
+      <ul>
+        <li><strong>Ngăn gian lận nội bộ:</strong> Không một cá nhân nào có thể rút tiền đơn phương.</li>
+        <li><strong>Tăng khả năng phục hồi:</strong> Mất một thiết bị vẫn giữ quyền truy cập.</li>
+        <li><strong>Kiểm soát rủi ro:</strong> Giao dịch cần nhiều người duyệt, giảm lỗi và chiếm đoạt.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>2️⃣ Mô hình phân quyền (ví dụ)</h2>
+      <p>Ví dụ cấu hình phổ biến: <strong>2‑of‑3</strong> hoặc <strong>3‑of‑5</strong>.</p>
+      <div class="grid">
+        <div>
+          <h3>Ví dụ 2‑of‑3</h3>
+          <ul>
+            <li><strong>Keyholder 1:</strong> CFO — ký giao dịch, quản lý ngân sách.</li>
+            <li><strong>Keyholder 2:</strong> CEO — ký giao dịch, quyết định chiến lược.</li>
+            <li><strong>Keyholder 3:</strong> Trưởng pháp chế / kiểm toán nội bộ — ký xác nhận hợp pháp.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Ví dụ 3‑of‑5</h3>
+          <ul>
+            <li>2 key cho lãnh đạo (CEO + CFO)</li>
+            <li>1 key cho phòng pháp chế</li>
+            <li>1 key dự phòng ở két sắt công ty</li>
+            <li>1 key dự phòng ở nơi bảo mật bên thứ ba (ví dụ law firm hoặc custodian)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3️⃣ Quy trình vận hành</h2>
+      <h3>Bước 1 – Tạo ví multi‑sig</h3>
+      <p>Sử dụng nền tảng phù hợp tùy blockchain:</p>
+      <ul>
+        <li><strong>Ethereum:</strong> Gnosis Safe (web UI) hoặc các giao diện tương thích.</li>
+        <li><strong>Bitcoin:</strong> Sparrow Wallet, Electrum, Specter Desktop (dùng PSBT).</li>
+      </ul>
+
+      <h3>Bước 2 – Lưu trữ khóa</h3>
+      <ul>
+        <li>Mỗi keyholder giữ một <span class="kbd">hardware wallet</span> và backup seed phrase.</li>
+        <li>Backup được lưu tại tối thiểu 2 nơi an toàn (két sắt công ty + két sắt cá nhân hoặc vault ngân hàng).</li>
+      </ul>
+
+      <h3>Bước 3 – Thực hiện giao dịch (mẫu)</h3>
+      <ol>
+        <li>Kế toán/Người đề xuất tạo yêu cầu thanh toán trên hệ thống (ví Gnosis/Sparrow).</li>
+        <li>Hệ thống phát sinh giao dịch cần ký (PSBT hoặc transaction object).</li>
+        <li>Keyholder lần lượt ký: ký online (Ledger/Trezor) hoặc ký offline qua QR (Keystone/Ellipal).</li>
+        <li>Sau khi đủ chữ ký, giao dịch được finalize và broadcast.</li>
+      </ol>
+
+      <h3>Bước 4 – Kiểm toán & ghi nhận</h3>
+      <ul>
+        <li>Lưu nhật ký giao dịch, người phê duyệt, timestamp.</li>
+        <li>Định kỳ kiểm tra tình trạng thiết bị và tính toàn vẹn backup.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>4️⃣ Lưu ý bảo mật & best practices</h2>
+      <ul>
+        <li><strong>Phân tán vị trí:</strong> Không để tất cả ví cứng ở cùng một địa điểm.</li>
+        <li><strong>Multi‑vendor:</strong> Dùng nhiều hãng ví cứng (Ví dụ: Keystone + Ledger + Coldcard) tránh rủi ro supply‑chain hoặc lỗ hổng firmware riêng.</li>
+        <li><strong>Không lưu seed online:</strong> Cấm tuyệt đối email, cloud, photo trên điện thoại.</li>
+        <li><strong>Quy trình khi mất thiết bị:</strong>
+          <ul>
+            <li>Nếu còn seed của thiết bị bị mất → restore vào thiết bị mới.</li>
+            <li>Nếu không còn seed → dùng các key còn lại tạo ví mới và chuyển toàn bộ tiền sang ví mới ngay lập tức.</li>
+          </ul>
+        </li>
+        <li><strong>Đào tạo nhân sự:</strong> Huấn luyện keyholder về phishing, social engineering và qui trình báo mất.</li>
+        <li><strong>Giao thức khẩn cấp:</strong> Thiết lập quy trình báo cáo và cách tạm dừng thanh toán khi phát hiện rủi ro.</li>
+      </ul>
+    </div>
+
+    <div class="card note">
+      <strong>Gợi ý cấu hình an toàn cho công ty:</strong>
+      <p>3‑of‑5 multi‑sig với: 2 key lãnh đạo (CEO + CFO), 1 key pháp chế, 1 key két sắt công ty, 1 key bên thứ ba (law firm/custodian).</p>
+    </div>
+
+    <footer>
+      <p>Nếu bạn muốn mình xuất bản thành tài liệu PDF/Word, hoặc vẽ sơ đồ luồng phê duyệt (flowchart) để in và đưa vào quy trình nội bộ, mình có thể làm tiếp.</p>
+    </footer>
+  </div>
+</body>
+</html>

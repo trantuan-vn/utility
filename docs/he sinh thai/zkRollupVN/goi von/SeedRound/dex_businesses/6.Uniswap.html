@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu Toàn Diện Về Uniswap</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #ff007a;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .note {
+            background-color: #fffde7;
+            border-left: 4px solid #ffd600;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+      .table-wrapper {
+                overflow-x: auto;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #007bff;
+                color: white;
+            }        
+    </style>
+</head>
+<body>
+    <h1>Giới Thiệu Toàn Diện Về Uniswap</h1>
+    
+    <div class="section">
+        <h2>1. Tổng Quan Về Uniswap</h2>
+        <p>Uniswap là một giao thức trao đổi phi tập trung (DEX) chạy trên Ethereum, sử dụng mô hình Automated Market Maker (AMM) thay vì sổ lệnh truyền thống.</p>
+        
+        <h3>Đặc điểm chính:</h3>
+        <ul>
+            <li>Phi tập trung: Không cần tin tưởng vào bên thứ ba</li>
+            <li>Không cần KYC</li>
+            <li>Thanh khoản được cung cấp bởi các nhà cung cấp thanh khoản (Liquidity Providers - LPs)</li>
+            <li>Sử dụng công thức x*y=k để định giá tài sản</li>
+            <li>Phí giao dịch: 0.3% (có thể thay đổi với Uniswap v3)</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>2. Kiến Trúc Hệ Thống</h2>
+        
+        <div class="diagram">
+            <div class="mermaid">
+                graph TD
+                    A[Frontend] -->|Tương tác| B[Smart Contracts]
+                    A -->|SDK Integration| C[Uniswap SDK]
+                    B -->|Events| D[Indexer/TheGraph]
+                    C -->|Dữ liệu chain| E[Ethereum Node]
+                    B -->|Truy vấn| E
+                    F[Liquidity Providers] -->|Add/Remove Liquidity| B
+                    G[Traders] -->|Swap| B
+                    H[Oracles] -->|Price Feeds| B
+                    
+                    subgraph Uniswap V3 Core
+                        B --> I[Factory Contract]
+                        B --> J[Pool Contract]
+                        B --> K[NonfungiblePositionManager]
+                    end
+                    
+                    subgraph Periphery
+                        B --> L[SwapRouter]
+                        B --> M[Quoter]
+                        B --> N[Multicall]
+                    end
+                    
+                    subgraph Tooling
+                        C --> O[Libraries]
+                        D --> P[Subgraphs]
+                        Q[Wallets] --> A
+                    end
+            </div>
+        </div>
+        
+        <h3>Các thành phần chính:</h3>
+        <ul>
+            <li><strong>Factory Contract</strong>: Tạo và quản lý các pair contract</li>
+            <li><strong>Pair Contract</strong>: Quản lý pool thanh khoản cho từng cặp token</li>
+            <li><strong>Router Contract</strong>: Xử lý logic giao dịch phức tạp</li>
+            <li><strong>Interface</strong>: Giao diện để tương tác với các contract</li>
+            <li><strong>Uniswap SDK</strong>: Bộ công cụ phát triển giúp tương tác với giao thức</li>
+            <li><strong>NonfungiblePositionManager</strong>: Quản lý vị thế thanh khoản dạng NFT</li>
+            <li><strong>Quoter</strong>: Ước tính kết quả giao dịch mà không cần thực thi</li>
+            <li><strong>Multicall</strong>: Gộp nhiều lệnh gọi contract vào một transaction</li>
+            <li><strong>TheGraph</strong>: Indexer lấy dữ liệu lịch sử từ blockchain</li>            
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>3. Cách Lấy và Build Các Thành Phần</h2>
+        
+        <h3>3.1. Cài đặt môi trường</h3>
+        <pre><code># Cài đặt Node.js và npm/yarn
+          # Cài đặt Hardhat hoặc Truffle cho phát triển smart contract
+          npm install -g hardhat
+
+          # Clone các repository cần thiết
+          git clone https://github.com/Uniswap/uniswap-v3-core.git
+          git clone https://github.com/Uniswap/uniswap-v3-periphery.git
+          git clone https://github.com/Uniswap/uniswap-sdk.git
+
+          # Cài đặt dependencies
+          cd uniswap-v3-core
+          npm install
+          cd ../uniswap-v3-periphery
+          npm install
+          cd ../uniswap-sdk
+          npm install
+          </code></pre>
+        
+        <h3>3.2. Build và triển khai contracts</h3>
+        <pre><code># Vào thư mục core
+        Trong thư mục core
+        npx hardhat run scripts/deploy.js --network goerli
+
+        # Trong thư mục periphery
+        npx hardhat run scripts/deploy.js --network goerli
+        </code></pre>
+        
+        <h3>3.3. Tương tác với frontend</h3>
+        <pre><code># Clone giao diện Uniswap
+        git clone https://github.com/Uniswap/uniswap-interface.git
+        cd uniswap-interface
+        npm install
+
+        # Chạy ứng dụng
+        npm start</code></pre>
+        <h3>3.4. Tích hợp SDK vào ứng dụng</h3>
+        <pre><code>import { ChainId, Token, Fetcher, Route } from '@uniswap/sdk'
+
+        // Khởi tạo token
+        const DAI = new Token(ChainId.MAINNET, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18)
+        const WETH = new Token(ChainId.MAINNET, '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 18)
+
+        // Lấy thông tin pool
+        const pair = await Fetcher.fetchPairData(DAI, WETH)
+
+        // Tạo route
+        const route = new Route([pair], WETH)
+        </code></pre>
+        
+    </div>
+    
+    <div class="section">
+        <h2>4. Customize Uniswap Cho Dự Án Startup</h2>
+        
+        <h3>4.1. Thay đổi cơ bản</h3>
+        <ul>
+            <li>Đổi branding (logo, màu sắc, tên) trong frontend</li>
+            <li>Thay đổi phí giao dịch trong contract</li>
+            <li>Thêm các token riêng vào danh sách mặc định</li>
+        </ul>
+        
+        <h3>4.2. Nâng cao</h3>
+        <ul>
+            <li><strong>Thay đổi công thức AMM</strong>: Sửa đổi công thức x*y=k trong Pair contract</li>
+            <li><strong>Thêm cơ chế phí mới</strong>: Ví dụ phí cho nhà phát triển</li>
+            <li><strong>Tích hợp cơ chế staking</strong>: Thưởng cho LP bằng token riêng</li>
+            <li><strong>Cross-chain</strong>: Tích hợp với các chain khác như BSC, Polygon</li>
+        </ul>
+        
+        <div class="note">
+            <strong>Lưu ý khi customize:</strong> Bất kỳ thay đổi nào với core contract cần được audit kỹ lưỡng vì liên quan đến tiền của người dùng.
+        </div>
+        
+        <h3>4.3. Ví dụ thay đổi phí giao dịch</h3>
+        <pre><code>// Trong UniswapV2Pair.sol
+uint public constant FEE = 20; // 0.2% thay vì 0.3%
+
+function _mintFee(uint112 _reserve0, uint112 _reserve1) private returns (bool feeOn) {
+    address feeTo = IUniswapV2Factory(factory).feeTo();
+    feeOn = feeTo != address(0);
+    uint _kLast = kLast; // gas savings
+    if (feeOn) {
+        if (_kLast != 0) {
+            uint rootK = Math.sqrt(uint(_reserve0).mul(_reserve1));
+            uint rootKLast = Math.sqrt(_kLast);
+            if (rootK > rootKLast) {
+                uint numerator = totalSupply.mul(rootK.sub(rootKLast)).mul(FEE);
+                uint denominator = rootK.mul(5000).add(rootKLast.mul(FEE));
+                uint liquidity = numerator / denominator;
+                if (liquidity > 0) _mint(feeTo, liquidity);
+            }
+        }
+    } else if (_kLast != 0) {
+        kLast = 0;
+    }
+}</code></pre>
+    </div>
+
+<div class="section">
+        <h2>5. Các Thành Phần Quan Trọng Cần Customize</h2>
+        
+        <h3>5.1. Các module chính có thể tùy chỉnh</h3>
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Thành phần</th>
+                        <th>Vị trí trong codebase</th>
+                        <th>Ví dụ tùy chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fee Structure</td>
+                        <td>Pool.sol</td>
+                        <td>Thêm tier phí 0.02%</td>
+                    </tr>
+                    <tr>
+                        <td>Oracle</td>
+                        <td>OracleLibrary.sol</td>
+                        <td>Tích hợp Chainlink</td>
+                    </tr>
+                    <tr>
+                        <td>LP Incentives</td>
+                        <td>NonfungiblePositionManager.sol</td>
+                        <td>Thêm cơ chế staking NFT</td>
+                    </tr>
+                    <tr>
+                        <td>Governance</td>
+                        <td>UniswapV3Factory.sol</td>
+                        <td>Whitelist pool creation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>5.2. Ví dụ code thay đổi cơ chế phí</h3>
+        <pre><code>// Trong UniswapV3Pool.sol
+function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1) external {
+    require(msg.sender == factory);
+    require(
+        (feeProtocol0 == 0 || (feeProtocol0 >= 4 && feeProtocol0 <= 10)) &&
+        (feeProtocol1 == 0 || (feeProtocol1 >= 4 && feeProtocol1 <= 10))
+    );
+    slot0.feeProtocol = feeProtocol0 + (feeProtocol1 << 4);
+    
+    // Thêm logic tùy chỉnh
+    if (feeProtocol0 == 2) {
+        // Xử lý phí đặc biệt 0.02%
+        emit FeeChanged(feeProtocol0, feeProtocol1);
+    }
+}</code></pre>
+        
+        <div class="note">
+            <strong>Lưu ý quan trọng:</strong> Khi thay đổi core contract, cần đảm bảo:
+            <ul>
+                <li>Không phá vỡ công thức toán học x*y=k</li>
+                <li>Giữ nguyên cấu trúc lưu trữ trạng thái</li>
+                <li>Test kỹ các edge cases với phạm vi giá mới</li>
+            </ul>
+        </div>
+    </div>    
+
+   <div class="section">
+        <h2>6. Tích Hợp SDK Vào Ứng Dụng</h2>
+        
+        <h3>6.1. Các bước tích hợp cơ bản</h3>
+        <pre><code>// 1. Cài đặt SDK
+npm install @uniswap/v3-sdk @uniswap/sdk-core
+
+// 2. Khởi tạo provider và signer
+const provider = new ethers.providers.Web3Provider(window.ethereum)
+const { chainId } = await provider.getNetwork()
+const signer = provider.getSigner()
+
+// 3. Tạo trade instance
+const trade = new Trade(
+  new Route([pool], tokenIn, tokenOut),
+  CurrencyAmount.fromRawAmount(tokenIn, "1000000"),
+  TradeType.EXACT_INPUT
+)
+
+// 4. Gọi Router contract
+const tx = await router.exactInput({
+  path: [tokenIn.address, tokenOut.address],
+  recipient: walletAddress,
+  deadline: Math.floor(Date.now() / 1000) + 60 * 20,
+  amountIn: trade.inputAmount.quotient,
+  amountOutMinimum: trade.minimumAmountOut(slippage).quotient
+}, { gasLimit: 1_000_000 })</code></pre>
+        
+        <h3>6.2. Các tính năng chính của SDK</h3>
+        <ul>
+            <li><strong>Tính toán swap</strong>: amountIn, amountOut, price impact</li>
+            <li><strong>Quản lý thanh khoản</strong>: Add/remove liquidity với phạm vi tùy chỉnh</li>
+            <li><strong>Price feeds</strong>: Lấy giá từ các pool có sẵn</li>
+            <li><strong>Multicall</strong>: Gộp nhiều operations vào một transaction</li>
+        </ul>
+    </div>    
+
+ <div class="section">
+        <h2>7. Các Công Cụ Hỗ Trợ Phát Triển</h2>
+        
+        <h3>7.1. Bảng công cụ quan trọng</h3>
+        <table>
+            <tr>
+                <th>Công cụ</th>
+                <th>Mục đích</th>
+                <th>Link</th>
+            </tr>
+            <tr>
+                <td>Uniswap SDK</td>
+                <td>Tích hợp logic giao dịch</td>
+                <td><a href="https://www.npmjs.com/package/@uniswap/v3-sdk" target="_blank">npmjs.com/package/@uniswap/v3-sdk</a></td>
+            </tr>
+            <tr>
+                <td>TheGraph</td>
+                <td>Truy vấn dữ liệu lịch sử</td>
+                <td><a href="https://thegraph.com/hosted-service/subgraph/uniswap/uniswap-v3" target="_blank">Subgraph chính thức</a></td>
+            </tr>
+            <tr>
+                <td>Hardhat</td>
+                <td>Phát triển và test contract</td>
+                <td><a href="https://hardhat.org/" target="_blank">hardhat.org</a></td>
+            </tr>
+            <tr>
+                <td>Foundry</td>
+                <td>Viết test với Solidity</td>
+                <td><a href="https://github.com/foundry-rs/foundry" target="_blank">github.com/foundry-rs/foundry</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>8. Các Phiên Bản Uniswap</h2>
+        <table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse: collapse;">
+            <tr>
+                <th>Phiên bản</th>
+                <th>Đặc điểm</th>
+                <th>Khác biệt chính</th>
+            </tr>
+            <tr>
+                <td>Uniswap v1</td>
+                <td>Phiên bản đầu tiên</td>
+                <td>Chỉ hỗ trợ ETH/token pairs</td>
+            </tr>
+            <tr>
+                <td>Uniswap v2</td>
+                <td>Phổ biến nhất</td>
+                <td>Hỗ trợ token/token pairs, flash swaps, price oracles</td>
+            </tr>
+            <tr>
+                <td>Uniswap v3</td>
+                <td>Phiên bản hiện tại</td>
+                <td>Liquidity concentration, multiple fee tiers, NFT LP tokens</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>9. Bảo Mật và Audit</h2>
+        <ul>
+            <li>Luôn sử dụng phiên bản contract đã được audit</li>
+            <li>Kiểm tra lại mọi thay đổi với core contract</li>
+            <li>Sử dụng thư viện SafeMath để tránh overflow/underflow</li>
+            <li>Triển khai trên testnet trước khi lên mainnet</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>10. Tài Nguyên Hữu Ích</h2>
+        <ul>
+            <li><a href="https://etherscan.io/address/0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f#code" target="_blank">Contract trên Etherscan</a></li>
+            <li><a href="https://docs.uniswap.org/protocol/introduction" target="_blank">Tài liệu chính thức Uniswap V3</a></li>
+            <li><a href="https://github.com/Uniswap" target="_blank">GitHub của Uniswap (Core, Periphery, SDK)</a></li>
+            <li><a href="https://uniswap.org/whitepaper-v3.pdf" target="_blank">Whitepaper V3</a></li>
+            <li><a href="https://web3js.readthedocs.io/" target="_blank">Web3.js Documentation</a></li>
+            <li><a href="https://docs.ethers.io/v5/" target="_blank">Ethers.js Documentation</a></li>            
+        </ul>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

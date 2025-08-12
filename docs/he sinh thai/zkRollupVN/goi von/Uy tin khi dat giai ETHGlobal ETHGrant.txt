@@ -1,0 +1,31 @@
+✅ 1. Đối với Ethereum Foundation (EF Grants)
+🎖 Uy tín & giá trị công nhận:
+- Được xem là chứng chỉ vàng trong Web3 infrastructure: EF rất chọn lọc và chỉ tài trợ các dự án thực sự có ý nghĩa cho hệ sinh thái Ethereum.
+- EF không tài trợ dự án có mục đích thương mại thuần túy, nên nếu bạn được chọn, nghĩa là bạn đang làm thứ "vì Ethereum".
+- Trên CV hoặc pitch deck, bạn có thể ghi dòng như: “Recipient of Ethereum Foundation Ecosystem Support Program (ESP) Grant, 2025”
+🧠 Tín nhiệm về năng lực kỹ thuật và cộng đồng:
+- Những ai được grant thường được cộng đồng xem như: builder nghiêm túc, giàu năng lực kỹ thuật, định hướng dài hạn.
+- Nhiều VC hoặc tổ chức khác sẽ theo dõi danh sách grant của EF để tìm kiếm dự án tiềm năng.
+📈 Cơ hội nối tiếp:
+- Dễ xin grant vòng 2 hoặc từ các Foundation khác (Optimism, Polygon, ZK stack, v.v.).
+- Dễ được mời nói chuyện tại các hội nghị như Devcon, ETHCC, ETHVietnam...
+✅ 2. Đối với ETHGlobal
+🏆 Hackathon winner hoặc top finalist:
+- Là một chứng nhận builder cấp thế giới: ETHGlobal là sân chơi toàn cầu, quy tụ hàng nghìn dev giỏi, đặc biệt ở các quốc gia top về Web3 như Mỹ, Đức, Ấn, Hàn...
+- Nếu đạt giải: “Winner (or Finalist), ETHGlobal [Tên Hackathon], Sponsored by [Aave, Chainlink, etc.], 2025”
+🤝 Mở ra network cực mạnh: Sau khi đạt giải:
+- Được gọi mời vào các Startup Fellowship như Superfluid, Arbitrum Builders, Gitcoin Explorer...
+- Nhận được intros từ các mentor, VC, hoặc quỹ tài trợ tiếp theo.
+- Dễ xin tài trợ theo track riêng (Compound Grants, Aave DAO Grants...).
+🧩 Là bước đệm để gọi vốn Seed:
+- Nhiều dự án nổi tiếng bắt đầu từ ETHGlobal (ví dụ: Worldcoin, Lens Protocol, Push Protocol, Gelato...).
+- Trong pitch deck startup, đây là điểm sáng đáng kể nếu bạn đi gọi vốn angel hoặc VC.
+✅ 3. Cụ thể hóa mức độ uy tín
+| Giai đoạn                     | Ethereum Foundation Grant                                | ETHGlobal Winner                            |
+| ----------------------------- | -------------------------------------------------------- | ------------------------------------------- |
+| **Portfolio cá nhân**         | Nặng về R\&D, protocol dev, infra                        | Nặng về UX, dApp, innovation                |
+| **Độ tín nhiệm từ VC**        | Rất cao (hạ tầng, vision)                                | Rất cao (proof of execution)                |
+| **Tạo hiệu ứng truyền thông** | Thường im lặng (EF không PR), nhưng uy tín ngầm rất mạnh | Có thể tận dụng social media, showcase mạnh |
+| **Cơ hội funding tiếp theo**  | Dễ mở cửa với các Foundation (ZK, Optimism...)           | Dễ scale lên từ MVP → seed round            |
+| **Tác động trong cộng đồng**  | Dễ trở thành mentor, speaker                             | Dễ thành “builder idol” trong cộng đồng dev |
+

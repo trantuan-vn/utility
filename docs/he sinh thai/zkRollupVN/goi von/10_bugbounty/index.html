@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STUX Bug Bounty Program</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background-color: #f9f9f9; color: #222; }
+    h1, h2, h3 { color: #2a2a2a; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.75rem; text-align: left; }
+    th { background-color: #eee; }
+    ul { margin-left: 1.5rem; }
+    code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+    .section { margin-bottom: 2rem; }
+    .critical { color: red; font-weight: bold; }
+    .high { color: darkorange; font-weight: bold; }
+    .medium { color: goldenrod; font-weight: bold; }
+    .low { color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>🛡️ STUX Bug Bounty Program</h1>
+  <div class="section">
+    <p>
+      Chào mừng đến với chương trình Bug Bounty chính thức của <strong>STUX</strong> – hệ sinh thái DEX và zkRollup phục vụ STO toàn cầu!
+    </p>
+    <p>
+      Cùng xây dựng hệ thống <strong>an toàn, minh bạch, không lỗi</strong> và <strong>không khai thác được</strong> nhờ sự đóng góp của cộng đồng hacker mũ trắng, dev và researcher.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>🎯 Mục tiêu</h2>
+    <ul>
+      <li>Phát hiện lỗi bảo mật / logic / contract / backend.</li>
+      <li>Bảo vệ user và Layer 2.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🧪 Phạm vi chương trình</h2>
+    <table>
+      <tr><th>Thành phần</th><th>Trạng thái</th></tr>
+      <tr><td>Smart Contracts: STUX, STO, sToken</td><td>✅ Trong phạm vi</td></tr>
+      <tr><td>zkRollup Core (Sequencer, Prover)</td><td>✅ Trong phạm vi</td></tr>
+      <tr><td>STUX-USD Stablecoin Mechanism</td><td>✅ Trong phạm vi</td></tr>
+      <tr><td>Web frontend (DEX, Launchpad)</td><td>✅ Trong phạm vi</td></tr>
+      <tr><td>Backend APIs & Database</td><td>✅ Trong phạm vi</td></tr>
+      <tr><td>OAuth2, KYC Services (bên thứ ba)</td><td>❌ Ngoài phạm vi</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>💨 Mức thưởng</h2>
+    <table>
+      <tr><th>Mức độ</th><th>Mô tả ví dụ</th><th>Thưởng (USD/STUX)</th></tr>
+      <tr><td class="critical">🔥 Critical</td><td>Chiếm quyền, rút tiền, bypass</td><td>$5,000 – $20,000 / 50,000 STUX</td></tr>
+      <tr><td class="high">⚠️ High</td><td>Lỗi logic, sai luồng giao dịch</td><td>$1,000 – $5,000 / 10,000 STUX</td></tr>
+      <tr><td class="medium">⚙️ Medium</td><td>Lỗi ảnh hưởng UI/UX</td><td>$500 – $1,000</td></tr>
+      <tr><td class="low">📄 Low</td><td>Typo, UI bug nhỏ</td><td>$100 – $500</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>📋 Tham gia</h2>
+    <ul>
+      <li>Gửi báo cáo qua email: <code>security@stux.exchange</code></li>
+      <li>Hoặc mở Private Issue: <code>github.com/stux-protocol/stux/issues</code></li>
+      <li>Nếu sử dụng Immunefi: qua form trực tiếp</li>
+    </ul>
+    <p><strong>Yêu cầu:</strong> Mô tả chi tiết, PoC, hướng dẫn, gợi ý fix nếu có.</p>
+  </div>
+
+  <div class="section">
+    <h2>❗ Quy tắc</h2>
+    <ul>
+      <li>Chỉ test trên testnet hoặc local.</li>
+      <li>KHÔNG tấn công production / L1.</li>
+      <li>KHÔNG public lỗi trước khi STUX xác nhận fix.</li>
+      <li>KHÔNG lợi dụng khai thác nhận lợi.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🤝 Cảm ơn</h2>
+    <p>Chúc bạn khai phá ra nhiều lỗi, và giúp chúng tôi trở thành một DEX an toàn và minh bạch nhất cho STO!</p>
+  </div>
+</body>
+</html>

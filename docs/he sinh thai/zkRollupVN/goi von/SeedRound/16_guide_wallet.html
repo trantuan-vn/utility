@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn sử dụng ví tiền điện tử an toàn</title>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+
+    <style>
+     .mermaid{background:#fdfdfd;padding:12px;border-radius:8px;border:1px solid #ddd;} 
+     body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+            margin-top: 40px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 0 5px 5px 0;
+        }
+        .warning {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .tip {
+            background-color: #e7f5ff;
+            padding: 15px;
+            border-left: 4px solid #4dabf7;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .step {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #3498db;
+        }
+        .permission-category {
+            margin: 30px 0 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px dashed #3498db;
+            color: #2c3e50;
+        }
+        .risk-high { color: #e74c3c; font-weight: bold; }
+        .risk-medium { color: #f39c12; font-weight: bold; }
+        .risk-low { color: #27ae60; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>I. Hướng dẫn sử dụng ví tiền điện tử an toàn</h1>
+
+    <section id="ledger-safepal">
+        <h2>1. Sử dụng Ledger Nano X (<a href="https://vitienbitcoin.com/san-pham/ledger-nano-x/?srsltid=AfmBOopQghlyPk_Z3wtbYZBOzZi3bCCXy8MIeZbrUhPqhcuFZXYbW0td" target="_blank" rel="noopener noreferrer">mua thiết bị ledger nano x</a>) và SafePal Cypher và tích hợp với Metamask</h2>
+        <h3>Hướng dẫn sử dụng tạo ví điện tử trên Ledger Nano X :</h3>        
+        <iframe src="https://www.youtube.com/embed/e8FP1P_8fyI?start=29" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:calc(100vh - 180px)"></iframe>
+        <h3>Hướng dẫn sử dụng khôi phục ví điện tử trên Ledger Nano X :</h3>        
+        <iframe src="https://www.youtube.com/embed/wlcbfYGY834" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:calc(100vh - 180px)"></iframe>
+        <h3>Hướng dẫn Ledger Live :</h3>        
+        <iframe src="https://www.youtube.com/embed/6gWVldBqDlM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:calc(100vh - 180px)"></iframe>
+        <h3>Hướng dẫn lưu seed phase (<a href="https://shopee.vn/Bảng-thép-lưu-trữ-cụm-24-từ-phục-hồi-ví-lạnh-Ledger-Trezor-SafePal-i.75695591.29054859661?xptdk=63d47f5d-d127-4f69-9577-619f632f4aea" target="_blank" rel="noopener noreferrer">mua thiết bị lưu trữ seed phase</a>) :</h3>        
+        <video width="100%" height="500" controls>
+            <source src="https://down-bs-sg.vod.susercontent.com/api/v4/11110107/mms/vn-11110107-6khw2-lxikxdtc2k0rb0.16000081720545373.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <section id="metamask-legder">
+        <h2>2. Quy trình sử dụng Metamask với ledger</h2>
+        <h3>Sơ đồ Metamask tích hợp với Ledger Nano X :</h3>
+        <div class="mermaid">
+        %%{init:{"theme":"default"}}%%
+        sequenceDiagram
+            participant User as Người dùng
+            participant MetaMask as Ví nóng MetaMask
+            participant Ledger as Thiết bị Ledger Nano S/X
+            participant Blockchain as Mạng Blockchain
+
+            User->>MetaMask: Tạo giao dịch mua hoặc swap token
+            MetaMask->>MetaMask: Chuẩn bị giao dịch chưa ký
+            MetaMask->>Ledger: Gửi giao dịch chưa ký qua USB
+            Ledger->>User: Hiển thị chi tiết giao dịch
+            User->>Ledger: Xác nhận ký giao dịch
+            Ledger->>MetaMask: Trả giao dịch đã ký
+            MetaMask->>Blockchain: Gửi giao dịch đã ký lên mạng
+            Blockchain->>Blockchain: Xử lý giao dịch
+            Blockchain->>MetaMask: Xác nhận giao dịch thành công
+            MetaMask->>User: Cập nhật số dư token/crypto mới
+        </div>  
+        <h3>Hướng dẫn sử dụng Metamask tích hợp với Ledger Nano X :</h3>
+        <iframe src="https://www.youtube.com/embed/BOJOsSDO_KQ?start=432s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:calc(100vh - 180px)"></iframe>
+    </section>
+
+    <section id="ledger-binance">
+        <h2>3. Quy trình chuyển coin/token trên binance</h2>
+        <h3>Hướng dẫn chuyển coin/token từ ledger tới binance :</h3>        
+        <iframe src="https://www.youtube.com/embed/kH4x-auJp4Y?start=12s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:calc(100vh - 180px)"></iframe>
+        <h3>Hướng dẫn chuyển coin/token từ binance tới ledger :</h3>        
+        <iframe src="https://www.youtube.com/embed/YQH9WBldILc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:calc(100vh - 180px)"></iframe>
+        <h3>Hướng dẫn bảo mật trên ví binance :</h3>
+        <iframe src="https://www.youtube.com/embed/uk4w1ytUjw0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:calc(100vh - 180px)"></iframe>
+    </section>
+
+    <h1>II. Tích hợp ví tiền điện tử với dapp một cách an toàn</h1>
+    <section id="list-of-ermissions">
+        <h2>1. Tổng quan 15 loại quyền quan trọng trong Web3</h2>
+        
+        <div class="warning">
+            <h3>Cảnh báo bảo mật</h3>
+            <p>Mỗi quyền đều tiềm ẩn rủi ro riêng. Luôn tuân thủ nguyên tắc: <strong>"Cấp tối thiểu - Thu hồi sớm - Kiểm tra kỹ"</strong>.</p>
+        </div>
+        
+        <h3 class="permission-category">1.1. Nhóm quyền cơ bản</h3>
+        <table>
+            <tr>
+                <th width="20%">Loại quyền</th>
+                <th width="30%">Mục đích</th>
+                <th width="30%">Ví dụ</th>
+                <th width="20%">Mức độ rủi ro</th>
+            </tr>
+            <tr>
+                <td>Truy cập tài khoản</td>
+                <td>Xem địa chỉ ví và số dư</td>
+                <td>Đăng nhập bằng ví</td>
+                <td class="risk-low">Thấp</td>
+            </tr>
+            <tr>
+                <td>Kết nối trang web</td>
+                <td>Cho phép dApp tương tác với ví</td>
+                <td>Kết nối MetaMask với Uniswap</td>
+                <td class="risk-low">Thấp</td>
+            </tr>
+            <tr>
+                <td>Ký tin nhắn (Sign)</td>
+                <td>Xác thực danh tính không tốn phí</td>
+                <td>Sign-in with Ethereum</td>
+                <td class="risk-medium">Trung bình</td>
+            </tr>
+        </table>
+
+        <h3 class="permission-category">1.2. Nhóm quyền giao dịch</h3>
+        <table>
+            <tr>
+                <td>Phê duyệt giao dịch (Approve)</td>
+                <td>Cho phép thực hiện giao dịch cụ thể</td>
+                <td>Swap token trên DEX</td>
+                <td class="risk-high">Cao</td>
+            </tr>
+            <tr>
+                <td>Hạn mức chi tiêu (Allowance)</td>
+                <td>Cho phép dApp tiêu một số lượng token</td>
+                <td>Cấp phép cho Uniswap</td>
+                <td class="risk-high">Rất cao (nếu unlimited)</td>
+            </tr>
+            <tr>
+                <td>Đề xuất giao dịch</td>
+                <td>DApp có thể gợi ý giao dịch</td>
+                <td>Gợi ý stake token vào pool</td>
+                <td class="risk-medium">Trung bình</td>
+            </tr>
+        </table>
+
+        <h3 class="permission-category">1.3. Nhóm quyền mạng lưới</h3>
+        <table>
+            <tr>
+                <td>Thêm mạng mới</td>
+                <td>Cho phép dApp thêm network vào ví</td>
+                <td>Thêm mạng Arbitrum</td>
+                <td class="risk-medium">Trung bình</td>
+            </tr>
+            <tr>
+                <td>Chuyển đổi mạng</td>
+                <td>Tự động chuyển giữa các network</td>
+                <td>Chuyển từ ETH sang BSC</td>
+                <td class="risk-low">Thấp</td>
+            </tr>
+        </table>
+
+        <h3 class="permission-category">1.4. Nhóm quyền nâng cao</h3>
+        <table>
+            <tr>
+                <td>Ủy quyền (Delegation)</td>
+                <td>Cho phép đại diện vote/thực thi</td>
+                <td>Delegate vote trong DAO</td>
+                <td class="risk-high">Cao</td>
+            </tr>
+            <tr>
+                <td>Mở khóa (Unlock)</td>
+                <td>Truy cập tài sản bị khóa</td>
+                <td>Rút token từ smart contract</td>
+                <td class="risk-high">Rất cao</td>
+            </tr>
+            <tr>
+                <td>Đa chữ ký (Multisig)</td>
+                <td>Yêu cầu nhiều chữ ký cho giao dịch</td>
+                <td>Ví doanh nghiệp Gnosis Safe</td>
+                <td class="risk-low">Thấp</td>
+            </tr>
+        </table>
+
+        <h3 class="permission-category">1.5. Nhóm quyền NFT & DeFi</h3>
+        <table>
+            <tr>
+                <td>Quản lý NFT</td>
+                <td>Cho phép chuyển/bán NFT</td>
+                <td>List NFT trên OpenSea</td>
+                <td class="risk-medium">Trung bình</td>
+            </tr>
+            <tr>
+                <td>Staking ủy thác</td>
+                <td>Ủy thác staking cho bên thứ 3</td>
+                <td>Staking trên Lido Finance</td>
+                <td class="risk-high">Cao</td>
+            </tr>
+            <tr>
+                <td>Vay mượn</td>
+                <td>Truy cập vị thế vay</td>
+                <td>Vay trên Aave/Compound</td>
+                <td class="risk-high">Rất cao</td>
+            </tr>
+        </table>
+    </section>
+
+    <section id="permissions">
+        <h2>2. Hiểu về các loại quyền quan trọng của ví điện tử</h2>
+        
+        <div class="warning">
+            <h3>Cảnh báo bảo mật</h3>
+            <p>Luôn kiểm tra kỹ các yêu cầu quyền từ dApp, đặc biệt là <strong>Token Allowance</strong> hoặc <strong>Transaction Approval</strong>, để tránh bị lừa đảo hoặc mất token.</p>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Loại quyền</th>
+                <th>Mục đích</th>
+                <th>Ví dụ</th>
+                <th>Rủi ro</th>
+            </tr>
+            <tr>
+                <td>Truy cập tài khoản</td>
+                <td>Xem địa chỉ ví và số dư</td>
+                <td>Đăng nhập bằng ví</td>
+                <td>Thấp</td>
+            </tr>
+            <tr>
+                <td>Phê duyệt giao dịch (Approve)</td>
+                <td>Cho phép thực hiện giao dịch cụ thể</td>
+                <td>Swap token trên DEX</td>
+                <td>Cao (có thể bị rút token)</td>
+            </tr>
+            <tr><td>Hạn mức chi tiêu (Allowance)</td>
+                <td>Cho phép dApp tiêu một số lượng token</td>
+                <td>Cấp phép cho Uniswap</td>
+                <td>Rất cao (nếu unlimited)</td>
+            </tr>
+            <tr>
+                <td>Ký tin nhắn</td>
+                <td>Xác thực danh tính</td>
+                <td>Sign-in with Ethereum</td>
+                <td>Trung bình</td>
+            </tr>
+        </table>
+    </section>
+    
+    <section id="layer2-risks">
+        <h2>3. Rủi ro đặc biệt khi dùng Layer 2</h2>
+        
+        <div class="warning">
+            <h3>Nguy cơ trên Layer 2</h3>
+            <ul>
+                <li>Phí gas rẻ → Hacker dễ triển khai hợp đồng độc hại</li>
+                <li>Tốc độ nhanh → Khó hủy giao dịch lừa đảo</li>
+                <li>Người dùng chủ quan vì nghĩ L2 "an toàn hơn"</li>
+            </ul>
+        </div>
+        
+        <h3>Cách phòng tránh trên L2:</h3>
+        <ol>
+            <li>Luôn kiểm tra hợp đồng trên Arbiscan/Optimistic Etherscan</li>
+            <li>Không bao giờ approve unlimited allowance</li>
+            <li>Revoke allowance sau khi dùng xong bằng <a href="https://revoke.cash" target="_blank">Revoke.cash</a></li>
+        </ol>
+    </section>
+    
+    <section id="multi-wallet">
+        <h2>4. Chiến lược đa ví an toàn</h2>
+        
+        <div class="step">
+            <h3>Ví chính (Cold Wallet)</h3>
+            <ul>
+                <li><strong>Mục đích:</strong> Lưu trữ dài hạn</li>
+                <li><strong>Cách dùng:</strong>
+                    <ul>
+                        <li>Dùng ví cứng (Ledger/Trezor) hoặc ví phần mềm offline</li>
+                        <li>Không bao giờ kết nối với dApp</li>
+                        <li>Chỉ dùng để nhận tiền/chuyển sang ví giao dịch</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="step">
+            <h3>Ví giao dịch (Hot Wallet)</h3>
+            <ul>
+                <li><strong>Mục đích:</strong> Tương tác hàng ngày</li>
+                <li><strong>Cách dùng:</strong>
+                    <ul>
+                        <li>Chỉ nạp đủ số token cần dùng</li>
+                        <li>Sau giao dịch chuyển ngay về ví chính</li>
+                        <li>Có thể tạo nhiều ví cho từng mục đích (DeFi, NFT)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="tip">
+            <h3>Mẹo bổ sung:</h3>
+            <ul>
+                <li>Dùng trình duyệt riêng (Brave/Firefox) cho ví</li>
+                <li>Cài extension bảo mật như <a href="https://walletguard.app/" target="_blank">Wallet Guard</a></li><li>Không lưu seed phrase trên thiết bị điện tử</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section id="safe-transaction">
+        <h2>5. Quy trình giao dịch an toàn</h2>
+        
+        <div class="step">
+            <h3>Bước 1: Nạp tiền vào ví giao dịch</h3>
+            <p>Chỉ chuyển từ ví chính số lượng đủ dùng</p>
+        </div>
+        
+        <div class="step">
+            <h3>Bước 2: Kết nối với dApp đã kiểm tra</h3>
+            <p>Xác minh URL và hợp đồng thông minh</p>
+        </div>
+        
+        <div class="step">
+            <h3>Bước 3: Approve với giới hạn</h3>
+            <p>Không bao giờ chọn "unlimited"</p>
+        </div>
+        
+        <div class="step">
+            <h3>Bước 4: Chuyển số dư về ví chính</h3>
+            <p>Thực hiện ngay sau giao dịch</p>
+        </div>
+        
+        <div class="step">
+            <h3>Bước 5: Revoke allowance</h3>
+            <p>Dùng <a href="https://revoke.cash" target="_blank">Revoke.cash</a> nếu không dùng lại dApp</p>
+        </div>
+    </section>
+
+    <h1>III.Tóm tắt nguyên tắc vàng</h1>
+    <section id="summary">
+        <div class="tip">
+            <ul>
+                <li><strong>"Ví chính là kho báu - ví giao dịch là túi tiền lẻ"</strong></li>
+                <li><strong>"Trust nothing, verify everything"</strong>: Luôn kiểm tra hợp đồng</li>
+                <li>Layer 2 không an toàn hơn - vẫn cần cảnh giác cao độ</li>
+                <li>Revoke allowance thường xuyên như khóa cửa sau khi ra khỏi nhà</li>
+            </ul>
+        </div>
+        
+        <h3>Công cụ hữu ích:</h3>
+        <ul>
+            <li>Kiểm tra allowance: <a href="https://etherscan.io/tokenapprovalchecker" target="_blank">Etherscan Token Approvals</a></li>
+            <li>Revoke quyền: <a href="https://revoke.cash" target="_blank">Revoke.cash</a></li>
+            <li>Ví bảo mật: <a href="https://rabby.io/" target="_blank">Rabby Wallet</a></li>
+        </ul>
+    </section>
+    
+    <footer>
+        <p>© 2023 Hướng dẫn bảo mật ví tiền điện tử. Cập nhật lần cuối: Tháng 8/2023</p>
+    </footer>
+</body>
+</html>
