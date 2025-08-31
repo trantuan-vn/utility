@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TradingVista</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 transition-colors duration-300 dark:bg-neutral-900 dark:text-gray-100">
+
+<!-- Header -->
+<header class="bg-white px-6 py-4 text-2xl font-bold text-blue-600 flex justify-between items-center border-b border-gray-200 flex-wrap 
+        dark:bg-neutral-800 dark:text-gray-100 dark:border-gray-700">
+  TradingSTO
+  <div class="flex items-center gap-2 mt-2 md:mt-0">
+    <input 
+      class="border border-gray-300 rounded px-3 py-1 text-sm dark:bg-neutral-700 dark:text-gray-100 dark:border-gray-600" 
+      type="text" 
+      placeholder="Search crypto/token/nft symbol..."
+    >
+    <select id="languageSelect" class="border border-gray-300 rounded px-3 py-1 text-sm cursor-pointer dark:bg-neutral-700 dark:text-gray-100 dark:border-gray-600">
+      <option value="en">🇺🇸 English</option>
+      <option value="vi_VN">🇻🇳 Tiếng Việt</option>
+    </select>
+    <button id="themeToggle" class="border border-gray-300 rounded px-3 py-1 text-sm cursor-pointer dark:bg-neutral-700 dark:text-gray-100 dark:border-gray-600">
+      🌙 Dark Mode
+    </button>
+  </div>
+</header>
+
+<!-- Navbar ticker -->
+<nav>
+  <div class="tradingview-widget-container" id="ticker-tape"></div>
+</nav>
+
+<!-- Container -->
+<div class="max-w-5xl mx-auto p-5">
+  <!-- Symbol Info -->
+  <div class="bg-white border border-gray-200 rounded-lg p-5 mb-5 dark:bg-neutral-800 dark:border-gray-700">
+    <h2 class="text-lg font-semibold mb-4">Symbol Info</h2>
+    <div class="tradingview-widget-container" id="symbol-info"></div>
+  </div>
+
+  <!-- Advanced Chart -->
+  <div class="bg-white border border-gray-200 rounded-lg p-5 mb-5 dark:bg-neutral-800 dark:border-gray-700">
+    <h2 class="text-lg font-semibold mb-4">Advanced Chart</h2>
+    <div class="tradingview-widget-container h-[600px] w-full" id="advanced-chart"></div>
+  </div>
+
+  <!-- Company Profile -->
+  <div class="bg-white border border-gray-200 rounded-lg p-5 mb-5 dark:bg-neutral-800 dark:border-gray-700">
+    <h2 class="text-lg font-semibold mb-4">Company Profile</h2>
+    <div class="tradingview-widget-container" id="company-profile"></div>
+  </div>
+
+  <!-- Technical Analysis & Top Stories -->
+  <div class="flex flex-wrap gap-5">
+    <div class="bg-white border border-gray-200 rounded-lg p-5 flex-1 min-w-[300px] dark:bg-neutral-800 dark:border-gray-700">
+      <h2 class="text-lg font-semibold mb-4">Technical Analysis</h2>
+      <div class="tradingview-widget-container" id="technical-analysis"></div>
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-lg p-5 flex-1 min-w-[300px] dark:bg-neutral-800 dark:border-gray-700">
+      <h2 class="text-lg font-semibold mb-4">Top Stories</h2>
+      <div class="tradingview-widget-container" id="top-stories"></div>
+    </div>
+  </div>
+
+  <!-- Heatmap -->
+  <div class="bg-white border border-gray-200 rounded-lg p-5 my-5 dark:bg-neutral-800 dark:border-gray-700">
+    <div class="tradingview-widget-container h-[600px] w-full" id="crypto-coins-heatmap"></div>
+  </div>
+
+  <!-- Market -->
+  <div class="bg-white border border-gray-200 rounded-lg p-5 my-5 dark:bg-neutral-800 dark:border-gray-700">
+    <div class="tradingview-widget-container h-[550px] w-full" id="cryptocurrency-market"></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center text-sm text-gray-500 my-10 dark:text-gray-400">
+  &copy; 2025 TradingVista UI – Built with TradingView Widgets
+</footer>
+
+<script>
+  let widgetLocale = 'en';
+  let widgetTheme = 'light';
+
+  const loadWidgets = () => {
+    ["ticker-tape","symbol-info","advanced-chart","company-profile","technical-analysis","top-stories","crypto-coins-heatmap","cryptocurrency-market"]
+      .forEach(id => document.getElementById(id).innerHTML = "");
+
+    const createScript = (id, src, config) => {
+      const container = document.getElementById(id);
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.innerHTML = JSON.stringify(config);
+      container.appendChild(document.createElement('div')).className = "tradingview-widget-container__widget";
+      container.appendChild(script);
+    };
+
+    createScript("ticker-tape","https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js",{
+      symbols:[
+        { proName:"BITSTAMP:XRPUSD", title:"Ripple" },
+        { proName:"BITSTAMP:SOLUSD", title:"Solana" },
+        { proName:"BINANCE:BNBUSD", title:"Binance" },
+        { proName:"BITSTAMP:BTCUSD", title:"Bitcoin" },
+        { proName:"BITSTAMP:ETHUSD", title:"Ethereum" }
+      ],
+      colorTheme: widgetTheme,
+      locale: widgetLocale,
+      isTransparent:false,
+      displayMode:"adaptive",
+      showSymbolLogo:true
+    });
+
+    createScript("symbol-info","https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js",{
+      symbol:"BITSTAMP:BTCUSD", colorTheme:widgetTheme, isTransparent:false, locale:widgetLocale
+    });
+
+    createScript("advanced-chart","https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js",{
+      autosize:true, height:600, width:"100%", symbol:"BITSTAMP:BTCUSD", interval:"D",
+      timezone:"Etc/UTC", theme:widgetTheme, style:"1", hide_top_toolbar:false,
+      hide_side_toolbar:false, allow_symbol_change:true, locale:widgetLocale,
+      watchlist:["BITSTAMP:BTCUSD","BITSTAMP:ETHUSD","BINANCE:BNBUSD","BITSTAMP:SOLUSD","BINANCE:AVAXUSDT"],
+      details:true, hotlist:true
+    });
+
+    createScript("company-profile","https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js",{
+      symbol:"BITSTAMP:BTCUSD", colorTheme:widgetTheme, isTransparent:false, locale:widgetLocale, height:350
+    });
+
+    createScript("technical-analysis","https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js",{
+      symbol:"BITSTAMP:BTCUSD", interval:"1m", showIntervalTabs:true,
+      colorTheme:widgetTheme, isTransparent:false, locale:widgetLocale, width:"100%", height:450
+    });
+
+    createScript("top-stories","https://s3.tradingview.com/external-embedding/embed-widget-timeline.js",{
+      feedMode:"all_symbols", colorTheme:widgetTheme, isTransparent:false, locale:widgetLocale,
+      displayMode:"regular", height:550
+    });
+
+    createScript("crypto-coins-heatmap","https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js",{
+      dataSource:"Crypto", blockSize:"market_cap_calc", blockColor:"24h_close_change|5", locale:widgetLocale,
+      symbolUrl:"", colorTheme:widgetTheme, hasTopBar:false, isDataSetEnabled:false,
+      isZoomEnabled:true, hasSymbolTooltip:true, isMonoSize:false, width:"100%", height:600
+    });
+
+    createScript("cryptocurrency-market","https://s3.tradingview.com/external-embedding/embed-widget-screener.js",{
+      defaultColumn:"overview", screener_type:"crypto_mkt", displayCurrency:"USD",
+      colorTheme:widgetTheme, isTransparent:false, locale:widgetLocale, width:"100%", height:550
+    });
+  };
+
+  document.getElementById('languageSelect').addEventListener('change', e => {
+    widgetLocale = e.target.value;
+    loadWidgets();
+  });
+
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const body = document.body;
+    const isDark = body.classList.toggle('dark');
+    widgetTheme = isDark ? 'dark' : 'light';
+    document.getElementById('themeToggle').textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+    loadWidgets();
+  });
+
+  loadWidgets();
+</script>
+
+</body>
+</html>

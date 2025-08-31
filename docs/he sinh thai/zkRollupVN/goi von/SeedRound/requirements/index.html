@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tài liệu DEX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Mermaid JS -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  
+  <!-- Marked JS -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+    }
+    
+    h1 {
+      color: #2c3e50;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    
+    #diagram-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    
+    #content {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 25px;
+      border-left: 4px solid #3498db;
+    }
+    
+    .mermaid .node {
+      cursor: pointer !important;
+      transition: all 0.2s;
+    }
+    
+    .mermaid .node:hover {
+      filter: brightness(95%);
+    }
+    
+    .loading {
+      color: #7f8c8d;
+      font-style: italic;
+    }
+    
+    .error {
+      color: #e74c3c;
+      background: #fdecea;
+      padding: 15px;
+      border-radius: 4px;
+      border-left: 4px solid #e74c3c;
+    }
+    
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <h1>📚 Tài liệu Hệ thống DEX</h1>
+  
+  <div id="diagram-container">
+    <pre id="diagram" class="mermaid">
+      flowchart TD
+        %% Yêu cầu
+        A1["🔍 URD: User Requirements"]
+        A2["📄 PRD: Product Requirements"]
+        A3["💼 BRD: Business Requirements"]
+
+        %% Đặc tả
+        B1["📘 SRS: Software Requirements Spec"]
+        B2["📑 RTM: Requirement Traceability Matrix"]
+
+        %% Thiết kế
+        C1["🧠 SDD: Software Design Document"]
+        C2["📐 HLD: High Level Design"]
+        C3["🔧 LLD: Low Level Design"]
+        C4["🗂️ ERD: Entity-Relationship Diagram"]
+        C5["🔁 UML: Sequence / Activity Diagrams"]
+        C6["🔄 DFD: Data Flow Diagram"]
+
+        %% Kiểm thử
+        D1["🧪 Test Plan"]
+        D2["Test Cases Document"]
+        D3["✅ QA Checklist"]
+
+        %% Bảo mật & quyết định
+        E1["🛡️ Threat Model Document"]
+        E2["🧭 ADR: Architecture Decisions"]
+
+        %% Triển khai
+        F1["🚀 Deployment Plan"]
+        F2["⚙️ System Config"]
+        F3["📦 API Documentation"]
+
+        %% Vận hành & hướng dẫn
+        G1["📖 User Manual / Guide"]
+        G2["📝 Release Notes"]
+
+        %% Liên kết
+        A1 --> B1
+        A2 --> B1
+        A3 --> B1
+        B1 --> B2
+        B1 --> C1
+        C1 --> C2
+        C1 --> C3
+        C2 --> C4
+        C3 --> C5
+        C3 --> C6
+        B2 --> D1
+        C1 --> D1
+        D1 --> D2
+        D1 --> D3
+        C1 --> E2
+        C1 --> E1
+        C1 --> F1
+        F1 --> F2
+        C1 --> F3
+        F2 --> G1
+        F3 --> G1
+        F1 --> G2
+
+        %% Click events
+        click A1 call handleClick('A1')
+        click A2 call handleClick('A2')
+        click A3 call handleClick('A3')
+        click B1 call handleClick('B1')
+        click B2 call handleClick('B2')
+        click C1 call handleClick('C1')
+        click C2 call handleClick('C2')
+        click C3 call handleClick('C3')
+        click C4 call handleClick('C4')
+        click C5 call handleClick('C5')
+        click C6 call handleClick('C6')
+        click D1 call handleClick('D1')
+        click D2 call handleClick('D2')
+        click D3 call handleClick('D3')
+        click E1 call handleClick('E1')
+        click E2 call handleClick('E2')
+        click F1 call handleClick('F1')
+        click F2 call handleClick('F2')
+        click F3 call handleClick('F3')
+        click G1 call handleClick('G1')
+        click G2 call handleClick('G2')
+    </pre>
+  </div>
+
+  <div id="content">
+    <h2>📂 Nội dung tài liệu</h2>
+    <div id="markdown-content">
+      <p>Nhấn vào bất kỳ node nào trong sơ đồ để xem nội dung tài liệu tương ứng.</p>
+    </div>
+  </div>
+
+  <script>
+    // Khởi tạo Mermaid
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'loose',
+      theme: 'default'
+    });
+    const diagram = document.querySelector("#diagram");
+    mermaid.run({ nodes: [diagram] });
+
+
+    // Mapping tài liệu
+    const docMap = {
+      'A1': 'URD.md',
+      'A2': 'PRD.md',
+      'A3': 'BRD.md',
+      'B1': 'SRS.md',
+      'B2': 'RTM.md',
+      'C1': 'SDD.md',
+      'C2': 'HLD.md',
+      'C3': 'LLD.md',
+      'C4': 'ERD.md',
+      'C5': 'UML.md',
+      'C6': 'DFD.md',
+      'D1': 'TestPlan.md',
+      'D2': 'TestCases.md',
+      'D3': 'QAChecklist.md',
+      'E1': 'ThreatModel.md',
+      'E2': 'ADR.md',
+      'F1': 'DeploymentPlan.md',
+      'F2': 'SystemConfig.md',
+      'F3': 'API.md',
+      'G1': 'UserGuide.md',
+      'G2': 'ReleaseNote.md'
+    };
+
+    // Hàm xử lý click
+    window.handleClick = function(nodeId) {
+      const normalizedId = nodeId.replace(/[^a-zA-Z0-9]/g, '');
+      const url = docMap[normalizedId];
+      const contentDiv = document.getElementById('markdown-content');
+      
+      if (!url) {
+        contentDiv.innerHTML = `<div class="error">Không tìm thấy mapping cho node ${nodeId}</div>`;
+        return;
+      }
+
+      contentDiv.innerHTML = `<p class="loading">Đang tải ${url}...</p>`;
+      
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(text => {
+          console.log('Nodeid: ' + nodeId);
+          console.log('URL: ' + url);
+          console.log('Text content: ' + text);
+          if (url === 'ERD.md' || url === 'UML.md' || url === 'DFD.md') {
+            contentDiv.innerHTML = text;
+            const cannon = document.querySelector("#cannon");
+            mermaid.run({ nodes: [cannon] });
+          }
+          else {
+            contentDiv.innerHTML = marked.parse(text) || 
+              `<div class="error">File ${url} trống hoặc không có nội dung</div>`;
+          }
+        })
+        .catch(error => {
+          contentDiv.innerHTML = `
+            <div class="error">
+              <h3>Không thể tải tài liệu</h3>
+              <p><b>File:</b> ${url}</p>
+              <p><b>Lỗi:</b> ${error.message}</p>
+              <p>Vui lòng đảm bảo:</p>
+              <ul>
+                <li>File tồn tại trong cùng thư mục với index.html</li>
+                <li>Bạn đang chạy qua web server (không mở trực tiếp file)</li>
+              </ul>
+              <button onclick="createStub('${url}')">Tạo file mẫu</button>
+            </div>
+          `;
+        });
+    };
+
+    // Hàm tạo file mẫu (chỉ hoạt động với server hỗ trợ ghi file)
+    window.createStub = function(filename) {
+      const content = `# ${filename.replace('.md', '')}\n\n## Mô tả\nĐây là file mẫu được tạo tự động.\n\n## Nội dung chính\n- Mục 1\n- Mục 2\n- Mục 3`;
+      
+      fetch(filename, {
+        method: 'POST',
+        body: content,
+        headers: {
+          'Content-Type': 'text/markdown'
+        }
+      })
+      .then(() => {
+        alert(`Đã tạo file ${filename} thành công!`);
+        window.handleClick(Object.keys(docMap).find(key => docMap[key] === filename));
+      })
+      .catch(err => {
+        alert(`Không thể tạo file: ${err.message}\n\nBạn cần chạy qua web server có hỗ trợ ghi file.`);
+      });
+    };
+
+    // Thêm hiệu ứng hover cho các node
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        document.querySelectorAll('.mermaid .node').forEach(node => {
+          node.style.cursor = 'pointer';
+          node.addEventListener('mouseenter', () => {
+            node.style.filter = 'brightness(90%)';
+          });
+          node.addEventListener('mouseleave', () => {
+            node.style.filter = 'none';
+          });
+        });
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

@@ -3,100 +3,214 @@
 <head>
   <meta charset="UTF-8" />
   <title>Seed Round Project Navigator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      height: 100vh;
-      background-color: #f5f7fa;
-    }
-
     #sidebar {
+      width: 60px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #sidebar.expanded {
       width: 280px;
-      background-color: #ffffff;
-      border-right: 1px solid #ddd;
-      padding: 20px 10px;
-      overflow-y: auto;
     }
-
-    h2 {
-      margin: 10px 15px;
-      font-size: 20px;
-      color: #333;
+    #toggleButton.active {
+      transform: rotate(90deg);
     }
-
-    ul {
-      list-style: none;
-      padding: 0;
+    #toggleButton::before {
+      content: '☰';
     }
-
-    li {
-      padding: 10px 15px;
-      margin: 5px 10px;
-      background-color: #f1f1f1;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      transition: background-color 0.2s ease;
+    #toggleButton.active::before {
+      content: '✕';
     }
-
-    li:hover {
-      background-color: #dce8ff;
+    #sidebar:not(.expanded) .text-label,
+    #sidebar:not(.expanded) h2 span:not(.icon),
+    #sidebar:not(.expanded) .child {
+      display: none;
     }
-
-    li span.icon {
-      margin-right: 10px;
-      color: #555;
+    #sidebar:not(.expanded) li,
+    #sidebar:not(.expanded) .parent > span {
+      justify-content: center;
+      padding: 12px;
     }
-
-    #content {
-      flex-grow: 1;
-      padding: 0;
+    #sidebar:not(.expanded) .icon {
+      margin-right: 0;
     }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      background-color: #fff;
-    }
-
-    .active {
-      background-color: #c3ddff;
+    @media (max-width: 768px) {
+      #sidebar.expanded {
+        width: 240px;
+      }
     }
   </style>
 </head>
-<body>
-  <div id="sidebar">
-    <h2>📁 SeedRound</h2>
-    <ul id="navList">
-      <li onclick="loadPage(this, '0_DeFi_2035.html')"><span class="icon">📄</span>DeFi 2035</li>
-      <li onclick="loadPage(this, '1_Genius Act.html')"><span class="icon">📄</span>Genius Act</li>
-      <li onclick="loadPage(this, '2.0_STO_exchange.html')"><span class="icon">📄</span>STO Exchange</li>
-      <li onclick="loadPage(this, '2.1_competitor.html')"><span class="icon">📄</span>Competitor</li>
-      <li onclick="loadPage(this, '3_zkKYC_opstack_architecture.html')"><span class="icon">📄</span>zkKYC Architecture</li>
-      <li onclick="loadPage(this, '4_opstack_architecture.html')"><span class="icon">📄</span>OP Stack Architecture</li>
-      <li onclick="loadPage(this, '5_roadmap.html')"><span class="icon">📄</span>Roadmap</li>
-      <li onclick="loadPage(this, '6_whitepaper.html')"><span class="icon">📄</span>Whitepaper</li>
-      <li onclick="loadPage(this, '7_seed_round.html')"><span class="icon">📄</span>MVP introduction</li>
+<body class="flex h-screen bg-gray-100 font-sans">
+  <button id="toggleButton" class="fixed top-4 left-4 bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg cursor-pointer shadow-lg hover:bg-blue-700 transition-transform duration-200 z-50"></button>
+  <div id="sidebar" class="bg-white shadow-lg overflow-y-auto overflow-x-hidden">
+    <h2 class="flex items-center gap-2 text-xl font-semibold text-gray-800 m-4">
+      <span class="icon text-lg">📁</span><span class="text-label">SeedRound</span>
+    </h2>
+    <ul id="navList" class="p-0 m-0 list-none">
+      <li onclick="loadPage(this, '0_DeFi_2035.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🔮</span><span class="text-label">DeFi 2035</span>
+      </li>
+      <li onclick="loadPage(this, '1_Genius Act.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">💡</span><span class="text-label">Genius Act và Tác động đến TradFi & DeFi</span>
+      </li>
+      <li onclick="loadPage(this, '2.0_STO_exchange.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">📈</span><span class="text-label">Dự đoán STO Exchange năm 2035</span>
+      </li>
+      <li onclick="loadPage(this, '2.1_competitor.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🤔</span><span class="text-label">Competitor</span>
+      </li>
+      <li onclick="loadPage(this, '3_zkKYC_opstack_architecture.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🌐</span><span class="text-label">"Đầu Tư Chiến Lược vào STO Exchange: Vì Sao Chúng Tôi Chọn Modular zkKYC + Layer2 trên OP Stack"</span>
+      </li>
+      <li onclick="loadPage(this, '4_opstack_architecture.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🔍</span><span class="text-label">Thiết kế STO Chain sử dụng OP Stack</span>
+      </li>
+      <li onclick="loadPage(this, '5_roadmap.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🗺️</span><span class="text-label">Roadmap Hệ Sinh Thái zkRollup & Smart Wallet</span>
+      </li>
+      <li onclick="loadPage(this, '6_whitepaper.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">📄</span><span class="text-label">Giai đoạn 1 & Giai đoạn 5: STUExchange Whitepaper</span>
+      </li>
+      <li onclick="loadPage(this, '10_bugbounty.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🛡️</span><span class="text-label">STUX Bug Bounty Program</span>
+      </li>
+      <li onclick="loadPage(this, '7_seed_round.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🚀</span><span class="text-label">MVP Introduction</span>
+      </li>
+      <li onclick="loadPage(this, '8_opstack.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🔩</span><span class="text-label">Kiến trúc OPSTACK</span>
+      </li>
+      <li onclick="loadPage(this, '10_resource_for_dex.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">📂</span><span class="text-label">Source Code cho DEX</span>
+      </li>
+      <li onclick="loadPage(this, '11_fullstack.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🔒</span><span class="text-label">Future-Proof Blockchain Tech Stack</span>
+      </li>
+      <li onclick="loadPage(this, '12_kientruc_nextjs.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🖥️</span><span class="text-label">Kiến trúc NextJS</span>
+      </li>
+      <li onclick="loadPage(this, '13_kientruc_nextjs _details.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">📂</span><span class="text-label">Ví dụ thư mục dự án NextJS</span>
+      </li>
+      <li onclick="loadPage(this, '15_ReownFeatures.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🔗</span><span class="text-label">Ví dụ tích hợp Reown(WalletConnect)</span>
+      </li>
+      <li onclick="loadPage(this, '16_guide_wallet.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">👥</span><span class="text-label">Hướng dẫn dùng ví cá nhân</span>
+      </li>
+      <li onclick="loadPage(this, '17_multi_sign_company.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">🏢</span><span class="text-label">Hướng dẫn dùng ví doanh nghiệp</span>
+      </li>
+      <li class="parent p-3 m-2 cursor-pointer" onclick="toggleMenu(this)">
+        <span class="flex items-center w-full font-medium text-gray-700 hover:text-blue-600">
+          <span class="icon mr-3 text-lg">📁</span><span class="text-label">Nghiên cứu sàn DEX, CEX</span>
+        </span>
+        <ul class="child hidden w-full pl-6">
+          <li onclick="loadPage(this, 'dex_cex/0.list_of_CEX.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">📊</span><span class="text-label">Danh sách sàn CEX</span>
+          </li>
+          <li onclick="loadPage(this, 'dex_cex/0.list_of_DEX.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">📊</span><span class="text-label">Danh sách sàn DEX</span>
+          </li>
+          <li onclick="loadPage(this, 'dex_cex/0.sosanh_CEX_DEX.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">🤔</span><span class="text-label">So sánh CEX với DEX</span>
+          </li>
+          <li onclick="loadPage(this, 'dex_cex/1.AMM.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">⚖️</span><span class="text-label">DEX - Mô hình AMM</span>
+          </li>
+          <li onclick="loadPage(this, 'dex_cex/2.Perpetual.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">📈</span><span class="text-label">DEX - Mô hình Perpetual</span>
+          </li>
+          <li onclick="loadPage(this, 'dex_cex/6.Uniswap.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">🦄</span><span class="text-label">DEX - Đối thủ Uniswap</span>
+          </li>
+          <li onclick="loadPage(this, 'dex_cex/3.TokenizeSecurities.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">📈</span><span class="text-label">Tokenize - Quy trình Tokenize</span>
+          </li>
+          <li onclick="loadPage(this, 'dex_cex/5.Tokeny.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">🤖</span><span class="text-label">Tokenize - Đối thủ Securitize</span>
+          </li>
+          <li onclick="loadPage(this, 'dex_cex/8_transfer.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">🤖</span><span class="text-label">Tokenize - Đối thủ Tokeny</span>
+          </li>
+        </ul>
+      </li>
+      <li class="parent p-3 m-2 cursor-pointer" onclick="toggleMenu(this)">
+        <span class="flex items-center w-full font-medium text-gray-700 hover:text-blue-600">
+          <span class="icon mr-3 text-lg">📁</span><span class="text-label">Các mẫu giao diện</span>
+        </span>
+        <ul class="child hidden w-full pl-6">
+          <li onclick="loadPage(this, 'protype/crypto2.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">฿</span><span class="text-label">Sàn crypto</span>
+          </li>
+          <li onclick="loadPage(this, 'protype/forex1.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">$</span><span class="text-label">Sàn forex</span>
+          </li>
+          <li onclick="loadPage(this, 'protype/stocks1.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+            <span class="icon mr-3 text-lg">📊</span><span class="text-label">Sàn chứng khoán</span>
+          </li>
+          <li onclick="loadPage(this, 'protype/dashboard.html', event)" class="flex items-center p-3 m-1 rounded-md cursor-pointer bg-blue-100 font-medium text-blue-600 active">
+            <span class="icon mr-3 text-lg text-blue-600">📈</span><span class="text-label">Trading Terminal</span>
+          </li>
+        </ul>
+      </li>
+      <li onclick="loadPage(this, 'requirements/index.html')" class="flex items-center p-3 m-2 rounded-md cursor-pointer text-gray-700 text-sm hover:bg-blue-50 hover:translate-x-1 transition duration-150">
+        <span class="icon mr-3 text-lg">📝</span><span class="text-label">Tài liệu hệ thống</span>
+      </li>
     </ul>
   </div>
 
-  <div id="content">
-    <iframe id="viewer" src="0_DeFi_2035.html"></iframe>
+  <div id="content" class="flex-1 bg-white transition-all duration-300">
+    <iframe id="viewer" src="protype/crypto2.html" class="w-full h-full border-0"></iframe>
   </div>
 
   <script>
-    function loadPage(element, file) {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = document.getElementById('toggleButton');
+
+    toggleButton.addEventListener('click', () => {
+      sidebar.classList.toggle('expanded');
+      toggleButton.classList.toggle('active');
+    });
+
+    function loadPage(element, file, event) {
+      if (event) event.stopPropagation();
       document.getElementById('viewer').src = file;
       const items = document.querySelectorAll('#navList li');
-      items.forEach(item => item.classList.remove('active'));
-      element.classList.add('active');
+      items.forEach(item => {
+        item.classList.remove('active', 'bg-blue-100', 'font-medium', 'text-blue-600');
+        item.querySelector('span.icon')?.classList.remove('text-blue-600');
+      });
+      element.classList.add('active', 'bg-blue-100', 'font-medium', 'text-blue-600');
+      element.querySelector('span.icon')?.classList.add('text-blue-600');
+      if (!sidebar.classList.contains('expanded')) {
+        sidebar.classList.add('expanded');
+        toggleButton.classList.add('active');
+      }
+    }
+
+    function toggleMenu(element) {
+      const isActive = element.classList.contains('active');
+      const items = document.querySelectorAll('#navList .parent');
+      items.forEach(item => {
+        item.classList.remove('active');
+        const childUl = item.querySelector('.child');
+        if (childUl) {
+          childUl.classList.add('hidden');
+        }
+      });
+      if (!isActive) {
+        element.classList.add('active');
+        const childUl = element.querySelector('.child');
+        if (childUl) {
+          childUl.classList.remove('hidden');
+        }
+      }
+      if (!sidebar.classList.contains('expanded')) {
+        sidebar.classList.add('expanded');
+        toggleButton.classList.add('active');
+      }
     }
   </script>
 </body>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Tích Bước 3: Theo Dõi Routing Và Pages Uniswap Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        h3 {
+            font-size: 18px;
+            color: #555;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .section {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Phân Tích Bước 3: Theo Dõi Routing Và Pages Uniswap Interface</h1>
+    <p>Dựa trên cấu trúc thư mục từ file <code>structure.txt</code>, bước này phân tích sâu cách routing và pages được tổ chức trong Uniswap interface, một single-page application (SPA) sử dụng React Router. Routes được define ở <code>RouteDefinitions.tsx</code>, pages là các component lớn kết hợp UI từ <code>components/</code>, state từ <code>state/</code>, và logic từ <code>hooks/</code>. Redirects xử lý legacy features, và navigation qua <code>components/NavBar/</code>.</p>
+
+    <div class="section">
+        <h2>Mục Tiêu Chi Tiết</h2>
+        <ul>
+            <li><strong>Hiểu routing mechanism</strong>: React Router với custom paths, redirects cho legacy routes, và dynamic routes (e.g., <code>/pool/:id</code>).</li>
+            <li><strong>Khám phá pages</strong>: Pages chính (Swap, PoolDetails, Explore) là entry points cho features, với e2e tests verify flow.</li>
+            <li><strong>Nắm navigation flow</strong>: Từ NavBar (tabs, search) đến pages, với mobile support (MobileBottomBar) và SEO (<code>metatags.ts</code>).</li>
+            <li><strong>Lý do quan trọng</strong>: Routing là backbone của SPA, kết nối user interactions với features (swap/liquidity) và handle errors (not found, redirects).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Hành Động Cụ Thể Và Hướng Dẫn Thực Hiện</h2>
+        <h3>1. Xem Files Routing Chính</h3>
+        <ul>
+            <li><strong><code>RouteDefinitions.tsx</code></strong>: Define routes với React Router (e.g., <code>&lt;Route path="/swap" element={&lt;Swap /&gt;} /&gt;</code>). Hỗ trợ nested routes và params (e.g., <code>/token/:address</code>).
+                <ul>
+                    <li><strong>Sâu hơn</strong>: Tích hợp <code>useLocationLinkProps.ts</code> từ <code>hooks/</code> cho dynamic links (locale/chain).</li>
+                </ul>
+            </li>
+            <li><strong><code>routes.test.ts</code></strong>: Unit tests cho routes, dùng snapshots (<code>__snapshots__/routes.test.ts.snap</code>).</li>
+            <li><strong><code>paths.ts</code>, <code>paths.test.ts</code></strong>: Helpers generate paths (e.g., <code>getPoolPath(poolId)</code>).</li>
+            <li><strong><code>getExploreTitle.ts</code>, <code>getPositionPageTitle.ts</code></strong>: Page titles cho SEO.</li>
+            <li><strong><code>metatags.ts</code></strong>: Dynamic meta tags cho titles/descriptions.</li>
+            <li><strong>Hướng dẫn</strong>: Mở <code>RouteDefinitions.tsx</code>, tìm "path=" để list routes. Dùng React DevTools để inspect &lt;Router&gt;.</li>
+        </ul>
+
+        <h3>2. Khám Phá Các Pages Chính</h3>
+        <ul>
+            <li>Chọn Swap hoặc PoolDetails để deep dive:
+                <ul>
+                    <li><strong>Code</strong>: Import components (e.g., <code>SwapForm.tsx</code>), state (<code>SwapContext.tsx</code>), hooks (<code>useSwapCallback.tsx</code>).</li>
+                    <li><strong>E2e tests</strong>: <code>Swap.e2e.test.ts</code> verify flow (input token, confirm tx).</li>
+                </ul>
+            </li>
+            <li>Redirects: <code>redirects.tsx</code> trong <code>AddLiquidityV2/</code> dùng &lt;Navigate to={newPath} /&gt;.</li>
+            <li><strong>Hướng dẫn</strong>: Chạy app, navigate <code>/swap</code>, dùng devtools để see component tree. Tìm "useParams" trong pages.</li>
+        </ul>
+
+        <h3>3. Trace Navigation Từ NavBar Đến Pages</h3>
+        <ul>
+            <li><code>components/NavBar/Tabs/Tabs.tsx</code>: Links (e.g., <code>&lt;NavLink to="/swap"&gt;Swap&lt;/NavLink&gt;</code>).</li>
+            <li><code>MobileBottomBar/MobileBottomBar.tsx</code>: Bottom nav cho mobile.</li>
+            <li><code>components/BreadcrumbNav/</code>: Path navigation (e.g., Home &gt; Explore &gt; Pool).</li>
+            <li><strong>Hướng dẫn</strong>: Dùng VS Code "Find All References" trên "useNavigate".</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mô Tả Chi Tiết Thư Mục <code>src/pages/</code></h2>
+        <ul>
+            <li><strong><code>AddLiquidityV2/</code></strong>: Legacy v2 liquidity.
+                <ul>
+                    <li><code>redirects.tsx</code>: Redirect to v3/v4.</li>
+                </ul>
+            </li>
+            <li><strong><code>AddLiquidityV3/</code></strong>: Legacy v3.
+                <ul>
+                    <li><code>redirects.tsx</code>: Redirect.</li>
+                </ul>
+            </li>
+            <li><strong><code>App/</code></strong>: App layout.
+                <ul>
+                    <li><code>AppBody.tsx</code>, <code>Body.tsx</code>, <code>Chrome.tsx</code>, <code>Header.tsx</code>, <code>Layout.tsx</code>: Wrap routes.</li>
+                    <li><code>WalletConnection.e2e.test.ts</code>: Wallet tests.</li>
+                    <li><code>utils/ResetPageScroll.tsx</code>, <code>UserPropertyUpdater.tsx</code>: Scroll/analytics.</li>
+                </ul>
+            </li>
+            <li><strong><code>CreatePosition/</code></strong>: Tạo liquidity position.
+                <ul>
+                    <li><code>ConfirmCreatePositionModal.tsx</code>, <code>CreateLiquidityContextProvider.tsx</code>, <code>CreatePosition.tsx</code>, <code>CreatePositionModal.tsx</code>.</li>
+                    <li><code>CreatePosition.e2e.test.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>Errors.e2e.test.ts</code></strong>: Global error tests.</li>
+            <li><strong><code>Explore/</code></strong>: Explore pools/tokens.
+                <ul>
+                    <li><code>Explore.e2e.test.ts</code>, <code>ExploreStatsSection.tsx</code>, <code>ProtocolFilter.tsx</code>, <code>TokenExplore.e2e.test.ts</code>.</li>
+                    <li><code>constants.ts</code>, <code>index.tsx</code>, <code>redirects.tsx</code>.</li>
+                    <li><code>tables/RecentTransactions.tsx</code>, <code>useFilterTransaction.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>ExtensionPasskeyAuthPopUp/</code></strong>: Passkey auth.
+                <ul>
+                    <li><code>index.tsx</code>, <code>useExternallyConnectableExtensionId.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>ExtensionUninstall/</code></strong>: Uninstall extension.
+                <ul>
+                    <li><code>ExtensionUninstall.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>IncreaseLiquidity/</code></strong>: Increase liquidity.
+                <ul>
+                    <li><code>IncreaseLiquidity.e2e.test.ts</code>, <code>IncreaseLiquidityContext.tsx</code>, <code>IncreaseLiquidityForm.tsx</code>, <code>IncreaseLiquidityModal.tsx</code>.</li>
+                    <li><code>hooks/useDerivedIncreaseLiquidityInfo.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>Landing/</code></strong>: Landing page.
+                <ul>
+                    <li><code>Fold.tsx</code>, <code>Landing.e2e.test.ts</code>, <code>LandingV2.tsx</code>.</li>
+                    <li><code>assets/approvedTokens.ts</code>, <code>components/</code>, <code>sections/</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>LegacyPool/</code></strong>: Legacy pool.
+                <ul>
+                    <li><code>redirects.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>MigrateV2/</code></strong>: Migrate v2.
+                <ul>
+                    <li><code>MigrateV2Pair.tsx</code>, <code>Settings/</code>, <code>index.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>MigrateV3/</code></strong>: Migrate v3.
+                <ul>
+                    <li><code>MigrateV3.e2e.test.ts</code>, <code>MigrateV3LiquidityTxContext.tsx</code>, <code>hooks/useInitialPosition.ts</code>, <code>index.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>NavBar.e2e.test.ts</code></strong>: Nav tests.</li>
+            <li><strong><code>NotFound/</code></strong>: Not found.
+                <ul>
+                    <li><code>NotFound.tsx</code>, <code>PoolNotFoundModal.tsx</code>, <code>TokenNotFoundModal.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>PasskeyManagement/</code></strong>: Passkey management.
+                <ul>
+                    <li><code>index.test.tsx</code>, <code>index.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>PoolDetails/</code></strong>: Pool details.
+                <ul>
+                    <li><code>PoolDetails.e2e.test.ts</code>, <code>index.test.tsx</code>, <code>index.tsx</code>, <code>utils.test.ts</code>, <code>utils.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>PoolFinder/</code></strong>: Find pools.
+                <ul>
+                    <li><code>index.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>Positions/</code></strong>: Positions list.
+                <ul>
+                    <li><code>PositionPage.tsx</code>, <code>TopPools.tsx</code>, <code>TopPoolsCard.tsx</code>, <code>TopPoolsSection.tsx</code>, <code>V2PositionPage.tsx</code>, <code>index.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>Redirects.e2e.test.ts</code></strong>: Redirect tests.</li>
+            <li><strong><code>RemoveLiquidity/</code></strong>: Remove liquidity.
+                <ul>
+                    <li><code>RemoveLiquidity.e2e.test.ts</code>, <code>RemoveLiquidityForm.tsx</code>, <code>RemoveLiquidityModal.tsx</code>, <code>RemoveLiquidityModalContext.tsx</code>.</li>
+                    <li><code>hooks/useRemoveLiquidityTxAndGasInfo.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>RouteDefinitions.tsx</code></strong>: Define routes.</li>
+            <li><strong><code>Swap/</code></strong>: Swap page (core).
+                <ul>
+                    <li><code>Buy/</code>: Buy crypto (<code>BuyForm.tsx</code>, <code>hooks.ts</code>).</li>
+                    <li><code>Fees.e2e.test.ts</code>, <code>Limit/</code> (Limit orders, <code>LimitForm.tsx</code>).</li>
+                    <li><code>Send/</code> (Send, <code>SendForm.tsx</code>).</li>
+                    <li><code>Swap.e2e.test.ts</code>, <code>SwapSettings.e2e.test.ts</code>, <code>UniswapX.e2e.test.ts</code>.</li>
+                    <li><code>common/AlternateCurrencyDisplay.tsx</code>, <code>settings/DeadlineOverride.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>TokenDetails/</code></strong>: Token details.
+                <ul>
+                    <li><code>TDPContext.tsx</code>, <code>TokenDetails.e2e.test.ts</code>, <code>index.tsx</code>, <code>util.test.ts</code>, <code>utils.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>__snapshots__/</-transition-to-mainnet.tsx.snap</code></strong>: Snapshots.</li>
+            <li><strong><code>getExploreTitle.ts</code>, <code>getPositionPageTitle.ts</code></strong>: Titles.</li>
+            <li><strong><code>metatags.ts</code></strong>: Meta tags.</li>
+            <li><strong><code>paths.test.ts</code>, <code>paths.ts</code></strong>: Path utils.</li>
+            <li><strong><code>routes.test.ts</code></strong>: Routes tests.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mối Liên Hệ Giữa Các File Và Thư Mục</h2>
+        <ul>
+            <li><strong>Pages -> Components</strong>: Pages import từ <code>components/</code> (e.g., <code>Swap/index.tsx</code> import <code>ConfirmSwapModal</code>).</li>
+            <li><strong>Pages -> State/Hooks</strong>: Pages dùng state (e.g., <code>Swap/SwapContext.tsx</code> từ <code>state/swap/</code>), hooks (e.g., <code>PoolDetails/</code> dùng <code>usePoolTickData.ts</code>).</li>
+            <li><strong>Routing -> Navigation</strong>: <code>RouteDefinitions.tsx</code> dùng trong <code>App/Layout.tsx</code>, links từ <code>NavBar/Tabs.tsx</code>.</li>
+            <li><strong>Redirects -> Compatibility</strong>: Redirect files dùng &lt;Navigate&gt;, check <code>state/user/</code> cho auth.</li>
+            <li><strong>Tests -> Validation</strong>: E2e tests (Playwright/Cypress) simulate navigation (e.g., click nav to <code>/swap</code>).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Lưu Ý Thực Tế Và Thời Gian Ước Tính</h2>
+        <ul>
+            <li><strong>Công cụ</strong>: React DevTools để inspect routes. Tìm "useNavigate" để trace.</li>
+            <li><strong>Thách thức</strong>: Dynamic routes cần params (e.g., <code>/token/:address</code>), test với mock data.</li>
+            <li><strong>Thay đổi 2025</strong>: Có thể thêm pages cho v5 hoặc Solana; kiểm tra GitHub commits.</li>
+            <li><strong>Thời gian</strong>: 1-2 giờ (explore 15-20 files, test 2 routes). Bắt đầu với <code>Swap/</code>.</li>
+        </ul>
+        <p>Nếu cần ví dụ code hoặc phân tích page cụ thể (e.g., <code>Swap/</code>), hãy hỏi thêm!</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiểu Kiến Trúc Phần Mềm Uniswap Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        h3 {
+            font-size: 18px;
+            color: #555;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .step {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hướng Dẫn Hiểu Kiến Trúc Phần Mềm Uniswap Interface</h1>
+    <p>Đây là hướng dẫn chi tiết để hiểu kiến trúc phần mềm của Uniswap interface, một ứng dụng React-based frontend cho sàn giao dịch phi tập trung (DEX) Uniswap. Dự án sử dụng các thư viện như React, Redux, Apollo GraphQL, Wagmi, và Tamagui, với cấu trúc monorepo lớn, tập trung vào tính modular, reusable components, và state management phức tạp.</p>
+
+    <div class="step">
+        <h2><a href="step1.html">Bước 1: Hiểu cấu trúc thư mục tổng quát và entry points</a></h2>
+        <p><strong>Mục tiêu</strong>: Nắm tổng quan dự án để biết các phần chính và cách chúng tổ chức.</p>
+        <h3>Hành động:</h3>
+        <ul>
+            <li>Xem file gốc: <code>src/index.tsx</code> (entry point chính), <code>index.html</code> (template HTML), và <code>src/App.tsx</code> (component root).</li>
+            <li>Phân loại thư mục:
+                <ul>
+                    <li><code>src/</code>: Chứa code chính.
+                        <ul>
+                            <li><code>components/</code>: Components reusable (e.g., <code>AccountDrawer/</code>, <code>Charts/</code>).</li>
+                            <li><code>hooks/</code>: Custom hooks (e.g., <code>useAccount.ts</code>, <code>useSwapCallback.tsx</code>).</li>
+                            <li><code>pages/</code>: Các trang/route (e.g., <code>Swap/</code>, <code>PoolDetails/</code>).</li>
+                            <li><code>state/</code>: State management (e.g., <code>swap/</code>, <code>user/</code>).</li>
+                            <li><code>utils/</code>: Utilities (e.g., <code>prices.ts</code>, <code>slippage.ts</code>).</li>
+                            <li><code>assets/</code>: Tài nguyên tĩnh (images, svgs).</li>
+                            <li><code>lib/</code>: Thư viện nội bộ (e.g., <code>hooks/routing/</code>).</li>
+                            <li><code>nft/</code>: NFT-related components.</li>
+                            <li><code>theme/</code>: Styling (Tamagui config).</li>
+                        </ul>
+                    </li>
+                    <li><code>public/</code>: Tài nguyên public (images, fonts, PDFs).</li>
+                    <li><code>functions/</code>: Serverless functions (e.g., API cho images).</li>
+                    <li><code>scripts/</code>: Build/test scripts (e.g., <code>generate-sitemap.js</code>).</li>
+                    <li><code>tests/</code>: Tests (Cypress, Playwright, Vitest).</li>
+                </ul>
+            </li>
+            <li><strong>Mối liên hệ</strong>: Entry points import từ các thư mục khác (e.g., <code>App.tsx</code> import <code>NavBar</code> từ <code>components/NavBar/</code>). Sử dụng VS Code để "Go to Definition".</li>
+        </ul>
+        <p><strong>Thời gian ước tính</strong>: 30-60 phút.</p>
+    </div>
+
+    <div class="step">
+        <h2><a href="step2.html">Bước 2: Phân tích state management và data flow</a></h2>
+        <p><strong>Mục tiêu</strong>: Hiểu cách state được quản lý (local/global) cho transactions, user prefs, và blockchain data.</p>
+        <h3>Hành động:</h3>
+        <ul>
+            <li>Tập trung vào <code>src/state/</code>:
+                <ul>
+                    <li><strong>Reducers</strong>: <code>application/reducer.ts</code>, <code>user/reducer.ts</code>, <code>swap/SwapContext.tsx</code>.</li>
+                    <li><strong>Actions</strong>: <code>lists/actions.ts</code>, <code>global/actions.ts</code>.</li>
+                    <li><strong>Sagas</strong>: <code>sagas/root.ts</code>, <code>sagas/transactions/swapSaga.ts</code>.</li>
+                    <li><strong>Hooks</strong>: <code>state/hooks.ts</code> (selectors).</li>
+                </ul>
+            </li>
+            <li>Xem <code>src/state/index.ts</code> (combine reducers) và <code>src/App.tsx</code> (Redux Provider).</li>
+            <li>Theo dõi data flow: State swap (<code>state/swap/</code>) được dùng trong <code>pages/Swap/SwapContext.tsx</code>, kết nối với <code>useSwapCallback.tsx</code>.</li>
+            <li><strong>Mối liên hệ</strong>: State kết nối với UI qua hooks (e.g., <code>useAccount.ts</code> lấy state từ <code>state/user/</code>). Sagas gọi API từ <code>appGraphql/</code> (e.g., <code>AllV3TicksQuery.ts</code>). Dùng Redux DevTools để debug.</li>
+        </ul>
+        <p><strong>Thời gian ước tính</strong>: 1-2 giờ.</p>
+    </div>
+
+    <div class="step">
+        <h2><a href="step3.html">Bước 3: Theo dõi routing và pages</a></h2>
+        <p><strong>Mục tiêu</strong>: Hiểu navigation và routes trong SPA.</p>
+        <h3>Hành động:</h3>
+        <ul>
+            <li>Xem <code>src/pages/RouteDefinitions.tsx</code> và <code>routes.test.ts</code> (React Router).</li>
+            <li>Khám phá pages:
+                <ul>
+                    <li><code>pages/Swap/index.tsx</code>: Trang swap, import <code>CurrencyInputPanel</code>.</li>
+                    <li><code>pages/PoolDetails/index.tsx</code>: Chi tiết pool, dùng GraphQL từ <code>appGraphql/data/pools/</code>.</li>
+                    <li><code>pages/AddLiquidityV2/redirects.tsx</code>: Handle legacy routes.</li>
+                </ul>
+            </li>
+            <li>Xem <code>components/NavBar/</code> (navigation).</li>
+            <li><strong>Mối liên hệ</strong>: Pages import components (e.g., <code>PoolDetails.tsx</code> import <code>PoolDetailsHeader.tsx</code>, hooks như <code>usePoolTickData.ts</code>). Routes check state từ <code>state/user/</code>.</li>
+        </ul>
+        <p><strong>Thời gian ước tính</strong>: 1 giờ.</p>
+    </div>
+
+    <div class="step">
+        <h2><a href="step4.html">Bước 4: Khám phá components và hooks</a></h2>
+        <p><strong>Mục tiêu</strong>: Hiểu cách UI và logic được modular hóa.</p>
+        <h3>Hành động:</h3>
+        <ul>
+            <li><strong>Components</strong>: <code>components/Swap/</code>, <code>components/Liquidity/</code> (e.g., <code>ConfirmSwapModal.tsx</code>).</li>
+            <li><strong>Hooks</strong>: <code>hooks/useSwapCallback.tsx</code>, <code>hooks/useAccount.ts</code>. Xem tests như <code>useMaxAmountIn.test.tsx</code>.</li>
+            <li><strong>Mối liên hệ</strong>: Components dùng hooks (e.g., <code>SwapCurrencyInputPanel.tsx</code> dùng <code>useCurrencyBalance.ts</code>). Hooks import utils (e.g., <code>useSwapTaxes.ts</code> dùng <code>slippage.ts</code>).</li>
+        </ul>
+        <p><strong>Thời gian ước tính</strong>: 1-2 giờ, tập trung vào swap hoặc liquidity.</p>
+    </div>
+
+    <div class="step">
+        <h2><a href="step5.html">Bước 5: Phân tích integrations (Web3, API, GraphQL)</a></h2>
+        <p><strong>Mục tiêu</strong>: Hiểu cách app kết nối với blockchain và backend.</p>
+        <h3>Hành động:</h3>
+        <ul>
+            <li><strong>Web3</strong>: <code>src/connection/</code> (connectors), <code>hooks/useConnect.tsx</code>, <code>wagmiConfig.ts</code>.</li>
+            <li><strong>GraphQL</strong>: <code>src/appGraphql/</code> (e.g., <code>Token.ts</code>, <code>apollo/client.ts</code>).</li>
+            <li><strong>API</strong>: <code>functions/api/</code>, <code>lib/hooks/routing/</code>.</li>
+            <li><strong>Mối liên hệ</strong>: Hooks như <code>useEthersProvider.ts</code> dùng trong components (e.g., <code>PoolDetails.tsx</code> query GraphQL, render charts).</li>
+        </ul>
+        <p><strong>Thời gian ước tính</strong>: 1 giờ.</p>
+    </div>
+
+    <div class="step">
+        <h2><a href="step6.html">Bước 6: Xem tests, build scripts, và tools</a></h2>
+        <p><strong>Mục tiêu</strong>: Hiểu cách dự án được test và build.</p>
+        <h3>Hành động:</h3>
+        <ul>
+            <li><strong>Tests</strong>: <code>src/test-utils/</code>, e2e tests như <code>pages/App.smoketest.e2e.test.ts</code>.</li>
+            <li><strong>Scripts</strong>: <code>scripts/</code> (e.g., <code>generate-sitemap.js</code>), <code>vite.config.mts</code>.</li>
+            <li><strong>Mối liên hệ</strong>: Tests mock dependencies (e.g., GraphQL ở <code>playwright/mocks/</code>), giúp theo dõi flow.</li>
+        </ul>
+        <p><strong>Thời gian ước tính</strong>: 30 phút, chạy <code>npm test</code>.</p>
+    </div>
+
+    <div class="step">
+        <h2><a href="step7.html">Bước 7: Tổng Hợp Và Tối Ưu Hóa Uniswap Interface</a></h2>
+        <p><strong>Mục tiêu</strong>: Tổng hợp kiến thứ, Xác định tối ưu hóa, Hiểu thực tế, Lý do quan trọng.</p>
+        <h3>Hành động:</h3>
+        <ul>
+            <li>Tổng Hợp Luồng Dữ Liệu (Data Flow).</li>
+            <li>Đánh Giá Tối Ưu Hóa Hiệu Suất.</li>
+            <li>Đánh Giá Maintainability.</li>
+            <li>Đánh Giá Scalability (Multichain, New Features).</li>
+            <li>Debugging Một Flow Thực Tế (Swap Failure).</li>
+        </ul>
+        <p><strong>Thời gian ước tính</strong>: 1 giờ.</p>
+    </div>
+
+    <div class="step">
+        <h2>Bước 8: Theo dõi dependencies và vẽ diagram</h2>
+        <p><strong>Mục tiêu</strong>: Visualize mối liên hệ giữa files.</p>
+        <h3>Hành động:</h3>
+        <ul>
+            <li>Sử dụng VS Code: Tìm kiếm import (e.g., <code>useSwapCallback</code>) hoặc extension "Graphviz".</li>
+            <li>Tool: <code>madge src/ --image graph.svg</code>.</li>
+            <li>Ví dụ flow: User click swap → <code>pages/Swap/</code> → state update via <code>state/swap/</code> → call API via sagas → render modal via <code>components/ConfirmSwapModal/</code>.</li>
+        </ul>
+        <p><strong>Thời gian ước tính</strong>: 1 giờ.</p>
+    </div>
+
+</body>
+</html>

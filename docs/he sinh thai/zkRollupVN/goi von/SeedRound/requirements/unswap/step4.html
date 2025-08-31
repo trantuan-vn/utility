@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Tích Bước 4: Khám Phá Components Và Hooks Uniswap Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        h3 {
+            font-size: 18px;
+            color: #555;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .section {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Phân Tích Bước 4: Khám Phá Components Và Hooks Uniswap Interface</h1>
+    <p>Dựa trên cấu trúc thư mục từ file <code>structure.txt</code>, bước này phân tích sâu cách UI và logic được modular hóa qua components (reusable UI) và hooks (custom logic/state). Components được tổ chức theo feature (e.g., Swap, Liquidity), với styles (<code>styled.tsx</code>) và tests (<code>*.test.tsx</code>). Hooks tách logic, xử lý blockchain interactions (e.g., approvals). Tuân theo React best practices: composition cho components, effects cho hooks.</p>
+
+    <div class="section">
+        <h2>Mục Tiêu Chi Tiết</h2>
+        <ul>
+            <li><strong>Hiểu modular design</strong>: Components là UI blocks (e.g., buttons, modals), hooks là logic reusable (e.g., fetch data), giúp code DRY và testable.</li>
+            <li><strong>Khám phá components</strong>: Từ basic (Icons, Loader) đến feature-specific (Swap, Liquidity), nhấn mạnh reusability (e.g., CurrencyInputPanel).</li>
+            <li><strong>Khám phá hooks</strong>: Custom hooks cho side effects (useEffect), state (useState), Web3 (e.g., useContract.ts).</li>
+            <li><strong>Nắm reusability</strong>: Components/hooks dùng cross-pages (e.g., useSwapCallback.tsx ở Swap/ và MiniPortfolio).</li>
+            <li><strong>Lý do quan trọng</strong>: Kết nối state (Bước 2) với UI (Bước 3) và integrations (Bước 5). Giúp debug render issues hoặc optimize performance.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Hành Động Cụ Thể Và Hướng Dẫn Thực Hiện</h2>
+        <h3>1. Tập Trung Vào Thư Mục <code>src/components/</code></h3>
+        <ul>
+            <li>Bắt đầu với components phổ biến (e.g., <code>CurrencyInputPanel/</code> cho token input).
+                <ul>
+                    <li><strong>Xem code</strong>: Structure gồm <code>index.tsx</code> (main), <code>styled.tsx</code> (styles), <code>*.test.tsx</code> (tests).</li>
+                    <li><strong>Props</strong>: Nhận props từ parents (pages), dùng hooks nội bộ.</li>
+                </ul>
+            </li>
+            <li>Deep dive feature: Chọn <code>Swap/</code> hoặc <code>Liquidity/</code> (e.g., <code>ConfirmSwapModal.tsx</code>).</li>
+            <li><strong>Hướng dẫn</strong>: Mở <code>components/Swap/</code>, tìm "export default". Dùng React DevTools để inspect hierarchy (e.g., CurrencyInputPanel trong Swap).</li>
+        </ul>
+
+        <h3>2. Tập Trung Vào Thư Mục <code>src/hooks/</code></h3>
+        <ul>
+            <li>Bắt đầu với hooks cơ bản (e.g., <code>useAccount.ts</code> cho wallet state).
+                <ul>
+                    <li><strong>Xem code</strong>: Return values/effects, với dependencies (useEffect).</li>
+                    <li><strong>Tests</strong>: <code>*.test.ts</code> (e.g., <code>useMaxAmountIn.test.tsx</code>).</li>
+                </ul>
+            </li>
+            <li>Deep dive: Hooks Web3 như <code>useSwapCallback.tsx</code> (build/sign/send tx).</li>
+            <li><strong>Hướng dẫn</strong>: Tìm "use" prefix. Chạy app, console.log trong hook (e.g., <code>useCurrencyBalance.ts</code>).</li>
+        </ul>
+
+        <h3>3. Trace Reusability</h3>
+        <ul>
+            <li>Tìm imports: Dùng VS Code search cho component/hook name (e.g., <code>PortfolioLogo.tsx</code>).</li>
+            <li>Tests: Chạy <code>npm test</code> để see coverage.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mô Tả Chi Tiết Thư Mục <code>src/components/</code></h2>
+        <ul>
+            <li><strong><code>AccountDetails/</code></strong>: Account display (<code>AddressDisplay.tsx</code>, <code>MultiBlockchainAddressDisplay.tsx</code>).</li>
+            <li><strong><code>AccountDrawer/</code></strong>: Drawer cho account, với MiniPortfolio.
+                <ul>
+                    <li>Sub: <code>Activity/</code>, <code>Limits/</code>, <code>NFTs/</code>, <code>Pools/</code>, <code>Tokens/</code>.</li>
+                    <li><code>MiniPortfolio.tsx</code>, <code>ActivityTab.tsx</code>, <code>PoolsTab.tsx</code>, e2e tests.</li>
+                </ul>
+            </li>
+            <li><strong><code>AddressInputPanel.tsx</code>, <code>AddressQRCode.tsx</code></strong>: Address inputs.</li>
+            <li><strong><code>Badge/</code></strong>: Badges (<code>WalletAlertBadge.tsx</code>).</li>
+            <li><strong><code>Banner/</code></strong>: Banners (<code>LimitedSupportBanner.tsx</code>, <code>OutageBanner.tsx</code>).</li>
+            <li><strong><code>BreadcrumbNav/</code></strong>: Breadcrumbs (<code>index.tsx</code>, tests).</li>
+            <li><strong><code>Card/</code></strong>: Cards (<code>cards.tsx</code>).</li>
+            <li><strong><code>ChainConnectivityWarning.tsx</code></strong>: Chain warnings.</li>
+            <li><strong><code>Charts/</code></strong>: Biểu đồ (price, volume, liquidity).
+                <ul>
+                    <li>Sub: <code>ActiveLiquidityChart/</code>, <code>BandsIndicator/</code>, <code>LiquidityChart/</code>, <code>PriceChart/</code>, <code>SparklineChart/</code>, <code>VolumeChart/</code>.</li>
+                    <li><code>ChartHeader.tsx</code>, <code>hooks.ts</code>, <code>types.ts</code>, <code>utils.tsx</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>ConfirmSwapModal/</code></strong>: Swap confirmation (<code>Modal.tsx</code>, <code>Pending.tsx</code>, <code>TradeSummary.tsx</code>, tests).</li>
+            <li><strong><code>CurrencyInputPanel/</code></strong>: Token input (<code>FiatValue.tsx</code>, <code>LimitPriceInputPanel/</code>, <code>SwapCurrencyInputPanel.tsx</code>).</li>
+            <li><strong><code>Dialog/</code></strong>: Modals (<code>Dialog.tsx</code>, tests).</li>
+            <li><strong><code>DropdownSelector/</code></strong>: Dropdowns (<code>AdaptiveDropdown.tsx</code>).</li>
+            <li><strong><code>ErrorBoundary.tsx</code>, <code>ErrorCallout/</code></strong>: Error handling.</li>
+            <li><strong><code>Expand/</code></strong>: Expandable sections.</li>
+            <li><strong><code>FeatureFlagModal/</code></strong>: Feature flags.</li>
+            <li><strong><code>FeeSelector/</code></strong>: Fee selection.</li>
+            <li><strong><code>FormattedCurrencyAmount.tsx</code></strong>: Format amounts.</li>
+            <li><strong><code>Icons/</code></strong>: Icons (<code>CheckMark.tsx</code>, <code>shared.tsx</code>).</li>
+            <li><strong><code>Identicon/</code></strong>: Avatars (<code>ENSAvatarIcon.tsx</code>).</li>
+            <li><strong><code>InputStepCounter.tsx</code></strong>: Input counters.</li>
+            <li><strong><code>LPSettings.tsx</code></strong>: LP settings.</li>
+            <li><strong><code>Liquidity/</code></strong>: Liquidity management.
+                <ul>
+                    <li>Sub: <code>Create/</code>, <code>Deposit/</code>, <code>LPIncentives/</code>, <code>hooks/</code>, <code>utils/</code>.</li>
+                    <li><code>LiquidityPositionCard.tsx</code>, <code>PositionNFT.tsx</code>, <code>analytics.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>Loader/</code></strong>: Loading (<code>styled.tsx</code>).</li>
+            <li><strong><code>Logo/</code></strong>: Logos (<code>CurrencyLogo.tsx</code>, <code>DoubleLogo.tsx</code>).</li>
+            <li><strong><code>LpIncentives/</code></strong>: Incentives display.</li>
+            <li><strong><code>Modal/</code></strong>: Modals (<code>GetHelpHeader.tsx</code>).</li>
+            <li><strong><code>NavBar/</code></strong>: Navigation.
+                <ul>
+                    <li>Sub: <code>ChainSelector/</code>, <code>CompanyMenu/</code>, <code>DownloadApp/</code>, <code>LegalAndPrivacyMenu/</code>, <code>MobileBottomBar/</code>, <code>NavDropdown/</code>, <code>PreferencesMenu/</code>, <code>SearchBar/</code>, <code>Tabs/</code>, <code>TestnetMode/</code>.</li>
+                    <li><code>NavBar.tsx</code>, e2e tests.</li>
+                </ul>
+            </li>
+            <li><strong><code>NotFoundModal/</code></strong>: Not found modals.</li>
+            <li><strong><code>NumericalInput.tsx</code>, <code>PercentInput.tsx</code></strong>: Inputs.</li>
+            <li><strong><code>PersistQueryClient.tsx</code></strong>: Persist queries.</li>
+            <li><strong><code>PoolProgressIndicator/</code></strong>: Pool progress.</li>
+            <li><strong><code>Pools/</code></strong>: Pools tables (<code>PoolDetails/</code>, <code>PoolTable/</code>).</li>
+            <li><strong><code>Popover.tsx</code></strong>: Popovers.</li>
+            <li><strong><code>Popups/</code></strong>: Popups/toasts (<code>ClaimPopup.tsx</code>, <code>Toast.tsx</code>).</li>
+            <li><strong><code>PositionCard/</code></strong>: Position cards (<code>Sushi.tsx</code>, <code>V2.tsx</code>).</li>
+            <li><strong><code>PrivacyChoices/</code></strong>: Privacy.</li>
+            <li><strong><code>PrivacyPolicy.tsx</code></strong>: Policy.</li>
+            <li><strong><code>QuestionHelper.tsx</code></strong>: Tooltips.</li>
+            <li><strong><code>RangeSelector/</code></strong>: Range selection.</li>
+            <li><strong><code>RateToggle.tsx</code></strong>: Rate toggle.</li>
+            <li><strong><code>ReceiveCryptoModal/</code></strong>: Receive modal.</li>
+            <li><strong><code>RouterLabel/</code></strong>: Router labels (<code>UniswapXRouterLabel.tsx</code>).</li>
+            <li><strong><code>SearchModal/</code></strong>: Search modal.</li>
+            <li><strong><code>SwapBottomCard.tsx</code></strong>: Swap card.</li>
+            <li><strong><code>SwitchLocaleLink.tsx</code></strong>: Locale switch.</li>
+            <li><strong><code>Table/</code></strong>: Tables (<code>Cell.tsx</code>, <code>Filter.tsx</code>).</li>
+            <li><strong><code>Toggle/</code></strong>: Toggles (<code>MultiToggle.tsx</code>).</li>
+            <li><strong><code>Tokens/</code></strong>: Tokens (<code>TokenDetails/</code>, <code>TokenTable/</code>).</li>
+            <li><strong><code>Tooltip.tsx</code></strong>: Tooltips.</li>
+            <li><strong><code>TopLevelBanners/</code></strong>: Banners (<code>MobileAppPromoBanner.tsx</code>).</li>
+            <li><strong><code>TopLevelModals/</code></strong>: Modals (<code>UkDisclaimerModal.tsx</code>, <code>modalRegistry.tsx</code>).</li>
+            <li><strong><code>UnitagProfilePicture.tsx</code></strong>: Profile pics.</li>
+            <li><strong><code>V2Unsupported.tsx</code></strong>: V2 unsupported.</li>
+            <li><strong><code>WalletModal/</code></strong>: Wallet connect modal.</li>
+            <li><strong><code>WalletOneLinkQR.tsx</code></strong>: QR codes.</li>
+            <li><strong><code>Web3Provider/</code></strong>: Web3 providers (<code>wagmiConfig.ts</code>).</li>
+            <li><strong><code>Web3Status/</code></strong>: Wallet status.</li>
+            <li><strong><code>animations/</code></strong>: Animations (<code>Wiggle.tsx</code>).</li>
+            <li><strong><code>claim/</code></strong>: Claim (<code>AddressClaimModal.tsx</code>).</li>
+            <li><strong><code>delegation/</code></strong>: Delegation (<code>DelegationMismatchModal.tsx</code>).</li>
+            <li><strong><code>deprecated/</code></strong>: Deprecated (<code>Column.tsx</code>).</li>
+            <li><strong><code>earn/</code></strong>: Earn (<code>styled.tsx</code>).</li>
+            <li><strong><code>swap/</code></strong>: Swap details (<code>SwapDetails.tsx</code>, <code>SwapLineItem.tsx</code>).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mô Tả Chi Tiết Thư Mục <code>src/hooks/</code></h2>
+        <ul>
+            <li><strong><code>Tokens.test.ts</code>, <code>Tokens.ts</code></strong>: Token hooks.</li>
+            <li><strong><code>screenSize/useIsMobile.ts</code></strong>: Screen size.</li>
+            <li><strong><code>useAccount.ts</code>, <code>useAccountRiskCheck.ts</code></strong>: Account.</li>
+            <li><strong><code>useApproveCallback.ts</code></strong>: Approvals.</li>
+            <li><strong><code>useBlockConfirmationTime.ts</code></strong>: Block times.</li>
+            <li><strong><code>useColor.ts</code></strong>: Colors.</li>
+            <li><strong><code>useConfirmModalState.ts</code></strong>: Modals.</li>
+            <li><strong><code>useConnect.tsx</code>, <code>useDisconnect.ts</code></strong>: Connections.</li>
+            <li><strong><code>useContract.ts</code></strong>: Contracts.</li>
+            <li><strong><code>useCopyClipboard.ts</code></strong>: Clipboard.</li>
+            <li><strong><code>useCurrentBlockTimestamp.ts</code></strong>: Timestamps.</li>
+            <li><strong><code>useDebounce.ts</code></strong>: Debounce.</li>
+            <li><strong><code>useDeferredComponent.ts</code></strong>: Deferred.</li>
+            <li><strong><code>useDisableNFTRoutes.ts</code></strong>: NFT routes.</li>
+            <li><strong><code>useDisableScrolling.ts</code></strong>: Scrolling.</li>
+            <li><strong><code>useERC20Permit.ts</code></strong>: Permits.</li>
+            <li><strong><code>useEthersProvider.ts</code>, <code>useEthersSigner.ts</code></strong>: Ethers.</li>
+            <li><strong><code>useFeeTierDistribution.ts</code></strong>: Fees.</li>
+            <li><strong><code>useFetchListCallback.ts</code></strong>: Lists.</li>
+            <li><strong><code>useFilterPossiblyMaliciousPositions.ts</code></strong>: Positions.</li>
+            <li><strong><code>useGlobalChainSwitch.ts</code></strong>: Chains.</li>
+            <li><strong><code>useGroupedRecentTransfers.ts</code></strong>: Transfers.</li>
+            <li><strong><code>useHoverProps.ts</code></strong>: Hover.</li>
+            <li><strong><code>useInfiniteScroll.ts</code></strong>: Scroll.</li>
+            <li><strong><code>useIsArgentWallet.ts</code></strong>: Wallets.</li>
+            <li><strong><code>useIsPage.ts</code></strong>: Pages.</li>
+            <li><strong><code>useIsPoolOutOfSync.ts</code></strong>: Pools.</li>
+            <li><strong><code>useIsTickAtLimit.ts</code></strong>: Ticks.</li>
+            <li><strong><code>useIsUniExtensionConnected.ts</code></strong>: Extensions.</li>
+            <li><strong><code>useIsUniswapXSupportedChain.ts</code></strong>: UniswapX.</li>
+            <li><strong><code>useIsWindowVisible.ts</code></strong>: Visibility.</li>
+            <li><strong><code>useLocalCurrencyLinkProps.ts</code></strong>: Currency.</li>
+            <li><strong><code>useLocationLinkProps.ts</code></strong>: Links.</li>
+            <li><strong><code>useLpIncentives.ts</code></strong>: Incentives.</li>
+            <li><strong><code>useMachineTime.ts</code></strong>: Time.</li>
+            <li><strong><code>useMaxAmountIn.ts</code></strong>: Amounts.</li>
+            <li><strong><code>useModalState.ts</code></strong>: Modals.</li>
+            <li><strong><code>useNetworkSupportsV2.ts</code></strong>: Networks.</li>
+            <li><strong><code>useOnClickOutside.ts</code></strong>: Click outside.</li>
+            <li><strong><code>usePasskeyAuthWithHelpModal.ts</code></strong>: Passkey.</li>
+            <li><strong><code>usePermit2Allowance.ts</code></strong>: Permits.</li>
+            <li><strong><code>usePoolPriceChartData.tsx</code></strong>: Charts.</li>
+            <li><strong><code>usePoolTickData.ts</code></strong>: Ticks.</li>
+            <li><strong><code>usePools.ts</code></strong>: Pools.</li>
+            <li><strong><code>usePositionOwnerV2.ts</code></strong>: Positions.</li>
+            <li><strong><code>usePositionTokenURI.ts</code></strong>: URIs.</li>
+            <li><strong><code>usePrevious.ts</code></strong>: Previous values.</li>
+            <li><strong><code>useScroll.ts</code></strong>: Scroll.</li>
+            <li><strong><code>useSelectChain.ts</code></strong>: Chains.</li>
+            <li><strong><code>useSendCallback.ts</code></strong>: Send.</li>
+            <li><strong><code>useSignInWithPasskey.ts</code></strong>: Sign in.</li>
+            <li><strong><code>useSimplePagination.ts</code></strong>: Pagination.</li>
+            <li><strong><code>useSocksBalance.ts</code></strong>: Socks.</li>
+            <li><strong><code>useStateRehydrated.ts</code></strong>: Rehydrated.</li>
+            <li><strong><code>useSwapCallback.tsx</code></strong>: Swaps.</li>
+            <li><strong><code>useSwapTaxes.ts</code></strong>: Taxes.</li>
+            <li><strong><code>useSwitchChain.ts</code></strong>: Chains.</li>
+            <li><strong><code>useTokenAllowance.ts</code></strong>: Allowances.</li>
+            <li><strong><code>useTokenBalances.ts</code></strong>: Balances.</li>
+            <li><strong><code>useTokenContextMenu.ts</code></strong>: Menus.</li>
+            <li><strong><code>useTokenContractsConstant.ts</code></strong>: Constants.</li>
+            <li><strong><code>useTotalSupply.ts</code></strong>: Supplies.</li>
+            <li><strong><code>useTransactionDeadline.ts</code></strong>: Deadlines.</li>
+            <li><strong><code>useTransactionGasFee.ts</code></strong>: Gas.</li>
+            <li><strong><code>useTriggerOnTransactionType.ts</code></strong>: Triggers.</li>
+            <li><strong><code>useUSDPrice.ts</code></strong>: Prices.</li>
+            <li><strong><code>useUniswapXSwapCallback.ts</code></strong>: UniswapX.</li>
+            <li><strong><code>useUniversalRouter.ts</code></strong>: Routers.</li>
+            <li><strong><code>useUnmountingAnimation.ts</code></strong>: Animations.</li>
+            <li><strong><code>useV2LiquidityTokenPermit.ts</code></strong>: Permits.</li>
+            <li><strong><code>useV2Pairs.ts</code></strong>: Pairs.</li>
+            <li><strong><code>useWrapCallback.tsx</code></strong>: Wraps.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mối Liên Hệ Giữa Các File Và Thư Mục</h2>
+        <ul>
+            <li><strong>Components -> Hooks</strong>: Components dùng hooks (e.g., <code>SwapCurrencyInputPanel.tsx</code> gọi <code>useCurrencyBalance.ts</code>).</li>
+            <li><strong>Components/Hooks -> State</strong>: Hooks access state (e.g., <code>useAccount.ts</code> dùng <code>state/user/</code>), components dispatch actions (e.g., <code>ConfirmSwapModal</code> từ <code>state/application/</code>).</li>
+            <li><strong>Components/Hooks -> Pages</strong>: Pages compose components (e.g., <code>Swap/</code> dùng <code>SwapModalHeaderAmount.tsx</code>), hooks (e.g., <code>PoolDetails/</code> dùng <code>usePoolData.ts</code>).</li>
+            <li><strong>Reusability</strong>: <code>CurrencyLogo.tsx</code> dùng ở <code>PortfolioRow</code>, <code>TokenDetails</code>. Hooks như <code>useDebounce.ts</code> dùng global.</li>
+            <li><strong>Tests/Styles</strong>: Tests/snapshots, styles từ <code>theme/</code> (e.g., <code>styled.tsx</code> dùng <code>colors.ts</code>).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Lưu Ý Thực Tế Và Thời Gian Ước Tính</h2>
+        <ul>
+            <li><strong>Công cụ</strong>: React DevTools để inspect props/hooks. Extension "React Hook Form" để debug hooks.</li>
+            <li><strong>Thách thức</strong>: Components lớn (Liquidity/ ~100 files), focus feature-specific. Hooks depend on providers (wagmi), mock trong tests.</li>
+            <li><strong>Thay đổi 2025</strong>: Có thể thêm hooks cho v5 (dynamic fees), components cho mobile wallet. Kiểm tra GitHub issues.</li>
+            <li><strong>Thời gian</strong>: 2-3 giờ (explore 30-40 files, trace 3-4 usages). Bắt đầu với <code>CurrencyInputPanel/</code> và <code>useSwapCallback.tsx</code>.</li>
+        </ul>
+        <p>Nếu cần ví dụ code hoặc phân tích subfolder (e.g., <code>Charts/</code>), hãy hỏi thêm!</p>
+    </div>
+</body>
+</html>

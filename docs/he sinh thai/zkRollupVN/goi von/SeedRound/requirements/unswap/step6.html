@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Tích Bước 6: Testing Và Debugging Strategies Uniswap Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        h3 {
+            font-size: 18px;
+            color: #555;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .section {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Phân Tích Bước 6: Testing Và Debugging Strategies Uniswap Interface</h1>
+    <p>Dựa trên cấu trúc thư mục từ file <code>structure.txt</code>, bước này phân tích sâu cách Uniswap interface triển khai testing (unit, integration, e2e) và debugging để đảm bảo reliability. Testing dùng Jest (unit tests), Playwright/Cypress (e2e tests), và snapshots. Debugging dùng logs, Redux DevTools, React DevTools, và browser tools để trace issues như failed transactions, stale data, hoặc UI errors.</p>
+
+    <div class="section">
+        <h2>Mục Tiêu Chi Tiết</h2>
+        <ul>
+            <li><strong>Hiểu testing framework</strong>: Jest cho unit tests (components, hooks, reducers), Playwright/Cypress cho e2e tests (user flows), snapshots cho UI consistency.</li>
+            <li><strong>Hiểu debugging strategies</strong>: Logs (<code>state/logs/</code>), DevTools (Redux, React, Wagmi, Apollo), browser Network/Console.</li>
+            <li><strong>Nắm coverage và edge cases</strong>: Tests bao gồm happy paths (successful swap) và edge cases (failed tx, invalid inputs).</li>
+            <li><strong>Lý do quan trọng</strong>: Testing đảm bảo reliability của DEX app, debugging giúp fix issues nhanh. Kết nối với state (Bước 2), UI (Bước 3-4), integrations (Bước 5).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Hành Động Cụ Thể Và Hướng Dẫn Thực Hiện</h2>
+        <h3>1. Tập Trung Vào Testing Framework (<code>tests/</code>, <code>__snapshots__/</code>)</h3>
+        <ul>
+            <li><strong>Unit Tests (Jest)</strong>:
+                <ul>
+                    <li>Files: <code>*.test.ts</code>/<code>*.test.tsx</code> trong <code>src/state/</code>, <code>src/components/</code>, <code>src/hooks/</code>, <code>functions/</code>.</li>
+                    <li>Ví dụ: <code>state/reducer.test.ts</code> test reducers, <code>components/SwapCurrencyInputPanel.test.tsx</code> test UI, <code>hooks/useSwapCallback.test.tsx</code> test tx logic.</li>
+                    <li>Mocking: Jest mocks (<code>playwright/mocks/</code>) cho Web3 (wagmi), GraphQL (Apollo), API.</li>
+                </ul>
+            </li>
+            <li><strong>E2e Tests (Playwright/Cypress)</strong>:
+                <ul>
+                    <li>Files: <code>*.e2e.test.ts</code> trong <code>src/pages/</code>, <code>tests/playwright/</code>, <code>tests/cypress/</code>.</li>
+                    <li>Ví dụ: <code>pages/Swap/Swap.e2e.test.ts</code> simulate swap flow (select token, input amount, confirm).</li>
+                    <li>Config: <code>playwright.config.ts</code>, <code>cypress.config.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong>Snapshots</strong>:
+                <ul>
+                    <li>Files: <code>__snapshots__/*.snap</code> trong <code>src/components/</code>, <code>src/pages/</code>.</li>
+                    <li>Ví dụ: <code>PortfolioLogo.test.tsx.snap</code> verify UI render.</li>
+                </ul>
+            </li>
+            <li><strong>Hướng dẫn</strong>: Chạy <code>npm test</code> cho Jest, <code>npm run e2e</code> cho Playwright/Cypress. Dùng <code>jest --coverage</code> để xem coverage.</li>
+        </ul>
+
+        <h3>2. Tập Trung Vào Debugging Strategies</h3>
+        <ul>
+            <li><strong>Logs</strong>:
+                <ul>
+                    <li><code>state/logs/slice.ts</code>: Log state changes (e.g., tx status).</li>
+                    <li><code>tracing/tracing.ts</code>: Analytics events cho error tracking.</li>
+                </ul>
+            </li>
+            <li><strong>DevTools</strong>:
+                <ul>
+                    <li>Redux DevTools: Trace state changes (e.g., <code>state/swap/</code>).</li>
+                    <li>React DevTools: Inspect component hierarchy, props (e.g., <code>ConfirmSwapModal.tsx</code>).</li>
+                    <li>Wagmi DevTools: Debug wallet connections (<code>wagmiConfig.ts</code>).</li>
+                    <li>Apollo DevTools: Trace GraphQL queries (<code>appGraphql/apollo/client.ts</code>).</li>
+                </ul>
+            </li>
+            <li><strong>Browser Tools</strong>:
+                <ul>
+                    <li>Network tab: Check RPC, GraphQL, API responses.</li>
+                    <li>Console: Add <code>console.log</code> trong hooks (e.g., <code>useSwapCallback.tsx</code>), sagas (<code>sagas/transactions/swapSaga.ts</code>).</li>
+                </ul>
+            </li>
+            <li><strong>Hướng dẫn</strong>: Cài extensions (Redux DevTools, React DevTools, Apollo DevTools). Navigate Swap page, inspect Network/Console khi trigger swap.</li>
+        </ul>
+
+        <h3>3. Trace Edge Cases</h3>
+        <ul>
+            <li>Unit tests: Test invalid inputs (<code>useMaxAmountIn.test.tsx</code>), failed tx (<code>useSwapCallback.test.tsx</code>).</li>
+            <li>E2e tests: Simulate wallet disconnect (<code>WalletConnection.e2e.test.ts</code>), pool not found (<code>PoolNotFoundModal.tsx</code>).</li>
+            <li><strong>Hướng dẫn</strong>: Tìm <code>it(</code> trong test files. Thêm <code>console.error</code> trong error handlers (e.g., <code>ErrorBoundary.tsx</code>).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mô Tả Chi Tiết Thư Mục Liên Quan Đến Testing</h2>
+        <ul>
+            <li><strong><code>tests/</code></strong>:
+                <ul>
+                    <li><code>playwright/</code>:
+                        <ul>
+                            <li><code>mocks/</code>: Mock Web3, GraphQL.</li>
+                            <li><code>pages/App.smoketest.e2e.test.ts</code>: Smoke tests.</li>
+                            <li><code>playwright.config.ts</code>: Config Playwright.</li>
+                        </ul>
+                    </li>
+                    <li><code>cypress/</code>:
+                        <ul>
+                            <li><code>cypress.config.ts</code>: Config Cypress.</li>
+                            <li>Tests tích hợp với <code>pages/</code> (e.g., <code>Swap.e2e.test.ts</code>).</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><strong><code>src/state/</code></strong>:
+                <ul>
+                    <li><code>reducer.test.ts</code>, <code>migrations.test.ts</code>: Test reducers, migrations.</li>
+                    <li><code>sagas/transactions/*.test.ts</code> (e.g., <code>swapSaga.test.ts</code>): Test async flows.</li>
+                    <li><code>hooks/*.test.ts</code> (e.g., <code>hooks.test.tsx</code>): Test state hooks.</li>
+                </ul>
+            </li>
+            <li><strong><code>src/components/</code></strong>:
+                <ul>
+                    <li><code>*.test.tsx</code> (e.g., <code>CurrencyInputPanel.test.tsx</code>): Test UI.</li>
+                    <li><code>__snapshots__/*.snap</code> (e.g., <code>PortfolioLogo.test.tsx.snap</code>): UI snapshots.</li>
+                </ul>
+            </li>
+            <li><strong><code>src/pages/</code></strong>:
+                <ul>
+                    <li><code>*.e2e.test.ts</code> (e.g., <code>Swap.e2e.test.ts</code>, <code>PoolDetails.e2e.test.ts</code>): E2e tests.</li>
+                    <li><code>Redirects.e2e.test.ts</code>: Test redirects.</li>
+                </ul>
+            </li>
+            <li><strong><code>src/hooks/</code></strong>:
+                <ul>
+                    <li><code>*.test.ts</code> (e.g., <code>useSwapCallback.test.tsx</code>): Test logic (tx, balances).</li>
+                </ul>
+            </li>
+            <li><strong><code>appGraphql/</code></strong>:
+                <ul>
+                    <li><code>apollo/client.test.ts</code>: Test Apollo Client.</li>
+                    <li><code>pools/usePoolData.test.ts</code>: Test GraphQL hooks.</li>
+                </ul>
+            </li>
+            <li><strong><code>connection/</code></strong>:
+                <ul>
+                    <li><code>*.test.ts</code> (e.g., <code>InjectedConnector.test.ts</code>): Test wallet connectors.</li>
+                </ul>
+            </li>
+            <li><strong><code>functions/</code></strong>:
+                <ul>
+                    <li><code>api/image/*.test.ts</code> (e.g., <code>generatePoolImage.test.ts</code>): Test APIs.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mô Tả Chi Tiết Debugging Strategies</h2>
+        <ul>
+            <li><strong>Logs</strong>:
+                <ul>
+                    <li><code>state/logs/</code>:
+                        <ul>
+                            <li><code>slice.ts</code>, <code>updater.ts</code>: Log state changes.</li>
+                            <li><code>utils.ts</code>: Format logs.</li>
+                        </ul>
+                    </li>
+                    <li><code>tracing/</code>:
+                        <ul>
+                            <li><code>tracing.ts</code>: Track errors (tx, API).</li>
+                            <li><code>zone-events.js</code> (public/): Error tracking.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><strong>DevTools</strong>:
+                <ul>
+                    <li>Redux DevTools: Trace actions/reducers (e.g., <code>state/swap/</code>).</li>
+                    <li>React DevTools: Inspect props/state (e.g., <code>ConfirmSwapModal.tsx</code>).</li>
+                    <li>Wagmi DevTools: Debug wallet (<code>wagmiConfig.ts</code>).</li>
+                    <li>Apollo DevTools: Trace GraphQL (<code>appGraphql/apollo/client.ts</code>).</li>
+                </ul>
+            </li>
+            <li><strong>Browser Tools</strong>:
+                <ul>
+                    <li>Network: Monitor RPC, GraphQL, API calls.</li>
+                    <li>Console: Log errors từ <code>ErrorBoundary.tsx</code>, hooks (<code>useSwapCallback.tsx</code>).</li>
+                </ul>
+            </li>
+            <li><strong>Custom Debugging</strong>:
+                <ul>
+                    <li>Thêm <code>console.log</code> trong sagas (<code>sagas/transactions/</code>), hooks (<code>useEthersProvider.ts</code>), components (<code>ConfirmSwapModal.tsx</code>).</li>
+                    <li>Sử dụng <code>debugger</code> để pause execution.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mối Liên Hệ Giữa Các File Và Thư Mục</h2>
+        <ul>
+            <li><strong>Tests -> Components/Hooks</strong>: <code>components/*.test.tsx</code> test rendering (e.g., <code>CurrencyInputPanel.test.tsx</code> mock <code>useCurrencyBalance.ts</code>). <code>hooks/*.test.ts</code> mock Web3/GraphQL.</li>
+            <li><strong>Tests -> Pages</strong>: <code>pages/*.e2e.test.ts</code> simulate flows (e.g., <code>Swap.e2e.test.ts</code> gọi components, hooks, state).</li>
+            <li><strong>Tests -> Integrations</strong>: <code>connection/*.test.ts</code> mock wallet, <code>appGraphql/*.test.ts</code> mock queries, <code>functions/*.test.ts</code> mock API.</li>
+            <li><strong>Debugging -> State</strong>: <code>state/logs/</code> và Redux DevTools trace state issues.</li>
+            <li><strong>Debugging -> Integrations</strong>: Network tab trace failed RPC (<code>useEthersProvider.ts</code>) hoặc GraphQL (<code>usePoolData.ts</code>).</li>
+            <li><strong>Coverage</strong>: <code>jest.config.js</code>, <code>playwright.config.ts</code> định nghĩa coverage scope.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Lưu Ý Thực Tế Và Thời Gian Ước Tính</h2>
+        <ul>
+            <li><strong>Công cụ</strong>:
+                <ul>
+                    <li>Testing: Jest (<code>npm test</code>), Playwright/Cypress (<code>npm run e2e</code>).</li>
+                    <li>Debugging: Redux DevTools, React DevTools, Wagmi DevTools, Apollo DevTools, browser devtools.</li>
+                    <li>IDE: VS Code extensions (Jest Runner, Playwright Test).</li>
+                </ul>
+            </li>
+            <li><strong>Thách thức</strong>:
+                <ul>
+                    <li>Unit tests cần mock phức tạp (wagmi, Apollo).</li>
+                    <li>E2e tests chậm nếu không optimize (headless mode).</li>
+                    <li>Debugging tx failures cần trace blockchain state (ethers.js logs).</li>
+                </ul>
+            </li>
+            <li><strong>Thay đổi 2025</strong>: Có thể thêm tests cho v5 (dynamic fees) hoặc Solana. Kiểm tra GitHub issues.</li>
+            <li><strong>Thời gian</strong>: 2-3 giờ (explore 20-30 test files, debug 1 flow như swap failure). Bắt đầu với <code>pages/Swap/Swap.e2e.test.ts</code> và <code>state/logs/slice.ts</code>.</li>
+        </ul>
+        <p>Nếu cần ví dụ code (e.g., test case), phân tích subfolder (e.g., <code>tests/playwright/</code>), hoặc debug flow cụ thể, hãy hỏi thêm!</p>
+    </div>
+</body>
+</html>

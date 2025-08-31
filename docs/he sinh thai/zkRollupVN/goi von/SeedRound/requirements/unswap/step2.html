@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Tích Bước 2: State Management Và Data Flow Uniswap Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        h3 {
+            font-size: 18px;
+            color: #555;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .section {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Phân Tích Bước 2: State Management Và Data Flow Uniswap Interface</h1>
+    <p>Dựa trên cấu trúc thư mục từ file <code>structure.txt</code>, bước này phân tích sâu cách Uniswap interface quản lý state và data flow. State được quản lý bằng Redux (reducers, actions, sagas), Context API (cho local state như swap, limit), và hooks để access/update state. Data flow: UI dispatch actions -> reducers update state -> sagas handle async (API, tx) -> hooks expose state.</p>
+
+    <div class="section">
+        <h2>Mục Tiêu Chi Tiết</h2>
+        <ul>
+            <li><strong>Phân loại state</strong>: Global state (Redux cho user prefs, lists, transactions) vs. Local state (Context cho swap, limit, send).</li>
+            <li><strong>Nắm data flow</strong>: Actions -> reducers -> sagas (async) -> updaters (realtime) -> hooks.</li>
+            <li><strong>Vai trò sagas</strong>: Xử lý side effects (API calls từ <code>appGraphql/</code>, tx watching, error handling).</li>
+            <li><strong>Lý do quan trọng</strong>: State là trung tâm, kết nối UI với blockchain. Hiểu bước này giúp debug stale data hoặc failed tx.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Hành Động Cụ Thể Và Hướng Dẫn Thực Hiện</h2>
+        <h3>1. Tập Trung Vào Thư Mục <code>src/state/</code></h3>
+        <ul>
+            <li><strong>Mô tả</strong>: Thư mục chính cho state, với Redux store ở <code>index.ts</code> và reducer root ở <code>webReducer.ts</code>.</li>
+            <li><strong>Reducers</strong>: Xử lý sync state (e.g., <code>application/reducer.ts</code> cho chainId, modals).</li>
+            <li><strong>Actions</strong>: Dispatch events (e.g., <code>lists/actions.ts</code> cho token lists).</li>
+            <li><strong>Sagas</strong>: Async flows (e.g., <code>sagas/transactions/swapSaga.ts</code> cho swap tx).</li>
+            <li><strong>Hooks</strong>: Selectors (e.g., <code>state/hooks.ts</code>).</li>
+            <li><strong>Updaters</strong>: Poll/realtime update (e.g., <code>activity/updater.tsx</code>).</li>
+            <li><strong>Hướng dẫn</strong>: Mở <code>src/state/index.ts</code> để xem combineReducers. Dùng Redux DevTools để inspect state changes.</li>
+        </ul>
+
+        <h3>2. Theo Dõi Data Flow Trong Một Feature (Swap)</h3>
+        <ul>
+            <li>Dispatch action từ UI (e.g., <code>pages/Swap/</code> dispatch từ <code>state/swap/hooks.tsx</code>).</li>
+            <li>Reducer update (e.g., <code>state/swap/SwapContext.tsx</code>).</li>
+            <li>Saga handle (e.g., <code>sagas/transactions/swapSaga.ts</code> gọi API từ <code>lib/hooks/routing/</code>).</li>
+            <li>Hooks expose (e.g., <code>useSwapContext.tsx</code>).</li>
+            <li><strong>Hướng dẫn</strong>: Tìm "useSelector" hoặc "useDispatch". Chạy app, console.log state ở hooks.</li>
+        </ul>
+
+        <h3>3. Xem Tests Và Migrations</h3>
+        <ul>
+            <li><strong>Tests</strong>: <code>reducer.test.ts</code>, <code>migrations.test.ts</code>.</li>
+            <li><strong>Migrations</strong>: <code>migrations/</code> migrate state cũ (e.g., v3 sang v4).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mô Tả Chi Tiết Thư Mục <code>src/state/</code></h2>
+        <ul>
+            <li><strong><code>README.md</code></strong>: Hướng dẫn state management.</li>
+            <li><strong><code>activity/</code></strong>: Quản lý transactions, orders.
+                <ul>
+                    <li><code>polling/</code>: Polling logic (e.g., <code>batch.ts</code>, <code>orders.ts</code>, <code>transactions.ts</code>).</li>
+                    <li><code>types.ts</code>, <code>updater.tsx</code>, <code>utils.ts</code>.</li>
+                </ul>
+            </li>
+            <li><strong><code>application/</code></strong>: App-wide state (e.g., <code>atoms.ts</code>, <code>hooks.tsx</code>, <code>reducer.ts</code>).</li>
+            <li><strong><code>claim/</code></strong>: Claim rewards (e.g., <code>hooks.ts</code>).</li>
+            <li><strong><code>connection/</code></strong>: Wallet connections (e.g., <code>hooks.ts</code>).</li>
+            <li><strong><code>embeddedWallet/</code></strong>: Embedded wallet (e.g., <code>store.ts</code>).</li>
+            <li><strong><code>explore/</code></strong>: Explore pools/tokens (e.g., <code>protocolStats.ts</code>, <code>topPools.ts</code>).</li>
+            <li><strong><code>fiatOnRampTransactions/</code></strong>: Fiat tx (e.g., <code>hooks.ts</code>, <code>reducer.ts</code>).</li>
+            <li><strong><code>global/</code></strong>: Global actions (e.g., <code>actions.ts</code>).</li>
+            <li><strong><code>hooks.ts</code></strong>: Hooks chung.</li>
+            <li><strong><code>index.ts</code></strong>: Combine reducers/export store.</li>
+            <li><strong><code>limit/</code></strong>: Limit orders (e.g., <code>LimitContext.tsx</code>, <code>hooks.ts</code>).</li>
+            <li><strong><code>lists/</code></strong>: Token lists (e.g., <code>actions.ts</code>, <code>reducer.ts</code>).</li>
+            <li><strong><code>logs/</code></strong>: Logging (e.g., <code>slice.ts</code>, <code>updater.ts</code>).</li>
+            <li><strong><code>migrations/</code></strong>: State migrations (e.g., <code>0.ts</code> đến <code>49.ts</code>, <code>legacy.ts</code>).</li>
+            <li><strong><code>mint/</code></strong>: Mint positions (e.g., <code>v3/actions.ts</code>, <code>v3/hooks.tsx</code>).</li>
+            <li><strong><code>multichain/</code></strong>: Multichain state (e.g., <code>MultichainContext.tsx</code>).</li>
+            <li><strong><code>routing/</code></strong>: Trade routing (e.g., <code>gas.ts</code>, <code>useRoutingAPITrade.ts</code>).</li>
+            <li><strong><code>sagas/</code></strong>: Side effects.
+                <ul>
+                    <li><code>liquidity/liquiditySaga.ts</code>: Liquidity.</li>
+                    <li><code>lp_incentives/lpIncentivesSaga.ts</code>: LP incentives.</li>
+                    <li><code>transactions/</code>: Tx sagas (e.g., <code>swapSaga.ts</code>, <code>uniswapx.ts</code>).</li>
+                    <li><code>utils/transaction.ts</code>: Tx utils.</li>
+                </ul>
+            </li>
+            <li><strong><code>send/</code></strong>: Send tx (e.g., <code>SendContext.tsx</code>).</li>
+            <li><strong><code>signatures/</code></strong>: Signatures (e.g., <code>hooks.ts</code>, <code>reducer.ts</code>).</li>
+            <li><strong><code>swap/</code></strong>: Swap state (e.g., <code>SwapContext.tsx</code>, <code>useSwapContext.tsx</code>).</li>
+            <li><strong><code>transactions/</code></strong>: Tx state (e.g., <code>hooks.tsx</code>, <code>types.ts</code>).</li>
+            <li><strong><code>user/</code></strong>: User prefs (e.g., <code>hooks.tsx</code>, <code>reducer.ts</code>).</li>
+            <li><strong><code>walletCapabilities/</code></strong>: Wallet caps (e.g., <code>useWalletGetCapabilitiesMutation.ts</code>).</li>
+            <li><strong><code>wallets/</code></strong>: Wallets state (e.g., <code>useDelegationService.ts</code>).</li>
+            <li><strong><code>webReducer.ts</code></strong>: Web-specific reducer.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mối Liên Hệ Giữa Các File Và Thư Mục</h2>
+        <ul>
+            <li><strong>State -> UI</strong>: Hooks từ <code>state/</code> (e.g., <code>swap/hooks.tsx</code>) dùng trong <code>components/</code>, <code>pages/</code> (e.g., <code>pages/Swap/SwapContext.tsx</code>).</li>
+            <li><strong>Actions -> Reducers -> Sagas</strong>: Action từ <code>global/actions.ts</code> -> reducer (e.g., <code>user/reducer.ts</code>) -> saga (e.g., <code>sagas/transactions/uniswapx.ts</code> gọi <code>hooks/useUniswapXSwapCallback.ts</code>).</li>
+            <li><strong>Data Flow Với API/Blockchain</strong>: Sagas gọi GraphQL từ <code>appGraphql/</code> (e.g., <code>explore/topPools.ts</code>), utils từ <code>utils/</code> (e.g., <code>slippage.ts</code>). Updaters poll data (e.g., <code>activity/updater.tsx</code>).</li>
+            <li><strong>Migrations</strong>: <code>migrations/</code> đảm bảo backward compat với localStorage/IndexedDB.</li>
+            <li><strong>Cross-Module</strong>: <code>state/user/</code> lưu prefs dùng trong <code>state/swap/</code> (slippage).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Lưu Ý Thực Tế Và Thời Gian Ước Tính</h2>
+        <ul>
+            <li><strong>Công cụ</strong>: Dùng Redux DevTools để visualize state. Tìm "takeEvery" trong sagas để thấy handlers.</li>
+            <li><strong>Thách thức</strong>: Sagas phức tạp với async (yield effects), debug bằng console.log.</li>
+            <li><strong>Thay đổi 2025</strong>: Có thể thêm sagas cho v5 hoặc multichain; kiểm tra GitHub commits.</li>
+            <li><strong>Thời gian</strong>: 2-3 giờ (explore 20-30 files, debug swap flow). Bắt đầu với <code>state/swap/</code>.</li>
+        </ul>
+        <p>Nếu cần ví dụ code hoặc phân tích subfolder (e.g., sagas), hãy hỏi thêm!</p>
+    </div>
+</body>
+</html>
